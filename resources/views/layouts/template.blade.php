@@ -48,70 +48,7 @@
 <!-- [ Pre-loader ] End -->
 
 <!-- [ navigation menu ] start -->
-<nav class="pcoded-navbar navbar-collapsed">
-    <div class="navbar-wrapper">
-        <div class="navbar-brand header-logo">
-            <a href="index.html" class="b-brand">
-                <div class="b-bg">
-                    <i class="feather icon-trending-up"></i>
-                </div>
-                <span class="b-title">Datta Able</span>
-            </a>
-            <a class="mobile-menu" id="mobile-collapse" href="javascript:"><span></span></a>
-        </div>
-        <div class="navbar-content scroll-div">
-            <ul class="nav pcoded-inner-navbar">
-                <li class="nav-item pcoded-menu-caption">
-                    <label>Navigation</label>
-                </li>
-                <li data-username="dashboard Default Ecommerce CRM Analytics Crypto Project" class="nav-item">
-                    <a href="index.html" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
-                </li>
-                <li class="nav-item pcoded-menu-caption">
-                    <label>UI Element</label>
-                </li>
-                <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
-                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-box"></i></span><span class="pcoded-mtext">Components</span></a>
-                    <ul class="pcoded-submenu">
-                        <li class=""><a href="bc_button.html" class="">Button</a></li>
-                        <li class=""><a href="bc_badges.html" class="">Badges</a></li>
-                        <li class=""><a href="bc_breadcrumb-pagination.html" class="">Breadcrumb & paggination</a></li>
-                        <li class=""><a href="bc_collapse.html" class="">Collapse</a></li>
-                        <li class=""><a href="bc_tabs.html" class="">Tabs & pills</a></li>
-                        <li class=""><a href="bc_typography.html" class="">Typography</a></li>
-                        <li class=""><a href="icon-feather.html" class="">Feather<span class="pcoded-badge label label-danger">NEW</span></a></li>
-                    </ul>
-                </li>
-                <li class="nav-item pcoded-menu-caption">
-                    <label>Forms & table</label>
-                </li>
-                <li data-username="form elements advance componant validation masking wizard picker select" class="nav-item">
-                    <a href="form_elements.html" class="nav-link "><span class="pcoded-micon"><i class="feather icon-file-text"></i></span><span class="pcoded-mtext">Form elements</span></a>
-                </li>
-                <li data-username="Table bootstrap datatable footable" class="nav-item">
-                    <a href="tbl_bootstrap.html" class="nav-link "><span class="pcoded-micon"><i class="feather icon-server"></i></span><span class="pcoded-mtext">Table</span></a>
-                </li>
-                <li class="nav-item pcoded-menu-caption">
-                    <label>Chart & Maps</label>
-                </li>
-                <li data-username="Charts Morris" class="nav-item"><a href="chart-morris.html" class="nav-link "><span class="pcoded-micon"><i class="feather icon-pie-chart"></i></span><span class="pcoded-mtext">Chart</span></a></li>
-                <li data-username="Maps Google" class="nav-item"><a href="map-google.html" class="nav-link "><span class="pcoded-micon"><i class="feather icon-map"></i></span><span class="pcoded-mtext">Maps</span></a></li>
-                <li class="nav-item pcoded-menu-caption">
-                    <label>Pages</label>
-                </li>
-                <li data-username="Authentication Sign up Sign in reset password Change password Personal information profile settings map form subscribe" class="nav-item pcoded-hasmenu">
-                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-lock"></i></span><span class="pcoded-mtext">Authentication</span></a>
-                    <ul class="pcoded-submenu">
-                        <li class=""><a href="auth-signup.html" class="" target="_blank">Sign up</a></li>
-                        <li class=""><a href="auth-signin.html" class="" target="_blank">Sign in</a></li>
-                    </ul>
-                </li>
-                <li data-username="Sample Page" class="nav-item active"><a href="sample-page.html" class="nav-link"><span class="pcoded-micon"><i class="feather icon-sidebar"></i></span><span class="pcoded-mtext">Sample page</span></a></li>
-                <li data-username="Disabled Menu" class="nav-item disabled"><a href="javascript:" class="nav-link"><span class="pcoded-micon"><i class="feather icon-power"></i></span><span class="pcoded-mtext">Disabled menu</span></a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
+@include('includes.sidebar')
 <!-- [ navigation menu ] end -->
 
 <!-- [ Header ] start -->
@@ -122,7 +59,7 @@
             <div class="b-bg">
                 <i class="feather icon-trending-up"></i>
             </div>
-            <span class="b-title">Datta Able</span>
+            <span class="b-title">SYSMAX</span>
         </a>
     </div>
     <a class="mobile-menu" id="mobile-header" href="javascript:">
@@ -131,7 +68,7 @@
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
             <li><a href="javascript:" class="full-screen" onclick="javascript:toggleFullScreen()"><i class="feather icon-maximize"></i></a></li>
-            <li class="nav-item dropdown">
+            {{--<li class="nav-item dropdown">
                 <a class="dropdown-toggle" href="javascript:" data-toggle="dropdown">Dropdown</a>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="javascript:">Action</a></li>
@@ -151,7 +88,7 @@
                             </span>
                     </div>
                 </div>
-            </li>
+            </li>--}}
         </ul>
         <ul class="navbar-nav ml-auto">
             <li>
@@ -213,17 +150,22 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right profile-notification">
                         <div class="pro-head">
-                            <img src="{{url('dattaable/assets/images/user/avatar-1.jpg')}}" class="img-radius" alt="User-Profile-Image">
-                            <span>John Doe</span>
-                            <a href="auth-signin.html" class="dud-logout" title="Logout">
+                            <img src="{{url('dattaable/assets/images/user/avatar-2.jpg')}}" class="img-radius" alt="User-Profile-Image">
+                            <span>{{\Illuminate\Support\Facades\Auth::user()->name}}</span>
+                            <a  class="dud-logout" title="Logout" href="{{ route('logout') }}"
+                               onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
                                 <i class="feather icon-log-out"></i>
                             </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
                         </div>
                         <ul class="pro-body">
-                            <li><a href="javascript:" class="dropdown-item"><i class="feather icon-settings"></i> Settings</a></li>
-                            <li><a href="javascript:" class="dropdown-item"><i class="feather icon-user"></i> Profile</a></li>
-                            <li><a href="message.html" class="dropdown-item"><i class="feather icon-mail"></i> My Messages</a></li>
-                            <li><a href="auth-signin.html" class="dropdown-item"><i class="feather icon-lock"></i> Lock Screen</a></li>
+                            <li><a href="javascript:" class="dropdown-item"><i class="feather icon-settings"></i> Configurações</a></li>
+                            <li><a href="javascript:" class="dropdown-item"><i class="feather icon-user"></i> Perfil</a></li>
+                            <li><a href="message.html" class="dropdown-item"><i class="feather icon-mail"></i> Mensagens</a></li>
+                            <li><a href="auth-signin.html" class="dropdown-item"><i class="feather icon-lock"></i> Bloquear</a></li>
                         </ul>
                     </div>
                 </div>

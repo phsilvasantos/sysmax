@@ -315,13 +315,17 @@
                 </div>
 
                 <div class="card" style="background:#f4f7fa; box-shadow:0 0 0 0;-webkit-box-shadow:0 0 0 0;">
+
+                    @if($venda[0]->status != 'Quitada')
                     <span class="label theme-bg text-white f-14 f-w-400 float-right btn-rounded btn-block" style="padding:10px"   onclick="pagamento()">
                         <i class="fa fa-edit"></i>
                         <a href="#!" class="float-right" style="color:white;">Registrar Pagamento</a>
                     </span>
-                    <span class="label theme-bg text-white f-14 f-w-400 float-right btn-rounded btn-block" style="padding:10px" onclick="lancar()">
+                    @endif
+
+                    <span class="label theme-bg text-white f-14 f-w-400 float-right btn-rounded btn-block" style="padding:10px" onclick="gerar_nfce()">
                         <i class="fa fa-edit"></i>
-                        <a href="{{route('nfce.gerar', $venda[0]->id)}}" target="_blank" class="float-right" style="color:white;" >Gerar NFCE</a>
+                        <a href="#" class="float-right" style="color:white;" >Gerar NFCE</a>
                     </span>
 
 
@@ -650,6 +654,53 @@
     </div>
 
 
+    <div class="modal fade" id="exampleModal7" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fa fa-edit"></i> CPF na Nota ?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+
+
+
+                <div class="modal-body">
+
+                    <div class="row">
+
+                        <div class="col-md-12">
+
+
+
+
+                            <br>
+
+
+                            <div class="input-group-sm col-sm-12">
+                                <i class="fa fa-dollar-sign"></i><label for="valor"> CPF / CNPJ</label>
+                                <input type="text"   class="form-control form-control-sm" name="nota_cpf" id="nota_cpf" value="{{$venda[0]->Cliente->cpf_cnpj}}" onblur="atualiza_link()">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+
+                    <a id="link_gerar" target="_blank" href="{{route('nfce.gerar', ['venda_id' => $venda[0]->id, 'cpf' => $venda[0]->Cliente->cpf_cnpj])}}" type="button" class="btn btn-primary btn-block" onclick="fechar_modal()" ><i class="fa fa-save"></i>  Gerar</a>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+
 
 @endsection
 
@@ -662,6 +713,17 @@
             calcula_total();
 
             });
+
+
+        function atualiza_link(){
+
+            var cpf = document.getElementById('nota_cpf').value;
+
+            document.getElementById('link_gerar').href =  '{{url("nfce/".$venda[0]->id )}}' + '?cpf=' + cpf ;
+
+
+
+        }
 
 
         //codigo para popular o combo de clientes dinamicamente
@@ -1120,6 +1182,16 @@
         function pagamento(){
 
             $("#exampleModal3").modal();
+        }
+
+        function gerar_nfce(){
+
+            $("#exampleModal7").modal();
+        }
+
+        function fechar_modal(){
+
+            $("#exampleModal7").modal('hide');
         }
 
 

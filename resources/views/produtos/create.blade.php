@@ -82,8 +82,9 @@
 
 
                                 <select class="form-control form-control-sm" id="tipo" name="tipo" required="" >
-                                    <option value="Produto">Produto</option>
+
                                     <option value="Serviço">Serviço</option>
+                                    <option value="Produto">Produto</option>
                                 </select>
 
                             </div>

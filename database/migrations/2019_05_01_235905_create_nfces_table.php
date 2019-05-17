@@ -14,6 +14,7 @@ class CreateNfcesTable extends Migration
     public function up()
     {
         Schema::create('nfces', function (Blueprint $table) {
+            $table->softDeletes();
             $table->bigIncrements('id');
             $table->unsignedBigInteger('venda_id');
             $table->foreign('venda_id')->references('id')->on('vendas')->ondelete('cascade');
@@ -27,6 +28,8 @@ class CreateNfcesTable extends Migration
             $table->string('status')->nullable();
             $table->string('mesAno')->nullable();
             $table->string('arquivo')->nullable();
+            $table->unsignedBigInteger('empresa_id');
+            $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->timestamps();
         });
     }

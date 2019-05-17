@@ -9,6 +9,8 @@ trait EmpresaGlobalScope{
     
 protected static function boot(){
     
+
+
     parent::boot();
     
     static::addGlobalScope(new EmpresaScope());

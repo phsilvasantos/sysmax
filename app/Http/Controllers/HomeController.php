@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Clientes\Cliente;
+use App\Models\Produtos\Produto;
+use App\Models\Vendas\Venda;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -24,7 +27,13 @@ class HomeController extends Controller
     public function index()
     {
 
+        $clientes = Cliente::count();
+        $produtos = Produto::count();
+        $vendas = Venda::count();
 
-        return view('home');
+        $ultimasVendas = Venda::orderBy('id', 'desc')->take(5)->get();
+
+
+        return view('home', compact('clientes','produtos', 'vendas','ultimasVendas'));
     }
 }

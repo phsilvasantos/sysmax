@@ -14,10 +14,14 @@ class CreateRacasTable extends Migration
     public function up()
     {
         Schema::create('racas', function (Blueprint $table) {
+            $table->softDeletes();
             $table->bigIncrements('id');
             $table->enum('especie',['Canino','Felino','Outros']);
             $table->string('raca_id');
             $table->text('descricao')->nullable();
+
+            $table->unsignedBigInteger('empresa_id');
+            $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->timestamps();
         });
     }

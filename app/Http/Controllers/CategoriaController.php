@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 class CategoriaController extends AppController
 {
 
+
+
     public $model = Categoria::class;
 
 

@@ -14,6 +14,7 @@ class CreateVendasTable extends Migration
     public function up()
     {
         Schema::create('vendas', function (Blueprint $table) {
+            $table->softDeletes();
             $table->bigIncrements('id');
             $table->bigInteger('cliente_id')->unsigned();
             $table->foreign('cliente_id')
@@ -36,6 +37,10 @@ class CreateVendasTable extends Migration
             $table->text('observacoes')->nullable();
             $table->enum('tipo',['Pr-Venda','Venda', 'Orçamento']);
             $table->enum('status',['Aberta','Quitada','Parcialmente Quitada','Cancelada']);
+
+            $table->unsignedBigInteger('empresa_id');
+            $table->foreign('empresa_id')->references('id')->on('empresas');
+
             $table->timestamps();
         });
     }

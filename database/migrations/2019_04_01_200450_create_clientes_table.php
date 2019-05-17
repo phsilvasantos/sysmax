@@ -35,6 +35,9 @@ class CreateClientesTable extends Migration
             $table->string('estado')->nullable();
             $table->string('referencia')->nullable();
             $table->text('observacoes')->nullable();
+
+            $table->unsignedBigInteger('empresa_id');
+            $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->timestamps();
         });
     }

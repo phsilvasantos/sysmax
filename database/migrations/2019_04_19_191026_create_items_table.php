@@ -14,6 +14,7 @@ class CreateItemsTable extends Migration
     public function up()
     {
         Schema::create('items', function (Blueprint $table) {
+            $table->softDeletes();
             $table->bigIncrements('id');
             $table->unsignedBigInteger('venda_id');
             $table->foreign('venda_id')->references('id')->on('vendas')->ondelete('cascade');
@@ -26,6 +27,8 @@ class CreateItemsTable extends Migration
             $table->float('sub_total',8,2);
             $table->float('desconto',8,2);
             $table->float('valor_total',8,2);
+            $table->unsignedBigInteger('empresa_id');
+            $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->timestamps();
         });
     }

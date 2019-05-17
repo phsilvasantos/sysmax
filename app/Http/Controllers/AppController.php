@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Scopes\EmpresaGlobalScope;
 use Illuminate\Http\Request;
 
 class AppController extends Controller
 {
+
+    use EmpresaGlobalScope;
+
 
     public $model;
     public $name;

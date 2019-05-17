@@ -14,6 +14,7 @@ class CreatePagamentosTable extends Migration
     public function up()
     {
         Schema::create('pagamentos', function (Blueprint $table) {
+            $table->softDeletes();
             $table->bigIncrements('id');
             $table->unsignedBigInteger('venda_id');
             $table->foreign('venda_id')->references('id')->on('vendas')->ondelete('cascade');
@@ -23,6 +24,8 @@ class CreatePagamentosTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->ondelete('cascade');
             $table->float('valor',8,2);
             $table->integer('parcelas');
+            $table->unsignedBigInteger('empresa_id');
+            $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->timestamps();
         });
     }

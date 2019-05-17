@@ -137,7 +137,7 @@ class NfceController extends AppController
         $std->CEP = $empresa->cep;
         $std->cPais = 1058;
         $std->xPais = 'BRASIL';
-        $std->fone = $empresa->telefone;
+        $std->fone = str_replace(['-','(',')',' '],['','','',''], $empresa->telefone);
 
         $nfe = $this->make->tagenderEmit($std);
     }
@@ -766,7 +766,7 @@ class NfceController extends AppController
                     ]);
 
 
-                    $autorizado = self::autoriza($nfce, $empresa);
+                    $pdf = self::autoriza($nfce, $empresa);
 
 
 
@@ -775,7 +775,7 @@ class NfceController extends AppController
                         'nfce_pdf' => 'public/arquivos/empresa_id_'. $empresa->id .'/'.'xml/'.$nfce->mesAno .'/PDFs/'.$nfce->arquivo.'.pdf'
                     ]);
 
-                    self::exibe($empresa, $nfce);
+
 
 
                     /*return ["situacao"=>"autorizada",
@@ -853,7 +853,9 @@ class NfceController extends AppController
     }
 
 
-    public function gerar($id){
+    public function gerar(Request $request, $id){
+
+
 
 
         $nfce = Nfce::where('venda_id', $id)->get();
@@ -863,7 +865,6 @@ class NfceController extends AppController
 
         self::tools($empresa);
 
-        //return response()->file(__DIR__ .'\..\..\..\storage\app\public\arquivos\empresa_id_'. $empresa->id .'\\'.'xml\\'.$nfce[0]->mesAno .'\\PDFs\\'.$nfce[0]->arquivo.'.pdf');
 
 
         if(count($nfce)){
@@ -872,6 +873,9 @@ class NfceController extends AppController
             if($nfce[0]->recibo){
                 $recibo = $nfce[0]->recibo;
                 $consulta = self::consulta($venda, $empresa, $recibo);
+
+                return response()->file(__DIR__ .'\..\..\..\storage\app\public\arquivos\empresa_id_'. $empresa->id .'\\'.'xml\\'.$nfce[0]->mesAno .'\\PDFs\\'.$nfce[0]->arquivo.'.pdf');
+
             }else{
 
 
@@ -880,20 +884,25 @@ class NfceController extends AppController
 
                 sleep(2);
 
-                $nfces = Nfce::where('venda_id', $venda->id)->get()[0];
-                $recibo = $nfces->recibo;
+                $nfce = Nfce::where('venda_id', $venda->id)->get()[0];
+                $recibo = $nfce->recibo;
 
                 $consulta = self::consulta($venda, $empresa, $recibo);
+
+                return response()->file(__DIR__ .'\..\..\..\storage\app\public\arquivos\empresa_id_'. $empresa->id .'\\'.'xml\\'.$nfce->mesAno .'\\PDFs\\'.$nfce->arquivo.'.pdf');
             };
 
         }else {
+
 
 
             self::taginfNFe($empresa);
             self::tagide($empresa, $venda);
             self::tagemit($empresa);
             self::tagenderEmit($empresa);
-            self::tagdest(73288020149);
+
+            $cpf = $request->cpf == '00000000000' ? '' : self::tagdest($request->cpf) ;
+
 
             foreach ($venda->Itens as $key => $item) {
 
@@ -928,10 +937,12 @@ class NfceController extends AppController
 
 
 
-            $nfces = Nfce::where('venda_id', $venda->id)->get()[0];
-            $recibo = $nfces->recibo;
+            $nfce = Nfce::where('venda_id', $venda->id)->get()[0];
+            $recibo = $nfce->recibo;
 
             $consulta = self::consulta($venda, $empresa, $recibo);
+
+            return response()->file(__DIR__ .'\..\..\..\storage\app\public\arquivos\empresa_id_'. $empresa->id .'\\'.'xml\\'.$nfce->mesAno .'\\PDFs\\'.$nfce->arquivo.'.pdf');
 
         };
 
@@ -953,11 +964,11 @@ class NfceController extends AppController
 
             $request = Storage::put('public/arquivos/empresa_id_'. $empresa->id .'/'.'xml/'.$nfce->mesAno .'/Autorizados/'.$nfce->arquivo.'-autorizado.xml', $xml);
 
-            $nfce->nfce_pdf = 'public/arquivos/empresa_id_'. $empresa->id .'/'.'xml/'.$nfce->mesAno .'/Autorizados/'.$nfce->arquivo.'-autorizado.xml';
-            $nfce->status = '4 - OK - Autorizado uso';
-            $nfce->save();
+            $nfce->update([
+                'status' => '4 - OK - Autorizado uso',
+                'xml_autorizado' =>'public/arquivos/empresa_id_'. $empresa->id .'/'.'xml/'.$nfce->mesAno .'/Autorizados/'.$nfce->arquivo.'-autorizado.xml'
+            ]);
 
-            //exibe em tela
 
             $docxml = Storage::get('public/arquivos/empresa_id_'. $empresa->id .'/'.'xml/'.$nfce->mesAno .'/Autorizados/'.$nfce->arquivo.'-autorizado.xml');
             $pathLogo = url('dattaable/assets/images/NFCe.png');
@@ -978,16 +989,7 @@ class NfceController extends AppController
 
     }
 
-    public function exibe($empresa, $nfce){
 
-        $caminho = __DIR__ .'\..\..\..\storage\app\public\arquivos\empresa_id_'. $empresa->id .'\\'.'xml\\'.$nfce->mesAno .'\\PDFs\\'.$nfce->arquivo.'.pdf';
-
-
-        //dd($empresa, $nfce);
-
-        return echo()
-
-    }
 
 
 

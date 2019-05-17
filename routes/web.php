@@ -32,6 +32,8 @@ Route::post('/clientes/desassociar', 'ClienteController@desassociar')->name('cli
 Route::any('/dynamic_dependent/fetch', 'RacaController@fetch')->name('dynamicdependent.fetch');
 Route::get('/nfce/{venda_id}', 'NfceController@gerar')->name('nfce.gerar');
 Route::get('/nfce/assina/{empresa}/{venda}', 'NfceController@assina')->name('nfce.assina');
+Route::get('/nfce/detalhes/{nfce_id}', 'NfceDetalheController@detalhes')->name('nfce.detalhes');
+
 
 
 Route::resource('/empresas', 'EmpresaController');

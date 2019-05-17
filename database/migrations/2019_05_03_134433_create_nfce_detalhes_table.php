@@ -14,6 +14,7 @@ class CreateNfceDetalhesTable extends Migration
     public function up()
     {
         Schema::create('nfce_detalhes', function (Blueprint $table) {
+            $table->softDeletes();
             $table->bigIncrements('id');
             $table->unsignedBigInteger('venda_id');
             $table->foreign('venda_id')->references('id')->on('vendas')->ondelete('cascade');
@@ -22,6 +23,8 @@ class CreateNfceDetalhesTable extends Migration
             $table->dateTime('data_hora')->nullable();
             $table->string('status')->nullable();
             $table->text('descricao')->nullable();
+            $table->unsignedBigInteger('empresa_id');
+            $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->timestamps();
         });
     }
