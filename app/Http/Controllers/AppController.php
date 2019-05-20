@@ -21,6 +21,8 @@ class AppController extends Controller
     public function __construct()
     {
 
+        $this->middleware('auth');
+
         $instace = new $this->model;
 
         $this->name = $instace->getTable();

@@ -6,7 +6,7 @@
 
     @endif
 
-    <form action="{{route('categorias.store')}}" method="post" name="form1">
+    <form action="{{route('vacinas.store')}}" method="post" name="form1">
 
         @csrf
         <input type="hidden" id="origem" name="origem" value="">
@@ -24,11 +24,11 @@
                                     <div><i class="fas fa-list m-r-5" style="font-size:38px"></i></div>
                                 </div>
                                 <div class="col">
-                                    <h5>Categoria</h5>
-                                    <span>Tipo</span>
+                                    <h5>Vacina</h5>
+
                                 </div>
                                 <div class="col text-right">
-                                    <a href="{{route('categorias.index')}}"> <button type="button" class="btn btn-sm btn-default btn-shadow-1 btn-rounded"><i class="feather icon-arrow-left"></i>Voltar</button></a>
+                                    <a href="{{route('vacinas.index')}}"> <button type="button" class="btn btn-sm btn-default btn-shadow-1 btn-rounded"><i class="feather icon-arrow-left"></i>Voltar</button></a>
 
 
                                     <div class="btn-group mb-2 mr-2  btn-rounded">
@@ -70,20 +70,16 @@
 
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <label>Nome da Categoria</label>
-                                    <input type="text" class="form-control form-control-sm" name="categoria"  required>
+                                    <label>Nome da Vacina</label>
+                                    <input type="text" class="form-control form-control-sm" name="nome"  required>
                                 </div>
                             </div>
 
 
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label>Tipo</label>
-                                    <select  class="form-control form-control-sm" name="categoria_type" >
-                                        <option value="Produtos">Produtos</option>
-                                        <option value="Clientes">Clientes</option>
-                                        <option value="atendimento_detalhes">Atendimentos</option>
-                                    </select>
+                                    <label>Periodo em Dias</label>
+                                    <input type="number" class="form-control form-control-sm" name="periodo">
                                 </div>
                             </div>
 

@@ -14,14 +14,17 @@
                 <li class="nav-item pcoded-menu-caption">
                     <label>Principal</label>
                 </li>
-                <li data-username="dashboard Default Ecommerce CRM Analytics Crypto Project" class="nav-item active">
+                <li class="nav-item active">
                     <a href="{{route('home')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
                 </li>
-                <li data-username="dashboard Default Ecommerce CRM Analytics Crypto Project" class="nav-item">
+                <li  class="nav-item">
                     <a href="{{route('clientes.index')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-user"></i></span><span class="pcoded-mtext">Clientes</span></a>
                 </li>
-                <li data-username="dashboard Default Ecommerce CRM Analytics Crypto Project" class="nav-item">
+                <li  class="nav-item">
                     <a href="{{route('vendas.index')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-shopping-cart "></i></span><span class="pcoded-mtext">Vendas</span></a>
+                </li>
+                <li  class="nav-item">
+                    <a href="{{route('atendimentos.index')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-globe "></i></span><span class="pcoded-mtext">Fila Atendimento</span></a>
                 </li>
 
                 <li class="nav-item pcoded-menu-caption">
@@ -34,6 +37,7 @@
                         <li class=""><a href="{{route('produtos.index')}}" class="">Produtos</a></li>
                         <li class=""><a href="{{route('forma_pagamentos.index')}}" class="">Forma de Pagamentos</a></li>
                         <li class=""><a href="{{route('racas.index')}}" class="">Raças</a></li>
+                        <li class=""><a href="{{route('vacinas.index')}}" class="">Vacinas</a></li>
                         <li class=""><a href="{{route('nfces.index')}}" class="">NFCE</a></li>
 
                     </ul>

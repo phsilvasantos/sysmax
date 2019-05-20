@@ -14,4 +14,22 @@ class Animal extends ModelDefault
     {
         return $this->belongsTo('App\Models\Racas\Raca');
     }
+
+
+    public function Cliente()
+    {
+        return $this->belongsTo('App\Models\Clientes\Cliente');
+    }
+
+    public function Raca()
+    {
+        return $this->belongsTo('App\Models\Racas\Raca');
+    }
+
+    public function Detalhes()
+    {
+
+        return $this->hasMany('App\Models\Atendimentos\Atendimento_Detalhes');
+    }
+
 }

@@ -47,6 +47,9 @@ Route::resource('/forma_pagamentos', 'FormaPagamentoController');
 Route::resource('/items', 'ItemController');
 Route::resource('/pagamentos', 'PagamentoController');
 Route::resource('/nfces', 'NfceController');
+Route::resource('/atendimentos', 'AtendimentoController');
+Route::resource('/atendimento_detalhes', 'AtendimentoDetalhesController');
+Route::resource('/vacinas', 'VacinaController');
 
 
 

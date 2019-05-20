@@ -6,7 +6,7 @@
 
     @endif
 
-    <form action="{{route('categorias.update', $registro->id)}}" method="post" name="form1">
+    <form action="{{route('vacinas.update', $registro->id)}}" method="post" name="form1">
 
         @csrf
         <input type="hidden" name="_method" value="put">
@@ -24,11 +24,11 @@
                             <div><i class="fas fa-list m-r-5" style="font-size:38px"></i></div>
                         </div>
                         <div class="col">
-                            <h5>{{$registro->categoria}}</h5>
-                            <span>{{$registro->categoria_type}}</span>
+                            <h5>{{$registro->nome}}</h5>
+
                         </div>
                         <div class="col text-right">
-                            <a href="{{route('categorias.index')}}"> <button type="button" class="btn btn-sm btn-default btn-shadow-1 btn-rounded"><i class="feather icon-arrow-left"></i>Voltar</button></a>
+                            <a href="{{route('vacinas.index')}}"> <button type="button" class="btn btn-sm btn-default btn-shadow-1 btn-rounded"><i class="feather icon-arrow-left"></i>Voltar</button></a>
 
 
                             <div class="btn-group mb-2 mr-2  btn-rounded">
@@ -70,19 +70,15 @@
 
                         <div class="col-md-8">
                             <div class="form-group">
-                                <label>Nome da Categoria</label>
-                                <input type="text" class="form-control form-control-sm" name="nome_fantasia"  value="{{$registro->categoria}}">
+                                <label>Nome da Vacina</label>
+                                <input type="text" class="form-control form-control-sm" name="nome"  value="{{$registro->nome}}">
                             </div>
                         </div>
 
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Tipo</label>
-                                <select  class="form-control form-control-sm" name="categoria_type" >
-                                    <option value="Produtos" @if($registro->categoria_type == 'Produtos') selected="" @endif>Produtos</option>
-                                    <option value="Clientes" @if($registro->categoria_type == 'Clientes') selected="" @endif>Clientes</option>
-                                    <option value="atendimento_detalhes" @if($registro->categoria_type == 'atendimento_detalhes') selected="" @endif>Atendimentos</option>
-                                </select>
+                                <input type="text" class="form-control form-control-sm" name="periodo"  value="{{$registro->periodo}}">
                             </div>
                         </div>
 
@@ -121,10 +117,10 @@
                     <p>Confirma a Desativação Deste Empresa?</p>
                 </div>
                 <div class="modal-footer">
-                    <a href="{{route('categorias.destroy', $registro->id)}}" class="btn btn-danger" onclick="event.preventDefault();
+                    <a href="{{route('vacinas.destroy', $registro->id)}}" class="btn btn-danger" onclick="event.preventDefault();
                                                      document.getElementById('delete-form').submit();">Desativar</a>
 
-                    <form id="delete-form" action="{{ route('categorias.destroy', $registro->id) }}" method="POST" style="display: none;">
+                    <form id="delete-form" action="{{ route('vacinas.destroy', $registro->id) }}" method="POST" style="display: none;">
                         @csrf
                         <input type="hidden" name="_method" value="DELETE">
                     </form>

@@ -32,7 +32,8 @@
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 
-
+    <!-- animation css -->
+    <link rel="stylesheet" href="{{url('dattaable/assets/plugins/bootstrap-datetimepicker/css/bootstrap-datepicker3.min.css')}}">
 
 
 
@@ -68,6 +69,7 @@
     <div class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
             <li><a href="javascript:" class="full-screen" onclick="javascript:toggleFullScreen()"><i class="feather icon-maximize"></i></a></li>
+            <li><h6>Empresa: {{\Illuminate\Support\Facades\Auth::user()->Empresa->nome_fantasia}}</h6></li>
             {{--<li class="nav-item dropdown">
                 <a class="dropdown-toggle" href="javascript:" data-toggle="dropdown">Dropdown</a>
                 <ul class="dropdown-menu">
@@ -96,13 +98,12 @@
                     <a class="dropdown-toggle" href="javascript:" data-toggle="dropdown"><i class="icon feather icon-bell"></i></a>
                     <div class="dropdown-menu dropdown-menu-right notification">
                         <div class="noti-head">
-                            <h6 class="d-inline-block m-b-0">Notifications</h6>
+                            <h6 class="d-inline-block m-b-0">Notificações</h6>
                             <div class="float-right">
-                                <a href="javascript:" class="m-r-10">mark as read</a>
-                                <a href="javascript:">clear all</a>
+                                <a href="javascript:">Limpar Tudo</a>
                             </div>
                         </div>
-                        <ul class="noti-body">
+                        {{--<ul class="noti-body">
                             <li class="n-title">
                                 <p class="m-b-0">NEW</p>
                             </li>
@@ -136,9 +137,9 @@
                                     </div>
                                 </div>
                             </li>
-                        </ul>
+                        </ul>--}}
                         <div class="noti-footer">
-                            <a href="javascript:">show all</a>
+                            <a href="javascript:">Mostrar Todas</a>
                         </div>
                     </div>
                 </div>
@@ -162,10 +163,10 @@
                             </form>
                         </div>
                         <ul class="pro-body">
-                            <li><a href="javascript:" class="dropdown-item"><i class="feather icon-settings"></i> Configurações</a></li>
+                            <li><a href="{{route('empresas.edit', Auth::user()->empresa_id)}}" class="dropdown-item"><i class="feather icon-settings"></i> Configurações</a></li>
                             <li><a href="javascript:" class="dropdown-item"><i class="feather icon-user"></i> Perfil</a></li>
-                            <li><a href="message.html" class="dropdown-item"><i class="feather icon-mail"></i> Mensagens</a></li>
-                            <li><a href="auth-signin.html" class="dropdown-item"><i class="feather icon-lock"></i> Bloquear</a></li>
+                            <li><a href="javascript:" class="dropdown-item"><i class="feather icon-mail"></i> Mensagens</a></li>
+                            <li><a href="javascript:" class="dropdown-item"><i class="feather icon-lock"></i> Bloquear</a></li>
                         </ul>
                     </div>
                 </div>
@@ -263,6 +264,7 @@
 <script src="{{url('dattaable/assets/js/pcoded.min.js')}}"></script>
 <script src="{{url('js/custom.js')}}"></script>
 
+<script src="{{url('dattaable/assets/plugins/bootstrap-datetimepicker/js/bootstrap-datepicker.min.js')}}"></script>
 
 
 <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>

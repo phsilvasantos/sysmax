@@ -299,7 +299,7 @@
                                                 <span>{{$animal->nome}}</span>
                                                 <div class="row m-t-30">
                                                     <div class="col-6 p-r-0">
-                                                        <a href="#!" class="btn  border btn-block btn-outline-secondary">Atendimento</a>
+                                                        <a href="#!" class="btn  border btn-block btn-outline-secondary" onclick="incluir_fila({{$animal->id}})">Atendimento</a>
                                                     </div>
                                                     <div class="col-6">
                                                         <a href="#!" class="btn  border btn-block btn-outline-secondary">Prontuário</a>
@@ -403,6 +403,56 @@
                     <div class="modal-footer">
                         <a href="{{route('animais.store')}}" class="btn btn-primary" onclick="event.preventDefault();
                                                          document.getElementById('animal-form').submit();">Salvar</a>
+
+
+
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Iniciar Atendimento</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form id="atendimento-form" action="{{ route('atendimentos.store') }}" method="post">
+
+                    @csrf
+
+
+                    <div class="modal-body">
+
+
+                        <div class="form-group col-md-12">
+                            <label for="nome" class="control-label">Selecione o Profissional:</label>
+
+                            <select class="form-control" name="user_id" id="user_id">
+                                @foreach(\App\User::all() as $user)
+                                    <option value="{{$user->id}}">{{$user->name}}</option>
+                                @endforeach()
+                            </select>
+                        </div>
+
+                        <input type="hidden" name="animal_id" id="animal_id" value="">
+                        <input type="hidden" name="data_recepcao" value="{{now()}}">
+                        <input type="hidden" name="atendente_id" value="{{Auth::user()->id}}">
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <a href="{{route('atendimentos.store')}}" class="btn btn-primary" onclick="event.preventDefault();
+                                                         document.getElementById('atendimento-form').submit();">Salvar</a>
 
 
 
@@ -573,6 +623,14 @@
             document.getElementById('method').value = 'POST';
 
 
+        }
+
+
+        function incluir_fila(animal_id){
+
+            document.getElementById('animal_id').value = animal_id;
+
+            $("#exampleModal3").modal();
         }
 
 
