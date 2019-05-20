@@ -39,9 +39,9 @@
                     <div class="card-block text-right">
                         <button type="button" class="btn btn-primary" onclick="adicionar('evolucao');"><i class="feather icon-thumbs-up"></i>Evolução</button>
                         <button type="button" class="btn btn-success" onclick="adicionar('receituario');"><i class="feather icon-check-circle"></i>Receituário</button>
-                        <button type="button" class="btn btn-secondary"  onclick="adicionar('vacina');"><i class="feather icon-camera"></i>Vacina</button>
+                        <button type="button" class="btn btn-secondary"  onclick="adicionar('vacina');"><i class="feather icon-info"></i>Vacina</button>
                         <button type="button" class="btn btn-warning"   onclick="adicionar('ocorrencia');"><i class="feather icon-alert-triangle"></i>Ocorrência</button>
-                        <button type="button" class="btn btn-info"  onclick="adicionar('anexo');"><i class="feather icon-info"></i>Anexos</button>
+                        <button type="button" class="btn btn-info"  onclick="adicionar('anexo');"><i class="feather icon-camera"></i>Anexos</button>
                     </div>
 
                     <br>
@@ -509,14 +509,16 @@
                         <div class="row">
 
                         <div class="form-group col-md-12">
-                            <label for="nome" class="control-label">Descrição:</label>
+                            <label for="nome" class="control-label">Descrição: </label>
 
                             <select  class="form-control" name="descricao" id="descricao2">
                                 @foreach(\App\Models\Vacinas\Vacina::all() as $vacina)
                                     <option value="{{$vacina->nome}}">{{$vacina->nome}}</option>
                                 @endforeach
                             </select>
+
                             <textarea class="form-control" name="descricao" id="descricao1" rows="16"></textarea>
+
                             <input type="file" name="descricao" id="descricao3" class="form-control">
 
 
@@ -558,13 +560,89 @@
 
 
                     </div>
+
+
+
                     <div class="modal-footer">
+
+
+
+                                <div>
+                                    <button type="button" class="btn btn-outline-primary" onclick="modelos()">Modelos</button>
+                                </div>
+
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
+
+                                <a href="{{route('atendimento_detalhes.store')}}" class="btn btn-primary" onclick="event.preventDefault();
+                                                         document.getElementById('atendimento-form').submit();">Salvar</a>
+
+
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="titulo">Modelos</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form id="modelos-form" action="{{ route('atendimento_detalhes.store') }}" method="post" enctype="multipart/form-data">
+
+                    @csrf
+
+
+                    <div class="modal-body">
+
+
+
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Modelo</th>
+                                    <th>Opções</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach(Auth::user()->Modelos as $modelo)
+                                <tr>
+                                    <td>{{$modelo->nome}}</td>
+                                    <td> Inserir </td>
+                                </tr>
+                                @endforeach()
+                            </tbody>
+                        </table>
+
+
+                        <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                        <input type="hidden" name="categoria" id="categoria" value="Evolução">
+                        <input type="hidden" name="_method" id="method" value="">
+
+
+
+                    </div>
+
+
+
+                    <div class="modal-footer">
+
+
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
+
                         <a href="{{route('atendimento_detalhes.store')}}" class="btn btn-primary" onclick="event.preventDefault();
                                                          document.getElementById('atendimento-form').submit();">Salvar</a>
 
 
-
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
                     </div>
 
                 </form>
@@ -591,6 +669,9 @@
 
          var form = document.getElementById("atendimento-form");
          form.reset();
+
+         form.action = '{{url('atendimento_detalhes')}}';
+         document.getElementById('method').value = 'POST';
 
          if(categoria == 'evolucao'){
 
@@ -703,6 +784,7 @@
 
                     document.getElementById('descricao1').value = obj.descricao;
                     document.getElementById('descricao2').value = obj.descricao;
+                    document.getElementById('resumo').value = obj.resumo;
                     document.getElementById('profissional').value = obj.usuario.name;
                     document.getElementById('data_hora').value = obj.created_at;
                     document.getElementById('categoria').value = obj.categoria;
@@ -726,6 +808,15 @@
 
 
         };
+
+
+        function modelos(){
+
+
+            $("#exampleModal4").modal();
+
+        }
+
 
 
 

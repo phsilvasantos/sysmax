@@ -32,8 +32,9 @@
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 
-    <!-- animation css -->
+    <!-- datetimepicker css -->
     <link rel="stylesheet" href="{{url('dattaable/assets/plugins/bootstrap-datetimepicker/css/bootstrap-datepicker3.min.css')}}">
+
 
 
 
@@ -370,7 +371,11 @@
     }
 
 
-    
+
+
+
+
+
 </script>
 
 

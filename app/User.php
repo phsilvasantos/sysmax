@@ -43,5 +43,10 @@ class User extends Authenticatable
         return $this->belongsTo('App\Models\Empresas\Empresa');
     }
 
+    public function Modelos()
+    {
+        return $this->hasMany('App\Models\Modelos\Modelo');
+    }
+
 
 }
