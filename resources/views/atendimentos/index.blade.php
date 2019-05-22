@@ -63,7 +63,14 @@
     </div>
 
 
+    <form action="{{route('atendimento.filtrar')}}" id="data_form" method="POST">
 
+        @csrf
+
+        <input type="hidden" name="data" value="" id="data">
+
+
+    </form>
 
 
 
@@ -74,12 +81,31 @@
     <script type="text/javascript">
 
 
+
         $('#calendar').datepicker({
             language: "pt-BR",
             todayHighlight: true
-        });
+        })
+            .on('changeDate', function(e) {
+                // `e` here contains the extra attributes
+                mudar_data(e.format(0,'yyyy-mm-dd'));
 
 
+
+
+            });
+
+
+
+
+        function mudar_data(data){
+
+            document.getElementById('data').value = data;
+
+           document.getElementById('data_form').submit();
+
+
+        };
 
 
 

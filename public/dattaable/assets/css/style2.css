@@ -16,4 +16,18 @@ input.campo {
     background: transparent;
 }
 
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    #printable, #printable * {
+        visibility: visible;
+    }
+    #printable {
+        position: fixed;
+        left: 0;
+        top: 0;
+    }
+}
+
 

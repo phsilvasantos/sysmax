@@ -10628,3 +10628,21 @@ select.form-control.form-control-sm {
     padding: .3rem;
 
 }
+
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    #printable, #printable * {
+        visibility: visible;
+    }
+    #printable {
+        position: fixed;
+        left: 0;
+        top: 0;
+    }
+
+
+}
+
+

@@ -296,7 +296,7 @@
                                                                 <td> {{ date('d/m/y H:m', strtotime($detalhe->created_at)) }}</td>
                                                                 <td > {{$detalhe->Usuario->name}}</td>
                                                                 <td > {{ substr($detalhe->descricao,0,40) }} ...</td>
-                                                                <td> <a href="{{route('atendimento.imprimir', $detalhe->id)}}"> <i class="fa fa-print" style="font-size:18px;padding:5px"></i> </a> <i class="fa fa-edit" style="font-size:18px;padding:5px" onclick="editar_evolucao({{$detalhe->id}}, 'evolucao', {{($registro->status == 'Em Atendimento' and $detalhe->atendimento_id == $registro->id)}})"></i> </td>
+                                                                <td> <a target="_blank" href="{{route('atendimento.imprimir', $detalhe->id)}}"> <i class="fa fa-print" style="font-size:18px;padding:5px"></i> </a> <i class="fa fa-edit" style="font-size:18px;padding:5px" onclick="editar_evolucao({{$detalhe->id}}, 'evolucao', {{($registro->status == 'Em Atendimento' and $detalhe->atendimento_id == $registro->id)}})"></i> </td>
 
                                                             </tr>
                                                         @endif
@@ -345,7 +345,7 @@
                                                             <td> {{ date('d/m/y H:m', strtotime($detalhe->created_at)) }}</td>
                                                             <td > {{$detalhe->Usuario->name}}</td>
                                                             <td > {{ substr($detalhe->descricao,0,40) }} ...</td>
-                                                            <td> <i class="fa fa-print" style="font-size:18px;padding:5px"></i> <i class="fa fa-edit" style="font-size:18px;padding:5px" onclick="editar_evolucao({{$detalhe->id}}, 'receituario', {{($registro->status == 'Em Atendimento' and $detalhe->atendimento_id == $registro->id)}})"></i> </td>
+                                                            <td> <a target="_blank" href="{{route('atendimento.imprimir', $detalhe->id)}}"> <i class="fa fa-print" style="font-size:18px;padding:5px"></i> </a>  <i class="fa fa-edit" style="font-size:18px;padding:5px" onclick="editar_evolucao({{$detalhe->id}}, 'receituario', {{($registro->status == 'Em Atendimento' and $detalhe->atendimento_id == $registro->id)}})"></i> </td>
 
                                                         </tr>
                                                     @endif
@@ -394,7 +394,7 @@
                                                             <td> {{ date('d/m/y H:m', strtotime($detalhe->created_at)) }}</td>
                                                             <td > {{$detalhe->Usuario->name}}</td>
                                                             <td > {{ substr($detalhe->descricao,0,40) }}</td>
-                                                            <td> <i class="fa fa-print" style="font-size:18px;padding:5px"></i> <i class="fa fa-edit" style="font-size:18px;padding:5px" onclick="editar_evolucao({{$detalhe->id}},'vacina', {{($registro->status == 'Em Atendimento' and $detalhe->atendimento_id == $registro->id)}})"></i> </td>
+                                                            <td>  <i class="fa fa-edit" style="font-size:18px;padding:5px" onclick="editar_evolucao({{$detalhe->id}},'vacina', {{($registro->status == 'Em Atendimento' and $detalhe->atendimento_id == $registro->id)}})"></i> </td>
 
                                                         </tr>
                                                     @endif
@@ -443,7 +443,7 @@
                                                             <td> {{ date('d/m/y H:m', strtotime($detalhe->created_at)) }}</td>
                                                             <td > {{$detalhe->Usuario->name}}</td>
                                                             <td > {{ substr($detalhe->descricao,0,40) }} ...</td>
-                                                            <td> <i class="fa fa-print" style="font-size:18px;padding:5px"></i> <i class="fa fa-edit" style="font-size:18px;padding:5px" onclick="editar_evolucao({{$detalhe->id}}, 'ocorrencia', {{($registro->status == 'Em Atendimento' and $detalhe->atendimento_id == $registro->id)}})"></i> </td>
+                                                            <td> <a target="_blank" href="{{route('atendimento.imprimir', $detalhe->id)}}"> <i class="fa fa-print" style="font-size:18px;padding:5px"></i> </a> <i class="fa fa-edit" style="font-size:18px;padding:5px" onclick="editar_evolucao({{$detalhe->id}}, 'ocorrencia', {{($registro->status == 'Em Atendimento' and $detalhe->atendimento_id == $registro->id)}})"></i> </td>
 
                                                         </tr>
                                                     @endif
