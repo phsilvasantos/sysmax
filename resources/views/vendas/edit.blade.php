@@ -32,9 +32,9 @@
 
                             <div class="row">
 
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
-                                        <i class="fa fa-shopping-cart"></i> <label>Venda</label>
+                                        <i class="fa fa-bookmark"></i> <label>Venda</label>
 
                                         <h5>#{{$venda[0]->id}}</h5>
 
@@ -42,7 +42,17 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <i class="fa fa-calendar"></i> <label>Data</label>
+
+                                        <h5>{{date('d/m/y', strtotime($venda[0]->created_at))}}</h5>
+
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <i class="fa fa-user"></i> <label>Cliente</label>
 
@@ -60,12 +70,12 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <i class="fa fa-shopping-cart"></i> <label>Vendedor</label>
 
                                         <div id="ven_nome" onclick="document.getElementById('ven_id').style.display = 'block';document.getElementById('ven_nome').style.display = 'none'">
-                                        <h5>{{$venda[0]->Usuario->name or 'Usuário Não Identificado'}}</h5>
+                                        <h5>{{$venda[0]->Usuario->name}}</h5>
                                         </div>
 
                                         <div id="ven_id" style="display:none">
@@ -79,7 +89,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <div class="form-group">
                                         <i class="fa fa-shopping-cart"></i> <label>Status</label>
 

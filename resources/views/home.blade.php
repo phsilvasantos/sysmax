@@ -85,7 +85,7 @@
                 <div class="card-block p-0">
 
                     @forelse($ultimasVendas as $venda)
-                        <a href="#!" class="media friendlist-box">
+                        <a href="{{route('vendas.edit', $venda->id)}}" class="media friendlist-box">
                             <div class="mr-3 photo-table">
                                 <i class="far fa-bell f-30"></i>
                             </div>

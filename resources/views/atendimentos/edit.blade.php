@@ -10,7 +10,11 @@
 
                 <div class="col-md-3 col-sm-12">
 
-                    <button type="button" class="btn btn-danger btn-block"><i class="feather icon-slash"></i>Finalizar Atendimento</button>
+                    @if($registro->status == 'Em Atendimento')
+
+                        <button type="button" onclick="finalizar()" class="btn btn-danger btn-block"><i class="feather icon-slash"></i>Finalizar Atendimento</button>
+
+                    @endif
 
                     <br>
 
@@ -25,7 +29,8 @@
 
 
 
-                        <li><a class="nav-link text-left @if(Session::get('status') != 'Evolução' and Session::get('status') != 'Receituário' and Session::get('status') != 'Vacina' and Session::get('status') != 'Ocorrência' and Session::get('status') != 'Anexo') active @endif " id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true"> Dados Cadastrais</a></li>
+                        <li><a class="nav-link text-left @if(Session::get('status') != 'Evolução' and Session::get('status') != 'Receituário' and Session::get('status') != 'Vacina' and Session::get('status') != 'Ocorrência' and Session::get('status') != 'Anexo' and Session::get('status') != 'Peso') active @endif " id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true"> Dados Cadastrais</a></li>
+                        <li><a class="nav-link text-left @if(Session::get('status') == 'Peso') active @endif " id="v-pills-peso-tab" data-toggle="pill" href="#v-pills-peso" role="tab" aria-controls="v-pills-peso" aria-selected="true"> Peso</a></li>
                         <li><a class="nav-link text-left @if(Session::get('status') == 'Evolução') active @endif "  id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Evolução</a></li>
                         <li><a class="nav-link text-left @if(Session::get('status') == 'Receituário') active @endif " id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Receituario</a></li>
                         <li><a class="nav-link text-left @if(Session::get('status') == 'Vacina') active @endif " id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Vacinas</a></li>
@@ -36,7 +41,10 @@
                 </div>
                 <div class="col-md-9 col-sm-12">
 
+                    @if($registro->status == 'Em Atendimento')
+
                     <div class="card-block text-right">
+                        <button type="button" class="btn btn-outline-accent" onclick="adicionar('peso');"><i class="feather icon-clock"></i>Peso</button>
                         <button type="button" class="btn btn-primary" onclick="adicionar('evolucao');"><i class="feather icon-thumbs-up"></i>Evolução</button>
                         <button type="button" class="btn btn-success" onclick="adicionar('receituario');"><i class="feather icon-check-circle"></i>Receituário</button>
                         <button type="button" class="btn btn-secondary"  onclick="adicionar('vacina');"><i class="feather icon-info"></i>Vacina</button>
@@ -44,10 +52,12 @@
                         <button type="button" class="btn btn-info"  onclick="adicionar('anexo');"><i class="feather icon-camera"></i>Anexos</button>
                     </div>
 
+                    @endif
+
                     <br>
 
                     <div class="tab-content" id="v-pills-tabContent">
-                        <div class="tab-pane fade show @if(Session::get('status') != 'Evolução' and Session::get('status') != 'Receituário' and Session::get('status') != 'Vacina'  and Session::get('status') != 'Ocorrência' and Session::get('status') != 'Anexo') active @endif " id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                        <div class="tab-pane fade show @if(Session::get('status') != 'Evolução' and Session::get('status') != 'Receituário' and Session::get('status') != 'Vacina'  and Session::get('status') != 'Ocorrência' and Session::get('status') != 'Anexo' and Session::get('status') != 'Peso') active @endif " id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
 
 
                                 <h5><i class="fa fa-user"></i>  Dados do Tutor</h5>
@@ -202,6 +212,56 @@
 
 
                         </div>
+                        <div class="tab-pane fade show @if(Session::get('status') == 'Peso') active @endif " id="v-pills-peso" role="tabpanel" aria-labelledby="v-pills-peso-tab">
+
+
+
+                                <div class="card code-table" style="margin: -25px;">
+                                    <div class="card-header">
+                                        <h5>Peso</h5>
+                                        <div class="card-header-right">
+
+
+                                        </div>
+                                    </div>
+                                    <div class="card-block pb-0">
+                                        <div class="table-responsive">
+                                            <div id="myTable_wrapper" class="dataTables_wrapper no-footer">
+                                                <table class="table table-hover table-list dataTable no-footer" id="myTable" role="grid">
+                                                    <thead>
+                                                    <tr role="row">
+                                                        <th >Data/Hora</th>
+                                                        <th >Profissional</th>
+                                                        <th >Peso</th>
+                                                        <th >Opções</th>
+
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+
+                                                    @foreach($registro->Animal->Detalhes as $detalhe)
+
+                                                        @if($detalhe->categoria == 'Peso')
+                                                            <tr role="row" class="odd">
+                                                                <td> {{ date('d/m/y H:m', strtotime($detalhe->created_at)) }}</td>
+                                                                <td > {{$detalhe->Usuario->name}}</td>
+                                                                <td > {{ substr($detalhe->descricao,0,40) }}</td>
+                                                                <td>  <i class="fa fa-edit" style="font-size:18px;padding:5px" onclick="editar_evolucao({{$detalhe->id}}, 'peso', {{($registro->status == 'Em Atendimento' and $detalhe->atendimento_id == $registro->id)}})"></i>  </td>
+
+                                                            </tr>
+                                                        @endif
+                                                    @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+                        </div>
                         <div class="tab-pane fade show @if(Session::get('status') == 'Evolução') active @endif " id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
 
 
@@ -236,7 +296,7 @@
                                                                 <td> {{ date('d/m/y H:m', strtotime($detalhe->created_at)) }}</td>
                                                                 <td > {{$detalhe->Usuario->name}}</td>
                                                                 <td > {{ substr($detalhe->descricao,0,40) }} ...</td>
-                                                                <td> <i class="fa fa-print" style="font-size:18px;padding:5px"></i> <i class="fa fa-edit" style="font-size:18px;padding:5px" onclick="editar_evolucao({{$detalhe->id}}, 'evolucao')"></i> </td>
+                                                                <td> <a href="{{route('atendimento.imprimir', $detalhe->id)}}"> <i class="fa fa-print" style="font-size:18px;padding:5px"></i> </a> <i class="fa fa-edit" style="font-size:18px;padding:5px" onclick="editar_evolucao({{$detalhe->id}}, 'evolucao', {{($registro->status == 'Em Atendimento' and $detalhe->atendimento_id == $registro->id)}})"></i> </td>
 
                                                             </tr>
                                                         @endif
@@ -285,7 +345,7 @@
                                                             <td> {{ date('d/m/y H:m', strtotime($detalhe->created_at)) }}</td>
                                                             <td > {{$detalhe->Usuario->name}}</td>
                                                             <td > {{ substr($detalhe->descricao,0,40) }} ...</td>
-                                                            <td> <i class="fa fa-print" style="font-size:18px;padding:5px"></i> <i class="fa fa-edit" style="font-size:18px;padding:5px" onclick="editar_evolucao({{$detalhe->id}}, 'receituario')"></i> </td>
+                                                            <td> <i class="fa fa-print" style="font-size:18px;padding:5px"></i> <i class="fa fa-edit" style="font-size:18px;padding:5px" onclick="editar_evolucao({{$detalhe->id}}, 'receituario', {{($registro->status == 'Em Atendimento' and $detalhe->atendimento_id == $registro->id)}})"></i> </td>
 
                                                         </tr>
                                                     @endif
@@ -334,7 +394,7 @@
                                                             <td> {{ date('d/m/y H:m', strtotime($detalhe->created_at)) }}</td>
                                                             <td > {{$detalhe->Usuario->name}}</td>
                                                             <td > {{ substr($detalhe->descricao,0,40) }}</td>
-                                                            <td> <i class="fa fa-print" style="font-size:18px;padding:5px"></i> <i class="fa fa-edit" style="font-size:18px;padding:5px" onclick="editar_evolucao({{$detalhe->id}},'vacina')"></i> </td>
+                                                            <td> <i class="fa fa-print" style="font-size:18px;padding:5px"></i> <i class="fa fa-edit" style="font-size:18px;padding:5px" onclick="editar_evolucao({{$detalhe->id}},'vacina', {{($registro->status == 'Em Atendimento' and $detalhe->atendimento_id == $registro->id)}})"></i> </td>
 
                                                         </tr>
                                                     @endif
@@ -383,7 +443,7 @@
                                                             <td> {{ date('d/m/y H:m', strtotime($detalhe->created_at)) }}</td>
                                                             <td > {{$detalhe->Usuario->name}}</td>
                                                             <td > {{ substr($detalhe->descricao,0,40) }} ...</td>
-                                                            <td> <i class="fa fa-print" style="font-size:18px;padding:5px"></i> <i class="fa fa-edit" style="font-size:18px;padding:5px" onclick="editar_evolucao({{$detalhe->id}}, 'ocorrencia')"></i> </td>
+                                                            <td> <i class="fa fa-print" style="font-size:18px;padding:5px"></i> <i class="fa fa-edit" style="font-size:18px;padding:5px" onclick="editar_evolucao({{$detalhe->id}}, 'ocorrencia', {{($registro->status == 'Em Atendimento' and $detalhe->atendimento_id == $registro->id)}})"></i> </td>
 
                                                         </tr>
                                                     @endif
@@ -432,7 +492,7 @@
                                                             <td> {{ date('d/m/y H:m', strtotime($detalhe->created_at)) }}</td>
                                                             <td > {{$detalhe->Usuario->name}}</td>
                                                             <td > <a href="{{url('storage/arquivos/empresa_id_'. $detalhe->empresa_id.'/'.$detalhe->descricao)}}" target="_blank">   {{ substr($detalhe->descricao,0,40) }} </a></td>
-                                                            <td>  <i class="fa fa-edit" style="font-size:18px;padding:5px" onclick="editar_evolucao({{$detalhe->id}}, 'anexo')"></i> </td>
+                                                            <td>  <i class="fa fa-edit" style="font-size:18px;padding:5px" onclick="editar_evolucao({{$detalhe->id}}, 'anexo', {{($registro->status == 'Em Atendimento' and $detalhe->atendimento_id == $registro->id)}})"></i> </td>
 
                                                         </tr>
                                                     @endif
@@ -517,17 +577,33 @@
                                 @endforeach
                             </select>
 
-                            <textarea class="form-control" name="descricao" id="descricao1" rows="16"></textarea>
+                            <textarea class="form-control" name="descricao" id="descricao1" rows="14"></textarea>
 
                             <input type="file" name="descricao" id="descricao3" class="form-control">
+
+                            <input type="text" name="descricao" id="descricao4" class="form-control">
 
 
 
                         </div>
 
                         <div class="form-group col-md-12">
+
+                            <div class="pull-right" style="text-align:right;" >
+
+                                <div class="custom-control custom-checkbox" id="checkboxModel">
+                                    <input type="checkbox" class="custom-control-input" name="check_modelo" id="customCheck1" onclick="salvarModelo()">
+                                    <label class="custom-control-label" for="customCheck1">Salvar como modelo?</label>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group col-md-12">
                             <label for="resumo" class="control-label">Observações:</label>
-                            <input type="text" name="resumo" id="resumo" class="form-control">
+                            <input type="text" name="resumo" id="resumo" class="form-control form-control-sm">
                         </div>
 
 
@@ -539,13 +615,13 @@
                         <div class="form-group col-md-6">
                             <label for="nome" class="control-label">Profissional:</label>
 
-                            <input type class="form-control"  id="profissional" readonly value="{{Auth::User()->name}}"></input>
+                            <input type class="form-control form-control-sm"  id="profissional" readonly value="{{Auth::User()->name}}"></input>
                         </div>
 
                         <div class="form-group col-md-6">
                             <label for="nome" class="control-label">Data Hora:</label>
 
-                            <input type="text" class="form-control" id="data_hora" readonly value="{{date('d/m/y H:m', strtotime(now()))}}"></input>
+                            <input type="text" class="form-control form-control-sm" id="data_hora" readonly value="{{date('d/m/y H:m', strtotime(now()))}}"></input>
 
                         </div>
 
@@ -557,6 +633,9 @@
                         <input type="hidden" name="categoria" id="categoria" value="Evolução">
                         <input type="hidden" name="_method" id="method" value="">
                         <input type="hidden" name="animal_id" id="animal_id" value="{{$registro->animal_id}}">
+
+
+                        <input type="hidden" name="nome_modelo" id="nome_modelo" value="">
 
 
                     </div>
@@ -573,7 +652,7 @@
 
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
 
-                                <a href="{{route('atendimento_detalhes.store')}}" class="btn btn-primary" onclick="event.preventDefault();
+                                <a id="btn_salvar" href="{{route('atendimento_detalhes.store')}}" class="btn btn-primary" onclick="event.preventDefault();
                                                          document.getElementById('atendimento-form').submit();">Salvar</a>
 
 
@@ -591,7 +670,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="titulo">Modelos</h5>
+                    <h5 class="modal-title" id="titulo">Inserir Modelo</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -605,28 +684,40 @@
                     <div class="modal-body">
 
 
+                        <div class="modal-body" >
 
-                        <table class="table table-sm">
-                            <thead>
-                                <tr>
-                                    <th>Modelo</th>
-                                    <th>Opções</th>
-                                </tr>
-                            </thead>
+                            <div class="form-group col-md-12">
+                                <label for="resumo" class="control-label">Nome:</label>
+                               <select class="form-control" id="modelo_descricao">
+                                   @foreach(Auth::user()->Modelos as $key => $modelo)
+                                        <option value="{{$key}}">{{$modelo->tipo}} - {{$modelo->nome}} </option>
+                                   @endforeach()
+                               </select>
+                            </div>
+
+
+
+
+                        </div>
+
+
+                        <table class="table table-hover table-list dataTable no-footer" style="display:none">
+
+
+
                             <tbody>
-                                @foreach(Auth::user()->Modelos as $modelo)
                                 <tr>
-                                    <td>{{$modelo->nome}}</td>
-                                    <td> Inserir </td>
+                                    <td>Modelo</td>
+
+                                </tr>
+                                @foreach(Auth::user()->Modelos as $key => $modelo)
+                                <tr>
+                                    <td>{{$modelo->nome}} <textarea type="hidden" id="modelo_descricao_{{$key}}">{{$modelo->descricao}}</textarea></td>
+
                                 </tr>
                                 @endforeach()
                             </tbody>
                         </table>
-
-
-                        <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
-                        <input type="hidden" name="categoria" id="categoria" value="Evolução">
-                        <input type="hidden" name="_method" id="method" value="">
 
 
 
@@ -637,10 +728,95 @@
                     <div class="modal-footer">
 
 
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
+                        <button type="button" class="btn btn-secondary" onclick="inserir_modelo(document.getElementById('modelo_descricao').value)">Inserir</button>
 
-                        <a href="{{route('atendimento_detalhes.store')}}" class="btn btn-primary" onclick="event.preventDefault();
-                                                         document.getElementById('atendimento-form').submit();">Salvar</a>
+
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="exampleModal5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                 <div class="modal-header">
+                     <h5 class="modal-title" id="titulo">Salvar Modelo</h5>
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                         <span aria-hidden="true">&times;</span>
+                     </button>
+                 </div>
+
+                <form id="modelos-form" action="{{ route('atendimento_detalhes.store') }}" method="post" enctype="multipart/form-data">
+
+                    @csrf
+
+
+                    <div class="modal-body" >
+
+                        <div class="form-group col-md-12">
+                            <label for="resumo" class="control-label">Nome:</label>
+                            <input type="text" id="modal_nome_modelo" class="form-control">
+                        </div>
+
+
+
+
+                    </div>
+
+
+
+                    <div class="modal-footer">
+
+
+                        <button type="button" onclick="transpor_nome()" class="btn btn-secondary">Voltar</button>
+
+
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal fade" id="exampleModal6" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="titulo">Finalizar Atendimento</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form id="update-form" action="{{ route('atendimentos.update', $registro->id) }}" method="post" enctype="multipart/form-data">
+
+                    @csrf
+                    <input type="hidden" name="_method" value="PUT">
+
+
+                    <div class="modal-body" >
+
+                        <H4 class="color-grey">Confirma a finalização deste Atendimento?</H4>
+
+
+
+
+                    </div>
+
+
+
+                    <div class="modal-footer">
+
+
+                        <button type="submit"  class="btn btn-danger">Confirmar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
 
 
                     </div>
@@ -697,6 +873,13 @@
              document.getElementById('titulo').innerHTML = "Anexo";
              document.getElementById('categoria').value = "Anexo";
 
+         }else if(categoria == 'peso'){
+
+             exibir('peso');
+             document.getElementById('titulo').innerHTML = "Peso";
+             document.getElementById('categoria').value = "Peso";
+
+
          }else if(categoria == 'vacina'){
 
              exibir('vacina');
@@ -705,6 +888,7 @@
          }
 
 
+         document.getElementById('btn_salvar').style.display = 'block'
 
          $("#exampleModal3").modal();
 
@@ -712,6 +896,8 @@
 
 
      function exibir(opcao){
+
+
 
         if(opcao == 'receituario' || opcao == 'evolucao' || opcao == 'ocorrencia'){
 
@@ -724,6 +910,11 @@
             document.getElementById('descricao1').style.display = 'block';
             document.getElementById('descricao1').name = 'descricao';
 
+            document.getElementById('descricao4').style.display = 'none';
+            document.getElementById('descricao4').name = '';
+
+            document.getElementById('checkboxModel').style.display = 'block';
+
         }else if(opcao == 'vacina'){
 
              document.getElementById('descricao2').style.display = 'block';
@@ -734,6 +925,27 @@
 
             document.getElementById('descricao3').style.display = 'none';
             document.getElementById('descricao3').name = '';
+
+            document.getElementById('descricao4').style.display = 'none';
+            document.getElementById('descricao4').name = '';
+
+            document.getElementById('checkboxModel').style.display = 'none';
+
+        }else if(opcao == 'peso'){
+
+            document.getElementById('descricao4').style.display = 'block';
+            document.getElementById('descricao4').name = 'descricao';
+
+            document.getElementById('descricao2').style.display = 'none';
+            document.getElementById('descricao2').name = 'none';
+
+            document.getElementById('descricao1').style.display = 'none';
+            document.getElementById('descricao1').name = '';
+
+            document.getElementById('descricao3').style.display = 'none';
+            document.getElementById('descricao3').name = '';
+
+            document.getElementById('checkboxModel').style.display = 'none';
 
          }else{
 
@@ -746,6 +958,12 @@
             document.getElementById('descricao3').style.display = 'block';
             document.getElementById('descricao3').name = 'descricao';
 
+            document.getElementById('descricao4').style.display = 'none';
+            document.getElementById('descricao4').name = '';
+
+
+            document.getElementById('checkboxModel').style.display = 'none';
+
 
 
         }
@@ -754,7 +972,16 @@
      }
 
 
-        function editar_evolucao(id,opcao){
+        function editar_evolucao(id,opcao, pode_editar){
+
+
+            if(pode_editar == 1){
+
+                document.getElementById('btn_salvar').style.display = 'block'
+            }else{
+
+                document.getElementById('btn_salvar').style.display = 'none'
+            }
 
             var form = document.getElementById("atendimento-form");
 
@@ -784,6 +1011,7 @@
 
                     document.getElementById('descricao1').value = obj.descricao;
                     document.getElementById('descricao2').value = obj.descricao;
+                    document.getElementById('descricao4').value = obj.descricao;
                     document.getElementById('resumo').value = obj.resumo;
                     document.getElementById('profissional').value = obj.usuario.name;
                     document.getElementById('data_hora').value = obj.created_at;
@@ -817,6 +1045,54 @@
 
         }
 
+        function inserir_modelo(key){
+
+
+            var texto = document.getElementById('modelo_descricao_'+ key).value;
+
+            document.getElementById('descricao1').value = texto;
+
+            $("#exampleModal4").modal('hide');
+
+        }
+
+
+        function salvarModelo(){
+
+
+            if(document.getElementById('customCheck1').checked){
+
+                $("#exampleModal5").modal();
+
+            }
+
+        }
+
+
+        function finalizar(){
+
+            $("#exampleModal6").modal();
+        }
+
+
+        function transpor_nome(){
+
+
+            var nome = document.getElementById('modal_nome_modelo').value
+
+            if(document.getElementById('modal_nome_modelo').value.length <= 0){
+                alert('Você não informou um nome!');
+
+
+            }else{
+                document.getElementById('nome_modelo').value = nome;
+                $("#exampleModal5").modal('hide');
+
+            }
+
+
+
+        }
 
 
 

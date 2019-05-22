@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Atendimentos\Atendimento_Detalhes;
+use App\Models\Modelos\Modelo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,6 +18,7 @@ class AtendimentoDetalhesController extends AppController
 
         $dados = $request->except('_token','_method');
 
+        //SALVAR ANEXO
         if($request->files->count()){
             foreach($request->files as $key => $arquivo) {
 
@@ -29,6 +31,22 @@ class AtendimentoDetalhesController extends AppController
 
             }
         }
+
+        //SALVAR MODELO
+        if($request->check_modelo == 'on'){
+
+            Modelo::create([
+                'user_id' => $request->user_id,
+                'tipo' => $request->categoria,
+                'nome' => $request->nome_modelo,
+                'descricao' => $request->descricao,
+                'acesso' => 'Restrito',
+
+            ]);
+
+        };
+
+
 
 
         $registro = new $this->model($dados);

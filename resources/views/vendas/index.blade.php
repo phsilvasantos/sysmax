@@ -38,7 +38,7 @@
                                 <td style="padding-left:10px;"> {{date('d/m/Y', strtotime($venda->created_at))}} </td>
                                 <td>{{$venda->Cliente->nome}} </td>
                                 <td>{{$venda->total_venda_liquido}} </td>
-                                <td> <a href="{{route('vendas.edit', $venda->id)}}" > <button type="button" class="btn btn-success btn-sm btn-rounded" onclick=""> Acessar </button> </a>    </td>
+                                <td style="padding:8px"> <a class="text-white label theme-bg" href="{{route('vendas.edit', $venda->id)}}">Acessar</a> </td>
 
                             </tr>
 

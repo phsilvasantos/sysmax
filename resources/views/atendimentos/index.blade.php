@@ -47,7 +47,7 @@
                                 <td>{{$atendimento->Animal->Cliente->nome}} </td>
                                 <td>{{$atendimento->Animal->nome}} </td>
                                 <td>{{$atendimento->status}} </td>
-                                <td> <a href="{{route('atendimentos.edit', $atendimento->id)}}" > <button type="button" class="btn btn-success btn-sm btn-rounded" onclick=""> Acessar </button> </a>    </td>
+                                <td style="padding:10px">  <a class="text-white label theme-bg" href="{{route('atendimentos.edit', $atendimento->id)}}">Acessar</a>  </td>
 
                             </tr>
 
@@ -61,6 +61,11 @@
     </div>
 
     </div>
+
+
+
+
+
 
 @endsection
 
