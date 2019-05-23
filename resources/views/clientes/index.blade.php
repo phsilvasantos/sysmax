@@ -63,7 +63,13 @@
                         <tbody>
                         @foreach($registros as $registro)
                             <tr class="unread">
-                            <td class="col-auto"><img class="rounded-circle" style="width:40px;margin-left: 20px;" src="{{url('dattaable/assets/images/user/avatar-4.jpg')}}" alt="activity-user"></td>
+                            <td class="col-auto">
+                                @if($registro->sexo == 'F')
+                                    <img class="rounded-circle" style="width:40px;margin-left: 20px;" src="{{url('dattaable/assets/images/user/avatar-3.jpg')}}" alt="activity-user">
+                                @else
+                                    <img class="rounded-circle" style="width:40px;margin-left: 20px;" src="{{url('dattaable/assets/images/user/avatar-4.jpg')}}" alt="activity-user">
+                                @endif
+                            </td>
                             <td>
                                 <h6 class="mb-1">{{$registro->nome}}</h6>
                                 <p class="m-0">{{$registro->cpf_cnpj}}</p>
