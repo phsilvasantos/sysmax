@@ -35,6 +35,9 @@
     <!-- datetimepicker css -->
     <link rel="stylesheet" href="{{url('dattaable/assets/plugins/bootstrap-datetimepicker/css/bootstrap-datepicker3.min.css')}}">
 
+    <!-- datetimepicker css -->
+    <link rel="stylesheet" href="{{url('dattaable/assets/plugins/data-tables/css/datatables.min.css')}}">
+
 
 
 
@@ -268,7 +271,10 @@
 <script src="{{url('dattaable/assets/plugins/bootstrap-datetimepicker/js/bootstrap-datepicker.min.js')}}"></script>
 
 
-<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="{{url('dattaable/assets/plugins/data-tables/js/datatables.min.js')}}"></script>
+
+
+{{--<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>--}}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
@@ -277,11 +283,21 @@
 
 
 <script>
+
     $(document).ready( function () {
         $('#myTable').DataTable({
-            'bFilter': false,
             'bInfo': false,
-            'bPaginate': false,
+            'lengthChange': false,
+            'language':{
+                'sSearch': 'Buscar:',
+                "oPaginate": {
+                    "sFirst":    "Primero",
+                    "sLast":    "Último",
+                    "sNext":    "Próximo",
+                    "sPrevious": "Anterior"
+                },
+            },
+
         });
     } );
 

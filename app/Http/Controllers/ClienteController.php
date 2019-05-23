@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Animais\Animal;
 use App\Models\Clientes\Cliente;
 use Illuminate\Http\Request;
 use App\Models\Categorias\Categoria;
@@ -12,6 +13,16 @@ class ClienteController extends AppController
 
     public $model = Cliente::class;
 
+
+    public function index()
+    {
+        //
+        $registros = $this->model::limit(10)->orderBy('id', 'desc')->get();
+
+
+        return view($this->name.'.index', compact('registros'));
+
+    }
 
     //sobrescrever o metodo store para salvar as categorias
     public function store(Request $request)
@@ -89,6 +100,37 @@ class ClienteController extends AppController
 
 
         return redirect()->route('clientes.edit', $request->cliente_id);
+
+
+    }
+
+    public function pesquisar(Request $request){
+
+
+
+        switch($request->campo){
+            case 'nome_cliente':
+                //
+                $registros = $this->model::where('nome', 'like', '%'. $request->descricao .'%')->get();
+                break;
+            case 'nome_animal':
+                //
+                $registros =   DB::table('clientes')->select('clientes.*','animais.nome as nome_animal')->join('animais','animais.cliente_id','clientes.id')->where('animais.nome', $request->descricao)->get();  //$this->model::where('nome', 'like', '%'. $request->descricao .'%')->with('animais')->get();
+                break;
+            case 'CPF':
+                //
+                $registros = $this->model::where('cpf_cnpj', 'like', '%'. $request->descricao .'%')->get();
+                break;
+            default :
+                //
+                $registros = $this->model::where();
+                break;
+
+        }
+
+
+
+        return view($this->name.'.index', compact('registros'));
 
 
     }

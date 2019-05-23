@@ -21,7 +21,7 @@
                         <div class="card-block p-0">
                             <div class="row align-items-center justify-content-center">
                                 <div class="col-auto">
-                                    <img class="img-fluid rounded-circle" style="width:80px;" src="{{url('dattaable/assets/images/user/avatar-4.jpg')}}" alt="dashboard-user">
+                                    <img class="img-fluid rounded-circle" style="width:40px;" src="{{url('dattaable/assets/images/user/avatar-4.jpg')}}" alt="dashboard-user">
                                 </div>
                                 <div class="col">
                                     <h5>Nome</h5>
@@ -141,21 +141,21 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Telefone</label>
-                                    <input type="text" class="form-control form-control-sm" name="telefone"  >
+                                    <input type="text" class="form-control form-control-sm telefone" name="telefone"  >
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Celular</label>
-                                    <input type="text" class="form-control form-control-sm" name="celular"  >
+                                    <input type="text" class="form-control form-control-sm telefone" name="celular"  >
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Email</label>
-                                    <input type="text" class="form-control form-control-sm" name="email"  >
+                                    <input type="email" class="form-control form-control-sm" name="email"  >
                                 </div>
                             </div>
 
@@ -176,7 +176,7 @@
                                 <div class="form-group">
                                     <label>CEP</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="cep" >
+                                        <input type="text" class="form-control" id="cep" name="cep" onblur="pesquisar_cep()">
                                         <div class="input-group-append"><span class="input-group-text" id="basic-addon2"><i class="fa fa-search"></i></span></div>
                                     </div>
                                 </div>
@@ -185,42 +185,42 @@
                             <div class="col-md-10">
                                 <div class="form-group">
                                     <label>Endereço</label>
-                                    <input type="text" class="form-control form-control-sm" name="endereco" >
+                                    <input type="text" class="form-control form-control-sm" name="endereco" id="endereco">
                                 </div>
                             </div>
 
                             <div class="col-md-1">
                                 <div class="form-group">
                                     <label>Número</label>
-                                    <input type="text" class="form-control form-control-sm" name="numero"  >
+                                    <input type="text" class="form-control form-control-sm" name="numero"  id="numero">
                                 </div>
                             </div>
 
                             <div class="col-md-5">
                                 <div class="form-group">
                                     <label>Complemento</label>
-                                    <input type="text" class="form-control form-control-sm" name="complemento"  >
+                                    <input type="text" class="form-control form-control-sm" name="complemento"  id="complemento">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Bairro</label>
-                                    <input type="text" class="form-control form-control-sm" name="bairro"  >
+                                    <input type="text" class="form-control form-control-sm" name="bairro"  id="bairro">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Cidade</label>
-                                    <input type="text" class="form-control form-control-sm" name="cidade" >
+                                    <input type="text" class="form-control form-control-sm" name="cidade" id="cidade">
                                 </div>
                             </div>
 
                             <div class="col-md-1">
                                 <div class="form-group">
                                     <label>Estado</label>
-                                    <input type="text" class="form-control form-control-sm" name="estado" >
+                                    <input type="text" class="form-control form-control-sm" name="estado" id="estado">
                                 </div>
                             </div>
 

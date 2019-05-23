@@ -9,4 +9,5 @@ class ModeloController extends AppController
 {
 
     public $model = Modelo::class;
+
 }

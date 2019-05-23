@@ -235,9 +235,9 @@
                         <i class="fa fa-edit"></i>
                         <a href="#!" class="float-right" style="color:white;">Registrar Pagamento</a>
                     </span>
-                    <span class="label theme-bg text-white f-14 f-w-400 float-right btn-rounded btn-block" style="padding:10px" onclick="lancar()">
+                    <span class="label theme-bg text-white f-14 f-w-400 float-right btn-rounded btn-block" style="padding:10px" onclick="document.getElementById('vendas-form').submit()">
                         <i class="fa fa-edit"></i>
-                        <a href="#!" class="float-right" style="color:white;" >Salvar Venda</a>
+                        <a href="#!" class="float-right" style="color:white;"  >Salvar Venda</a>
                     </span>
 
 

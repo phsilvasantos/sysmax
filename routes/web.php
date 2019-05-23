@@ -26,6 +26,7 @@ Route::resource('/modulos', 'ModuloController');
 
 Route::any('/product/localizar','ProdutoController@localizar')->name('produto.localizar');
 Route::any('/cliente/localizar','ClienteController@localizar')->name('cliente.localizar');
+Route::post('/clientes/pesquisar','ClienteController@pesquisar')->name('clientes.pesquisar');
 Route::any('/product/localizar/{id}','ProdutoController@localizar_id')->name('produto.localizar_id');
 Route::get('/clientes/{id}/ficha', 'ClienteController@ficha')->name('cliente.ficha');
 Route::post('/clientes/desassociar', 'ClienteController@desassociar')->name('cliente.desassociar');
@@ -52,6 +53,10 @@ Route::resource('/nfces', 'NfceController');
 Route::resource('/atendimentos', 'AtendimentoController');
 Route::resource('/atendimento_detalhes', 'AtendimentoDetalhesController');
 Route::resource('/vacinas', 'VacinaController');
+
+Route::resource('/permissions', 'PermissionController');
+Route::resource('/roles', 'RoleController');
+Route::resource('/users', 'UserController');
 
 
 

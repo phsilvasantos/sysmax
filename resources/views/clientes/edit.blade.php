@@ -22,7 +22,7 @@
                         <div class="card-block p-0">
                             <div class="row align-items-center justify-content-center">
                                 <div class="col-auto">
-                                    <img class="img-fluid rounded-circle" style="width:80px;" src="{{url('dattaable/assets/images/user/avatar-4.jpg')}}" alt="dashboard-user">
+                                    <img class="img-fluid rounded-circle" style="width:40px;" src="{{url('dattaable/assets/images/user/avatar-4.jpg')}}" alt="dashboard-user">
                                 </div>
                                 <div class="col">
                                     <h5>{{ strtoupper($registro->nome)}}</h5>
@@ -142,14 +142,14 @@
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Telefone</label>
-                                    <input type="text" class="form-control form-control-sm" name="telefone"    value="{{$registro->telefone}}" >
+                                    <input type="text" class="form-control form-control-sm telefone" name="telefone"    value="{{$registro->telefone}}" >
                                 </div>
                             </div>
 
                             <div class="col-md-3">
                                 <div class="form-group">
                                     <label>Celular</label>
-                                    <input type="text" class="form-control form-control-sm" name="celular"   value="{{$registro->celular}}"  >
+                                    <input type="text" class="form-control form-control-sm telefone" name="celular"   value="{{$registro->celular}}"  >
                                 </div>
                             </div>
 
@@ -177,7 +177,7 @@
                                 <div class="form-group">
                                     <label>CEP</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="cep"   value="{{$registro->cep}}" >
+                                        <input type="text" class="form-control" name="cep" id="cep"   value="{{$registro->cep}}" onblur="pesquisar_cep()">
                                         <div class="input-group-append"><span class="input-group-text" id="basic-addon2"><i class="fa fa-search"></i></span></div>
                                     </div>
                                 </div>
@@ -186,42 +186,42 @@
                             <div class="col-md-10">
                                 <div class="form-group">
                                     <label>Endereço</label>
-                                    <input type="text" class="form-control form-control-sm" name="endereco"   value="{{$registro->endereco}}" >
+                                    <input type="text" class="form-control form-control-sm" name="endereco"   value="{{$registro->endereco}}" id="endereco">
                                 </div>
                             </div>
 
                             <div class="col-md-1">
                                 <div class="form-group">
                                     <label>Número</label>
-                                    <input type="text" class="form-control form-control-sm" name="numero"    value="{{$registro->numero}}" >
+                                    <input type="text" class="form-control form-control-sm" name="numero"    value="{{$registro->numero}}" id="numero">
                                 </div>
                             </div>
 
                             <div class="col-md-5">
                                 <div class="form-group">
                                     <label>Complemento</label>
-                                    <input type="text" class="form-control form-control-sm" name="complemento"   value="{{$registro->complemento}}"  >
+                                    <input type="text" class="form-control form-control-sm" name="complemento"   value="{{$registro->complemento}}"  id="complemento">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Bairro</label>
-                                    <input type="text" class="form-control form-control-sm" name="bairro"    value="{{$registro->bairro}}" >
+                                    <input type="text" class="form-control form-control-sm" name="bairro"    value="{{$registro->bairro}}" id="bairro">
                                 </div>
                             </div>
 
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Cidade</label>
-                                    <input type="text" class="form-control form-control-sm" name="cidade"   value="{{$registro->cidade}}" >
+                                    <input type="text" class="form-control form-control-sm" name="cidade"   value="{{$registro->cidade}}" id="cidade">
                                 </div>
                             </div>
 
                             <div class="col-md-1">
                                 <div class="form-group">
                                     <label>Estado</label>
-                                    <input type="text" class="form-control form-control-sm" name="estado"   value="{{$registro->estado}}" >
+                                    <input type="text" class="form-control form-control-sm" name="estado"   value="{{$registro->estado}}" id="estado">
                                 </div>
                             </div>
 

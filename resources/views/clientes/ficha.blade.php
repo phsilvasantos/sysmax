@@ -23,11 +23,8 @@
 
                                     <br>
                                         <div class="col-sm-12" style="padding:20px 50px;">
-                                            <p> O Instituto de Fomento Apoio Brasil é uma associação sem fins econômicos, de direito privado, mantida do Instituto de Fomento e Apoio ao Terceiro Setor. Sua mantenedora é qualificada como Organização da Sociedade Civil de Interesse Público, constituída em 21 de setembro de 2009, hoje exerce atividades exclusivas na área social, atuando com consultoria jurídica e contábil gratuita às organizações filantrópicas.
-
-                                                Temos como missão a promoção do desenvolvimento econômico e social sustentável das pessoas e organizações, valorizando as potencialidades, as competências e compondo recursos necessários para os processos de mudanças, por meio das características e demandas do terceiro setor, respeitando o fluxo e as necessidades do novo mundo.
-
-                                                Formado por um grupo de profissionais que atuam em diversas áreas em todo o território brasileiro semeando e incentivando o trabalho associativo, dando suporte técnico e especializado nos mais diversos segmentos. </p>
+                                            <p> O Centro Brasileiro de Cuidado Animal é uma associação sem fins econômicos, de direito privado. Temos como missão a promoção do cuidado animal de forma sustentável e o fortalecimento dos laços entre os tutores e seus respectivos pets, valorizando as potencialidades, as competências e compondo recursos necessários para os processos de mudança, por meio das características e demandas do terceiro setor, respeitando o fluxo e as necessidades do novo mundo.
+                                                Formado por profissionais que atuam em diversas áreas, semeando e incentivando o trabalho associativo, dando suporte técnico e especializado nos mais diversos segmentos de medicina veterinária. </p>
                                         </div>
 
                                 </div>
