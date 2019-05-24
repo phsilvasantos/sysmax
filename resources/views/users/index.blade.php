@@ -22,7 +22,7 @@
                             <td class="col-auto"><div><img class="rounded-circle" style="width:40px;margin-left: 20px;" src="{{url('dattaable/assets/images/user/avatar-2.jpg')}}" alt="activity-user"></div></td>
                             <td>
                                 <h6 class="mb-1">{{$registro->name}}</h6>
-                                <p class="m-0">{{$registro->roles[0]->name}}</p>
+                                <p class="m-0">{{$registro->roles[0]->name or ''}}</p>
                             </td>
                             <td>
                                 {{--<h6 class="text-muted"><i class="fas fa-circle text-c-green f-10 m-r-15"></i>{{$registro->especie}}</h6>--}}
