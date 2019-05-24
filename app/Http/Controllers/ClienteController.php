@@ -115,7 +115,18 @@ class ClienteController extends AppController
                 break;
             case 'nome_animal':
                 //
-                $registros =   DB::table('clientes')->select('clientes.*','animais.nome as nome_animal')->join('animais','animais.cliente_id','clientes.id')->where('animais.nome', $request->descricao)->with('animais')->get();  //$this->model::where('nome', 'like', '%'. $request->descricao .'%')->with('animais')->get();
+                $clientes =   DB::table('clientes')->select('clientes.id')->join('animais','animais.cliente_id','clientes.id')->where('animais.nome', 'like', '%'. $request->descricao .'%')->get();
+
+                $ids = array();
+
+                foreach($clientes as $key => $cliente){
+
+                    $ids[] =  $cliente->id;
+                }
+
+
+                $registros = $this->model::whereIn('id',  $ids )->get();
+
                 break;
             case 'CPF':
                 //
