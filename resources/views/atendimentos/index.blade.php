@@ -24,7 +24,23 @@
                 </div>
             </div>
             <div class="card-block pb-0">
-                <div class="table-responsive">
+
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+                    <li class="nav-item"><a class="nav-link text-left " id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true"> Todos</a></li>
+                    <li class="nav-item"><a class="nav-link text-left active" id="v-pills-peso-tab" data-toggle="pill" href="#v-pills-peso" role="tab" aria-controls="v-pills-peso" aria-selected="true"> Aguardando</a></li>
+                    <li class="nav-item"><a class="nav-link text-left "  id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Em Atendimento</a></li>
+                    <li class="nav-item"><a class="nav-link text-left " id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Atendido</a></li>
+
+                </ul>
+
+
+                <div class="tab-content" id="v-pills-tabContent">
+
+                    <div class="tab-pane fade show " id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+
+
+                        <div class="table-responsive">
                     <table class="table table-hover  table-list" id="myTable">
                         <thead>
                         <tr>
@@ -46,7 +62,16 @@
                                 <td style="padding-left:10px;"> {{date('H:m', strtotime($atendimento->created_at))}} </td>
                                 <td>{{$atendimento->Animal->Cliente->nome}} </td>
                                 <td>{{$atendimento->Animal->nome}} </td>
-                                <td>{{$atendimento->status}} </td>
+                                <td>
+
+                                    @if($atendimento->status == 'Aguardando')
+                                        <label class="label label-warning"> {{$atendimento->status}} </label>
+                                    @elseif($atendimento->status == 'Atendido')
+                                        <label class="label label-success"> {{$atendimento->status}} </label>
+                                    @else
+                                        <label class="label label-primary"> {{$atendimento->status}} </label>
+                                    @endif
+                                </td>
                                 <td style="padding:10px">  <a class="text-white label theme-bg" href="{{route('atendimentos.edit', $atendimento->id)}}">Acessar</a>  </td>
 
                             </tr>
@@ -56,6 +81,165 @@
                         </tbody>
                     </table>
                 </div>
+
+
+                    </div>
+
+
+                    <div class="tab-pane fade show active" id="v-pills-peso" role="tabpanel" aria-labelledby="v-pills-peso-tab">
+
+                        <div class="table-responsive">
+                            <table class="table table-hover  table-list" id="myTables">
+                                <thead>
+                                <tr>
+
+                                    <th>Hora</th>
+                                    <th>Cliente</th>
+                                    <th>Animal</th>
+                                    <th>Status</th>
+                                    <th width="50">Opção</th>
+
+                                </tr></thead>
+                                <tbody>
+
+
+
+                                @foreach($registros as $atendimento)
+
+                                    @if($atendimento->status == 'Aguardando')
+
+                                    <tr>
+                                        <td style="padding-left:10px;"> {{date('H:m', strtotime($atendimento->created_at))}} </td>
+                                        <td>{{$atendimento->Animal->Cliente->nome}} </td>
+                                        <td>{{$atendimento->Animal->nome}} </td>
+                                        <td>
+
+                                            @if($atendimento->status == 'Aguardando')
+                                                <label class="label label-warning"> {{$atendimento->status}} </label>
+                                            @elseif($atendimento->status == 'Atendido')
+                                                <label class="label label-success"> {{$atendimento->status}} </label>
+                                            @else
+                                                <label class="label label-primary"> {{$atendimento->status}} </label>
+                                            @endif
+                                        </td>
+                                        <td style="padding:10px">  <a class="text-white label theme-bg" href="{{route('atendimentos.edit', $atendimento->id)}}">Acessar</a>  </td>
+
+                                    </tr>
+
+                                    @endif
+
+                                @endforeach
+
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                    </div>
+
+                    <div class="tab-pane fade show" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+
+
+                        <div class="table-responsive">
+                            <table class="table table-hover  table-list" id="myTables">
+                                <thead>
+                                <tr>
+
+                                    <th>Hora</th>
+                                    <th>Cliente</th>
+                                    <th>Animal</th>
+                                    <th>Status</th>
+                                    <th width="50">Opção</th>
+
+                                </tr></thead>
+                                <tbody>
+
+
+
+                                @foreach($registros as $atendimento)
+
+                                    @if($atendimento->status == 'Em Atendimento')
+
+                                        <tr>
+                                            <td style="padding-left:10px;"> {{date('H:m', strtotime($atendimento->created_at))}} </td>
+                                            <td>{{$atendimento->Animal->Cliente->nome}} </td>
+                                            <td>{{$atendimento->Animal->nome}} </td>
+                                            <td>
+
+                                                @if($atendimento->status == 'Aguardando')
+                                                    <label class="label label-warning"> {{$atendimento->status}} </label>
+                                                @elseif($atendimento->status == 'Atendido')
+                                                    <label class="label label-success"> {{$atendimento->status}} </label>
+                                                @else
+                                                    <label class="label label-primary"> {{$atendimento->status}} </label>
+                                                @endif
+                                            </td>
+                                            <td style="padding:10px">  <a class="text-white label theme-bg" href="{{route('atendimentos.edit', $atendimento->id)}}">Acessar</a>  </td>
+
+                                        </tr>
+
+                                    @endif
+
+                                @endforeach
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                    <div class="tab-pane fade show" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+
+                        <div class="table-responsive">
+                            <table class="table table-hover  table-list" id="myTables">
+                                <thead>
+                                <tr>
+
+                                    <th>Hora</th>
+                                    <th>Cliente</th>
+                                    <th>Animal</th>
+                                    <th>Status</th>
+                                    <th width="50">Opção</th>
+
+                                </tr></thead>
+                                <tbody>
+
+
+
+                                @foreach($registros as $atendimento)
+
+                                    @if($atendimento->status == 'Atendido')
+
+                                        <tr>
+                                            <td style="padding-left:10px;"> {{date('H:m', strtotime($atendimento->created_at))}} </td>
+                                            <td>{{$atendimento->Animal->Cliente->nome}} </td>
+                                            <td>{{$atendimento->Animal->nome}} </td>
+                                            <td>
+
+                                                @if($atendimento->status == 'Aguardando')
+                                                    <label class="label label-warning"> {{$atendimento->status}} </label>
+                                                @elseif($atendimento->status == 'Atendido')
+                                                    <label class="label label-success"> {{$atendimento->status}} </label>
+                                                @else
+                                                    <label class="label label-primary"> {{$atendimento->status}} </label>
+                                                @endif
+                                            </td>
+                                            <td style="padding:10px">  <a class="text-white label theme-bg" href="{{route('atendimentos.edit', $atendimento->id)}}">Acessar</a>  </td>
+
+                                        </tr>
+
+                                    @endif
+
+                                @endforeach
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
         </div>
     </div>

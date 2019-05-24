@@ -53,6 +53,9 @@ Route::resource('/nfces', 'NfceController');
 Route::resource('/atendimentos', 'AtendimentoController');
 Route::resource('/atendimento_detalhes', 'AtendimentoDetalhesController');
 Route::resource('/vacinas', 'VacinaController');
+Route::resource('/associacao', 'AssociacaoController');
+Route::resource('/planos', 'PlanoController');
+Route::resource('/receber', 'ReceberController');
 
 Route::resource('/permissions', 'PermissionController');
 Route::resource('/roles', 'RoleController');

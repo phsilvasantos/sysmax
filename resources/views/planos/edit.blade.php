@@ -6,7 +6,7 @@
 
     @endif
 
-    <form action="{{route('categorias.update', $registro->id)}}" method="post" name="form1">
+    <form action="{{route('planos.update', $registro->id)}}" method="post" name="form1">
 
         @csrf
         <input type="hidden" name="_method" value="put">
@@ -21,14 +21,14 @@
                 <div class="card-block p-0">
                     <div class="row align-items-center justify-content-center">
                         <div class="col-auto">
-                            <div><i class="fas fa-list m-r-5" style="font-size:38px"></i></div>
+                            <div><i class="fa fa-cart-plus m-r-5 text-c-blue" style="font-size:38px"></i></div>
                         </div>
                         <div class="col">
-                            <h5>{{$registro->categoria}}</h5>
-                            <span>{{$registro->categoria_type}}</span>
+                            <h5>{{$registro->nome}}</h5>
+
                         </div>
                         <div class="col text-right">
-                            <a href="{{route('categorias.index')}}"> <button type="button" class="btn btn-sm btn-default btn-shadow-1 btn-rounded"><i class="feather icon-arrow-left"></i>Voltar</button></a>
+                            <a href="{{route('planos.index')}}"> <button type="button" class="btn btn-sm btn-default btn-shadow-1 btn-rounded"><i class="feather icon-arrow-left"></i>Voltar</button></a>
 
 
                             <div class="btn-group mb-2 mr-2  btn-rounded">
@@ -68,22 +68,24 @@
                             </div>
                         </div>
 
-                        <div class="col-md-8">
+                        <div class="col-md-7">
                             <div class="form-group">
-                                <label>Nome da Categoria</label>
-                                <input type="text" class="form-control form-control-sm" name="categoria"  value="{{$registro->categoria}}">
+                                <label>Nome do Plano</label>
+                                <input type="text" class="form-control form-control-sm" name="nome"  value="{{$registro->nome}}">
                             </div>
                         </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="form-group">
-                                <label>Tipo</label>
-                                <select  class="form-control form-control-sm" name="categoria_type" >
-                                    <option value="Produtos" @if($registro->categoria_type == 'Produtos') selected="" @endif>Produtos</option>
-                                    <option value="Clientes" @if($registro->categoria_type == 'Clientes') selected="" @endif>Clientes</option>
-                                    <option value="Receber" @if($registro->categoria_type == 'Receber') selected="" @endif>Contas a Receber</option>
-                                    <option value="Pagar" @if($registro->categoria_type == 'Pagar') selected="" @endif>Contas a Pagar</option>
-                                </select>
+                                <label>Valor</label>
+                                <input type="number" step="0.01" class="form-control form-control-sm" name="valor_original"   value="{{$registro->valor_original}}"  required>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Periodo em Dias</label>
+                                <input type="integer" class="form-control form-control-sm" name="periodicidade"   value="{{$registro->periodicidade}}"  required>
                             </div>
                         </div>
 
@@ -122,10 +124,10 @@
                     <p>Confirma a Desativação Deste Empresa?</p>
                 </div>
                 <div class="modal-footer">
-                    <a href="{{route('categorias.destroy', $registro->id)}}" class="btn btn-danger" onclick="event.preventDefault();
+                    <a href="{{route('planos.destroy', $registro->id)}}" class="btn btn-danger" onclick="event.preventDefault();
                                                      document.getElementById('delete-form').submit();">Desativar</a>
 
-                    <form id="delete-form" action="{{ route('categorias.destroy', $registro->id) }}" method="POST" style="display: none;">
+                    <form id="delete-form" action="{{ route('planos.destroy', $registro->id) }}" method="POST" style="display: none;">
                         @csrf
                         <input type="hidden" name="_method" value="DELETE">
                     </form>

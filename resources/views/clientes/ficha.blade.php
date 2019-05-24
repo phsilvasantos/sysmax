@@ -6,12 +6,14 @@
 
     @foreach($registro->categorias as $categ)
 
+
+
     <div class="main-body">
         <div class="page-wrapper">
             <!-- [ Main Content ] start -->
             <div class="row">
                 <!-- [ Invoice ] start -->
-                <div class="container" id="">
+                <div class="container" id="printable">
                     <div>
                         <div class="card">
                             <div class="row">
@@ -44,7 +46,7 @@
                                     </p>
 
 
-                                    <h5><span class="float-right"  style="padding-right:50px"><a class="text-secondary" href="#!">Associado Número:  {{$registro->id}}</a></span></h5>
+                                    <h5><span class="float-right"  style="padding-right:50px"><a class="text-secondary" href="#!">Associado Número:  {{$categ->pivot->id}}</a></span></h5>
 
 
 
@@ -211,13 +213,13 @@
 
 
                                 <p style="padding: 20px 50px;">
-                                    Declaro, para todos os fins de direito, meu interesse e inteira concordância em ser associado ao Instituto de Fomento Apoio Brasil.
+                                    Declaro, para todos os fins de direito, meu interesse e inteira concordância em ser associado ao CENTRO BRASILEIRO DE CUIDADO ANIMAL.
 
                                     Validade indeterminada.
                                 </p>
 
                                 <p style="padding: 20px 50px;">
-                                    Brasília, {{date('d / m /  Y')}}
+                                    Brasília, {{date('d / m /  Y', strtotime($categ->pivot->created_at))}}
                                 </p>
 
 

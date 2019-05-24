@@ -49,7 +49,7 @@
                                     <a class="nav-link @if(Session::get('status') != 'Animal Incluido') active @endif  show" id="pills-home-tab" data-toggle="pill" href="#kt_portlet_base_demo_1_1_tab_content" role="tab" aria-controls="pills-home" aria-selected="true">Geral</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link show" id="pills-profile-tab" data-toggle="pill" href="#kt_portlet_base_demo_1_2_tab_content" role="tab" aria-controls="pills-profile" aria-selected="false">Categorias</a>
+                                    <a class="nav-link show" id="pills-profile-tab" data-toggle="pill" href="#kt_portlet_base_demo_1_2_tab_content" role="tab" aria-controls="pills-profile" aria-selected="false">Associação</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link @if(Session::get('status') == 'Animal Incluido') active @endif  show" id="pills-contact-tab" data-toggle="pill" href="#kt_portlet_base_demo_1_3_tab_content" role="tab" aria-controls="pills-contact" aria-selected="false"> Animais</a>
@@ -233,7 +233,7 @@
 
                         <div class="card code-table" style="margin: -25px;">
                             <div class="card-header">
-                                <h5>Categorias</h5>
+                                <h5>Associação</h5>
                                 <div class="card-header-right">
 
                                     <button type="button" class="btn btn-primary btn-sm btn-rounded" onclick="addRow();">+ Nova</button>
@@ -261,7 +261,7 @@
 
                                             <tr>
                                                 <td style="padding-left:10px;">  {{$categ->categoria}}</td>
-                                                <td> {{ date('d/m/Y', strtotime($categ->created_at))}}</td>
+                                                <td> {{ date('d/m/Y', strtotime($categ->pivot->created_at))}}</td>
                                                 <td> <a href="{{route('cliente.ficha', $registro->id)}}" target="_blank"> <button type="button" class="btn btn-success btn-sm btn-rounded" onclick=""> Imprimir</button> </a>  <a href="" class="btn btn-danger btn-sm btn-rounded"  data-toggle="modal" data-target="#exampleModal" onclick="setar_categoria({{$categ->id}})"> Cancelar</a>  </td>
 
                                             </tr>
@@ -441,11 +441,19 @@
                         <div class="form-group col-md-12">
                             <label for="nome" class="control-label">Selecione o Profissional:</label>
 
-                            <select class="form-control" name="user_id" id="user_id">
+                            <select class="form-control form-control-sm" name="user_id" id="user_id">
                                 @foreach(\App\User::all() as $user)
                                     <option value="{{$user->id}}">{{$user->name}}</option>
                                 @endforeach()
                             </select>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <label for="nome" class="control-label">Informe o Peso do Animal:</label>
+
+
+                                <input type="text" name="peso" class="form-control">
+
                         </div>
 
                         <input type="hidden" name="animal_id" id="animal_id" value="">

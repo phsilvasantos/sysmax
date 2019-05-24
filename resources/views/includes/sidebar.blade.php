@@ -27,6 +27,14 @@
                     <a href="{{route('atendimentos.index')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-globe "></i></span><span class="pcoded-mtext">Fila Atendimento</span></a>
                 </li>
 
+                <li  class="nav-item">
+                    <a href="{{route('associacao.index')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-star "></i></span><span class="pcoded-mtext">Associação</span></a>
+                </li>
+
+                <li  class="nav-item">
+                    <a href="{{route('receber.index')}}" class="nav-link"><span class="pcoded-micon"><i class="fa fa-money-bill "></i></span><span class="pcoded-mtext">Contas a Receber</span></a>
+                </li>
+
                 <li class="nav-item pcoded-menu-caption">
                     <label>Cadastro</label>
                 </li>
@@ -39,6 +47,7 @@
                         <li class=""><a href="{{route('racas.index')}}" class="">Raças</a></li>
                         <li class=""><a href="{{route('vacinas.index')}}" class="">Vacinas</a></li>
                         <li class=""><a href="{{route('nfces.index')}}" class="">NFCE</a></li>
+                        <li class=""><a href="{{route('planos.index')}}" class="">Planos</a></li>
 
                     </ul>
                 </li>

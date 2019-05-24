@@ -6,7 +6,7 @@
 
     @endif
 
-    <form action="{{route('categorias.store')}}" method="post" name="form1">
+    <form action="{{route('planos.store')}}" method="post" name="form1">
 
         @csrf
         <input type="hidden" id="origem" name="origem" value="">
@@ -21,14 +21,14 @@
                         <div class="card-block p-0">
                             <div class="row align-items-center justify-content-center">
                                 <div class="col-auto">
-                                    <div><i class="fas fa-list m-r-5" style="font-size:38px"></i></div>
+                                    <div><i class="fa fa-cart-plus m-r-5 text-c-blue" style="font-size:38px"></i></div>
                                 </div>
                                 <div class="col">
-                                    <h5>Categoria</h5>
-                                    <span>Tipo</span>
+                                    <h5>Plano</h5>
+                                    <span>Valor</span>
                                 </div>
                                 <div class="col text-right">
-                                    <a href="{{route('categorias.index')}}"> <button type="button" class="btn btn-sm btn-default btn-shadow-1 btn-rounded"><i class="feather icon-arrow-left"></i>Voltar</button></a>
+                                    <a href="{{route('planos.index')}}"> <button type="button" class="btn btn-sm btn-default btn-shadow-1 btn-rounded"><i class="feather icon-arrow-left"></i>Voltar</button></a>
 
 
                                     <div class="btn-group mb-2 mr-2  btn-rounded">
@@ -68,23 +68,25 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-8">
+                            <div class="col-md-7">
                                 <div class="form-group">
-                                    <label>Nome da Categoria</label>
-                                    <input type="text" class="form-control form-control-sm" name="categoria"  required>
+                                    <label>Nome do Plano</label>
+                                    <input type="text" class="form-control form-control-sm" name="nome"  required>
                                 </div>
                             </div>
 
 
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="form-group">
-                                    <label>Tipo</label>
-                                    <select  class="form-control form-control-sm" name="categoria_type" >
-                                        <option value="Produtos">Produtos</option>
-                                        <option value="Clientes">Clientes</option>
-                                        <option value="Receber">Contas a Receber</option>
-                                        <option value="Pagar">Contas a Pagar</option>
-                                    </select>
+                                    <label>Valor</label>
+                                    <input type="number" step="0.01" class="form-control form-control-sm" name="valor_original"  required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Periodo em Dias</label>
+                                    <input type="integer" class="form-control form-control-sm" name="periodicidade"  required>
                                 </div>
                             </div>
 

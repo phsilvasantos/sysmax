@@ -17,7 +17,7 @@ class Cliente extends ModelDefault
 
     public function categorias()
     {
-        return $this->belongsToMany('App\Models\Categorias\Categoria');
+        return $this->belongsToMany('App\Models\Categorias\Categoria')->withPivot('id','created_at')->withTimestamps();
     }
 
     public function animais()

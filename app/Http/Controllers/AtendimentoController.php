@@ -69,4 +69,28 @@ class AtendimentoController extends AppController
 
     }
 
+    public function store(Request $request)
+    {
+        //
+
+        $registro = new $this->model($request->except('_token','_method'));
+        $registro->save();
+
+
+        if($request->peso) {
+            $detalhes = Atendimento_Detalhes::create([
+                'user_id' => $request->atendente_id,
+                'atendimento_id' => $registro->id,
+                'categoria' => 'Peso',
+                'descricao' => $request->peso,
+                'animal_id' => $request->animal_id
+            ]);
+        }
+
+        return redirect()->route($this->name.'.index')->with('status', 'Registro Incluído');
+
+
+
+    }
+
 }
