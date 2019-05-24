@@ -168,7 +168,7 @@
                         </div>
                         <ul class="pro-body">
                             <li><a href="{{route('empresas.edit', Auth::user()->empresa_id)}}" class="dropdown-item"><i class="feather icon-settings"></i> Configurações</a></li>
-                            <li><a href="javascript:" class="dropdown-item"><i class="feather icon-user"></i> Perfil</a></li>
+                            <li><a href="{{route('users.edit', Auth::user()->empresa_id)}}" class="dropdown-item"><i class="feather icon-user"></i> Perfil</a></li>
                             <li><a href="javascript:" class="dropdown-item"><i class="feather icon-mail"></i> Mensagens</a></li>
                             <li><a href="javascript:" class="dropdown-item"><i class="feather icon-lock"></i> Bloquear</a></li>
                         </ul>

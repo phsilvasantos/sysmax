@@ -291,16 +291,20 @@
                                 @foreach($registro->animais  as $key => $animal)
 
                                 <div class="col-xl-4 col-md-6">
-                                    <div class="card">
+                                    <div class="card @if($animal->status == 'Obito') card-border-c-red @endif">
                                         <div class="card-block p-0">
                                             <div class="text-center project-main">
+
+
                                                 <i class="fa fa-paw" style="font-size:60px;"></i>
                                                 <h5 class="mt-4">{{$animal->nome}}</h5>
                                                 <span>{{$animal->nome}}</span>
                                                 <div class="row m-t-30">
+                                                    @if($animal->status != 'Obito')
                                                     <div class="col-6 p-r-0">
                                                         <a href="#!" class="btn  border btn-block btn-outline-secondary" onclick="incluir_fila({{$animal->id}})">Atendimento</a>
                                                     </div>
+                                                    @endif
                                                     <div class="col-6">
                                                         <a href="#!" class="btn  border btn-block btn-outline-secondary">Prontuário</a>
                                                     </div>
@@ -310,7 +314,7 @@
                                             <div class="project-main" style="padding: 0px">
                                                 <div class="row text-center">
                                                     <div class="col-12">
-                                                        <a href="#!" class="btn btn-primary   btn-block" onclick="editar_animal({{$animal->id}})">Editar</a>
+                                                        <a href="#!" class="btn @if($animal->status != 'Obito') btn-primary @else btn-danger  @endif  btn-block" onclick="editar_animal({{$animal->id}})">Editar</a>
                                                     </div>
                                                 </div>
                                             </div>

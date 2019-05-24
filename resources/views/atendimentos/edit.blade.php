@@ -227,7 +227,7 @@
                                     <div class="card-block pb-0">
                                         <div class="table-responsive">
                                             <div id="myTable_wrapper" class="dataTables_wrapper no-footer">
-                                                <table class="table table-hover table-list dataTable no-footer" id="myTable" role="grid">
+                                                <table class="table table-hover table-list dataTable no-footer" id="minhaTabela" role="grid">
                                                     <thead>
                                                     <tr role="row">
                                                         <th >Data/Hora</th>
@@ -277,7 +277,7 @@
                                     <div class="card-block pb-0">
                                         <div class="table-responsive">
                                             <div id="myTable_wrapper" class="dataTables_wrapper no-footer">
-                                                <table class="table table-hover table-list dataTable no-footer" id="myTable" role="grid">
+                                                <table class="table table-hover table-list dataTable no-footer" id="minhaTabela" role="grid">
                                                     <thead>
                                                     <tr role="row">
                                                         <th >Data/Hora</th>
@@ -326,7 +326,7 @@
                                 <div class="card-block pb-0">
                                     <div class="table-responsive">
                                         <div id="myTable_wrapper" class="dataTables_wrapper no-footer">
-                                            <table class="table table-hover table-list dataTable no-footer" id="myTable" role="grid">
+                                            <table class="table table-hover table-list dataTable no-footer" id="minhaTabela" role="grid">
                                                 <thead>
                                                 <tr role="row">
                                                     <th >Data/Hora</th>
@@ -375,7 +375,7 @@
                                 <div class="card-block pb-0">
                                     <div class="table-responsive">
                                         <div id="myTable_wrapper" class="dataTables_wrapper no-footer">
-                                            <table class="table table-hover table-list dataTable no-footer" id="myTable" role="grid">
+                                            <table class="table table-hover table-list dataTable no-footer" id="minhaTabela" role="grid">
                                                 <thead>
                                                 <tr role="row">
                                                     <th >Data/Hora</th>
@@ -424,7 +424,7 @@
                                 <div class="card-block pb-0">
                                     <div class="table-responsive">
                                         <div id="myTable_wrapper" class="dataTables_wrapper no-footer">
-                                            <table class="table table-hover table-list dataTable no-footer" id="myTable" role="grid">
+                                            <table class="table table-hover table-list dataTable no-footer" id="minhaTabela" role="grid">
                                                 <thead>
                                                 <tr role="row">
                                                     <th >Data/Hora</th>
@@ -473,7 +473,7 @@
                                 <div class="card-block pb-0">
                                     <div class="table-responsive">
                                         <div id="myTable_wrapper" class="dataTables_wrapper no-footer">
-                                            <table class="table table-hover table-list dataTable no-footer" id="myTable" role="grid">
+                                            <table class="table table-hover table-list dataTable no-footer" id="minhaTabela" role="grid">
                                                 <thead>
                                                 <tr role="row">
                                                     <th >Data/Hora</th>

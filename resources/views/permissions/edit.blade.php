@@ -71,7 +71,7 @@
                         <div class="col-md-8">
                             <div class="form-group">
                                 <label>Nome da Permissão</label>
-                                <input type="text" class="form-control form-control-sm" name="raca_id"  value="{{$registro->name}}">
+                                <input type="text" class="form-control form-control-sm" name="name"  value="{{$registro->name}}">
                             </div>
                         </div>
 

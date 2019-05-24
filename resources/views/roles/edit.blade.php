@@ -71,7 +71,7 @@
                         <div class="col-md-11">
                             <div class="form-group">
                                 <label>Nome do Papel</label>
-                                <input type="text" class="form-control form-control-sm" name="raca_id"  value="{{$registro->name}}">
+                                <input type="text" class="form-control form-control-sm" name="name"  value="{{$registro->name}}">
                             </div>
                         </div>
 
