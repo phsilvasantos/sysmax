@@ -18,7 +18,7 @@
                         <tbody>
                         @foreach($registros as $registro)
                             <tr class="unread">
-                            <td class="col-auto"><div><i class="fas fa-list m-r-5" style="font-size:38px;margin-left: 20px;"></i></div></td>
+                            <td class="col-auto"><div><i class="fas fa-paw m-r-5" style="font-size:28px;margin-left: 20px;"></i></div></td>
                             <td>
                                 <h6 class="mb-1">{{$registro->raca_id}}</h6>
                                 {{--<p class="m-0">{{$registro->categoria}}</p>--}}

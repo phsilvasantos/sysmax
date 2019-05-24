@@ -115,7 +115,7 @@ class ClienteController extends AppController
                 break;
             case 'nome_animal':
                 //
-                $registros =   DB::table('clientes')->select('clientes.*','animais.nome as nome_animal')->join('animais','animais.cliente_id','clientes.id')->where('animais.nome', $request->descricao)->get();  //$this->model::where('nome', 'like', '%'. $request->descricao .'%')->with('animais')->get();
+                $registros =   DB::table('clientes')->select('clientes.*','animais.nome as nome_animal')->join('animais','animais.cliente_id','clientes.id')->where('animais.nome', $request->descricao)->with('animais')->get();  //$this->model::where('nome', 'like', '%'. $request->descricao .'%')->with('animais')->get();
                 break;
             case 'CPF':
                 //
