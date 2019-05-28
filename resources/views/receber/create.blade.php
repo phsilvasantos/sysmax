@@ -17,7 +17,42 @@
 
             <div class="row">
 
-                <div class="col-md-9">
+
+
+                <div class="col-md-9 filter-bar">
+
+                    <nav class="navbar m-b-10 p-10">
+                        <ul class="nav">
+                            <li class="nav-item f-text active">
+                                <a class="nav-link text-secondary" href="#" onclick="document.getElementById('form1').submit()"><i class="fa fa-check"></i> Salvar <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link text-secondary" href="{{route('receber.index')}}" ><i class="fa fa-angle-left"></i> Voltar</a>
+
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link text-secondary" href="#"  onclick="document.getElementById('form1').reset()"><i class="fa fa-ban"></i> Cancelar</a>
+
+                            </li>
+                        </ul>
+                        <div class="nav-item nav-grid f-view">
+                            <ul class="nav">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle text-secondary" href="#" id="bydate" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Opções</a>
+                                <div class="dropdown-menu" aria-labelledby="bydate">
+                                    <a class="dropdown-item" href="#">Show all</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Today</a>
+                                    <a class="dropdown-item" href="#">Yesterday</a>
+                                    <a class="dropdown-item" href="#">This week</a>
+                                    <a class="dropdown-item" href="#">This month</a>
+                                    <a class="dropdown-item" href="#">This year</a>
+                                </div>
+                            </li>
+                            </ul>
+                        </div>
+                    </nav>
 
                     <div class="kt-portlet__body">
 
@@ -94,7 +129,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Setor</label>
-                                            <select  class="form-control form-control-sm" name="categoria_id" >
+                                            <select  class="form-control form-control-sm" name="setor_id" >
                                                 <option value=""></option>
                                                 @foreach(\App\Models\Setores\Setor::all() as $setor)
                                                     <option value="{{$setor->id}}">{{$setor->nome}}</option>
@@ -161,25 +196,13 @@
                 <div class="col-md-3">
 
 
+
                     <div class="accordion" id="accordionExample">
                         <div class="card" style="margin-bottom:10px">
                             <div class="card-header" style="padding:15px 25px" id="headingOne">
-                                <h5 class="mb-0"><a href="#!" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="collapsed">Opções</a></h5>
+                                <h5 class="mb-0"><a href="#!" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="collapsed">Parcelamento</a></h5>
                             </div>
                             <div id="collapseOne" class="card-body collapse show" aria-labelledby="headingOne" data-parent="#accordionExample" style="">
-
-                                <button type="button" class="btn btn-outline-primary btn-block" onclick="document.getElementById('form1').submit()"><i class="fa fa-check" ></i>Salvar</button>
-                                <a href="{{route('receber.index')}}"> <button type="button" class="btn btn-outline-secondary btn-block"><i class="fa fa-angle-left"></i>Voltar</button></a>
-                                <button type="button" class="btn btn-outline-danger btn-block"><i class="fa fa-ban"></i>Cancelar</button>
-
-                            </div>
-                        </div>
-                        <div class="card" style="margin-bottom:10px">
-                            <div class="card-header" id="headingTwo"  style="padding:15px 25px">
-                                <h5 class="mb-0"><a href="#!" class="collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Parcelamento</a></h5>
-                            </div>
-                            <div id="collapseTwo" class="card-body collapse" aria-labelledby="headingTwo" data-parent="#accordionExample" style="">
-
 
                                 <div class="card-block">
                                     <div class="row">
@@ -190,14 +213,10 @@
                                                 <label class="custom-control-label" for="customRadioInline1">Única</label>
                                             </div>
 
-                                            <div class="custom-control custom-radio custom-control-inline">
-                                                <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input" onclick="fixo()">
-                                                <label class="custom-control-label" for="customRadioInline2">Fixa</label>
-                                            </div>
 
                                             <div class="custom-control custom-radio custom-control-inline">
-                                                <input type="radio" id="customRadioInline3" name="customRadioInline1" class="custom-control-input" onclick="parcelas()">
-                                                <label class="custom-control-label" for="customRadioInline3">Parcelas</label>
+                                                <input type="radio" id="customRadioInline3" name="customRadioInline1" class="custom-control-input" onclick="parcelado()">
+                                                <label class="custom-control-label" for="customRadioInline3">Parcelado</label>
                                             </div>
                                         </div>
 
@@ -208,14 +227,14 @@
                                         <div class="col-md-12" id="parcela" style="display:none">
                                             <div class="form-group">
                                                 <label>Parcelas</label>
-                                                <input type="number"  class="form-control form-control-sm" name="parcelas"   value="1">
+                                                <input type="number"  class="form-control form-control-sm" name="parcelas" id="parc"   value="1">
                                             </div>
                                         </div>
 
                                         <div class="col-md-12" id="periodicidade" style="display:none">
                                             <div class="form-group">
                                                 <label>Repetição a cada (Dias)</label>
-                                                <input type="number"  class="form-control form-control-sm" name="periodicidade"   value="30">
+                                                <input type="number"  class="form-control form-control-sm" name="periodicidade" id="peri"  value="30">
                                             </div>
                                         </div>
 
@@ -228,60 +247,57 @@
                                     </div>
                                 </div>
 
-
                             </div>
                         </div>
-                        <div class="card">
-                            <div class="card-header" id="headingThree"  style="padding:15px 25px">
-                                <h5 class="mb-0"><a href="#!" class="collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">Pagamentos</a></h5>
+                        <div class="card" style="margin-bottom:10px">
+                            <div class="card-header" id="headingTwo"  style="padding:15px 25px">
+                                <h5 class="mb-0"><a href="#!" class="collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Pagamento</a></h5>
                             </div>
-                            <div id="collapseThree" class="card-body collapse" aria-labelledby="headingThree" data-parent="#accordionExample" style="">
+                            <div id="collapseTwo" class="card-body collapse" aria-labelledby="headingTwo" data-parent="#accordionExample" style="">
 
-                                    <div class="card-block">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>Data Pagamento</label>
-                                                    <input type="date"  class="form-control form-control-sm" name="data_pagamento"   value="">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>Descontos</label>
-                                                    <input type="number" step="0.01" class="form-control form-control-sm" name="valor_desconto"   value="">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>Juros</label>
-                                                    <input type="number" step="0.01" class="form-control form-control-sm" name="valor_juros"   value="">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>Multas</label>
-                                                    <input type="number" step="0.01" class="form-control form-control-sm" name="valor_multa"   value="">
-                                                </div>
-                                            </div>
 
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>Valor Pagamento</label>
-                                                    <input type="number" step="0.01" class="form-control form-control-sm" name="valor_pagamento"   value="">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-
-                                                    <button type="button" class="btn btn-primary btn-block" >Efetuar Pagamento</button>
-                                                </div>
+                                <div class="card-block">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Data Pagamento</label>
+                                                <input type="date"  class="form-control form-control-sm" name="data_pagamento"   value="">
                                             </div>
                                         </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Descontos</label>
+                                                <input type="number" step="0.01" class="form-control form-control-sm" name="valor_desconto"   value="">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Juros</label>
+                                                <input type="number" step="0.01" class="form-control form-control-sm" name="valor_juros"   value="">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Multas</label>
+                                                <input type="number" step="0.01" class="form-control form-control-sm" name="valor_multa"   value="">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Valor Pagamento</label>
+                                                <input type="number" step="0.01" class="form-control form-control-sm" name="valor_pagamento"   value="">
+                                            </div>
+                                        </div>
+
+
                                     </div>
+                                </div>
+
 
                             </div>
                         </div>
+
                     </div>
 
 
@@ -340,26 +356,26 @@
             minimumInputLength: 3,
         });
 
-        function fixo(){
 
-            document.getElementById('periodicidade').style.display = 'block';
-            document.getElementById('parcelas').style.display = 'none';
 
-        }
-
-        function parcelas(){
+        function parcelado(){
 
             document.getElementById('periodicidade').style.display = 'block';
             document.getElementById('parcela').style.display = 'block';
 
-        }
+
+
+        };
 
         function unica(){
 
-            document.getElementById('periodicidade').style.display = 'none';
-            document.getElementById('parcelas').style.display = 'none';
+            document.getElementById('peri').value = 30;
+            document.getElementById('parc').value = 1;
 
-        }
+            document.getElementById('periodicidade').style.display = 'none';
+            document.getElementById('parcela').style.display = 'none';
+
+        };
 
     </script>
 

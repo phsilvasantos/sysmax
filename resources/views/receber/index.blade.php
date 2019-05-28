@@ -37,7 +37,11 @@
 
                             <tr>
                                 <td style="padding-left:10px;"> {{date('d/m/Y', strtotime($conta->data_vencimento))}} </td>
-                                <td>{{$conta->Cliente->nome}} </td>
+                                @if(isset($registro->Cliente->nome))
+                                    <td>{{$conta->Cliente->nome}} </td>
+                                @else
+                                    <td> Cliente não Identificado </td>
+                                @endif
                                 <td>{{$conta->valor_original}} </td>
                                 <td>{{$conta->status}} </td>
                                 <td style="padding:8px"> <a class="text-white label theme-bg" href="{{route('receber.edit', $conta->id)}}">Acessar</a> </td>

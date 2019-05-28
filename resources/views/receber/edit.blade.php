@@ -6,7 +6,7 @@
 
     @endif
 
-    <form action="{{route('receber.update', $registro->id)}}" method="post" name="form1">
+    <form action="{{route('receber.update', $registro->id)}}" method="post" name="form1" id="form1">
 
         @csrf
         <input type="hidden" id="_method" name="_method" value="PUT">
@@ -17,7 +17,46 @@
 
             <div class="row">
 
-                <div class="col-md-9">
+                <div class="col-md-9 filter-bar">
+
+                    <nav class="navbar m-b-10 p-10">
+                        <ul class="nav">
+                            <li class="nav-item f-text active">
+                                <a class="nav-link text-secondary" href="#" onclick="document.getElementById('form1').submit()"><i class="fa fa-check"></i> Salvar <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link text-secondary" href="{{route('receber.index')}}" ><i class="fa fa-angle-left"></i> Voltar</a>
+
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link text-secondary" href="#"  onclick="document.getElementById('form1').reset()"><i class="fa fa-ban"></i> Cancelar</a>
+
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link text-secondary" href="{{route('receber.create')}}"><i class="fa fa-plus"></i> Novo</a>
+
+                            </li>
+
+                        </ul>
+                        <div class="nav-item nav-grid f-view">
+                            <ul class="nav">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle text-secondary" href="#" id="bydate" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Opções</a>
+                                    <div class="dropdown-menu" aria-labelledby="bydate">
+                                        <a class="dropdown-item" href="#">Show all</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#">Today</a>
+                                        <a class="dropdown-item" href="#">Yesterday</a>
+                                        <a class="dropdown-item" href="#">This week</a>
+                                        <a class="dropdown-item" href="#">This month</a>
+                                        <a class="dropdown-item" href="#">This year</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
 
                     <div class="kt-portlet__body">
 
@@ -63,16 +102,18 @@
                                     </div>
 
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Cliente</label>
                                             <select class="form-control form-control-sm js-select" name="cliente_id" id="cliente_id">
-                                                <option value="{{$registro->cliente_id}}"  selected="selected">{{$registro->Cliente->nome}}</option>
+                                                @if(isset($registro->Cliente->nome))
+                                                    <option value="{{$registro->cliente_id}}"  selected="selected">{{$registro->Cliente->nome}}</option>
+                                                @endif
                                             </select>
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Plano de Contas</label>
                                             <select  class="form-control form-control-sm" name="tipo" >
@@ -83,21 +124,33 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Data Vencimento</label>
                                             <input type="date" class="form-control form-control-sm" name="data_vencimento"    value="{{$registro->data_vencimento}}" >
                                         </div>
                                     </div>
 
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Setor</label>
+                                            <select  class="form-control form-control-sm" name="setor_id" >
+                                                <option value=""></option>
+                                                @foreach(\App\Models\Setores\Setor::all() as $setor)
+                                                    <option value="{{$setor->id}}">{{$setor->nome}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Data Emissão</label>
                                             <input type="date" class="form-control form-control-sm" name="data_emissao"    value="{{$registro->data_emissao}}" >
                                         </div>
                                     </div>
 
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Numero Documento</label>
                                             <input type="text" class="form-control form-control-sm" name="documento"   value="{{$registro->documento}}">
@@ -107,7 +160,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Observações</label>
-                                            <textarea  class="form-control form-control-sm" name="descricao" rows="5">{{$registro->documento}}</textarea>
+                                            <textarea  class="form-control form-control-sm" name="descricao" rows="2">{{$registro->documento}}</textarea>
                                         </div>
                                     </div>
 
@@ -140,86 +193,114 @@
                         </div>
                     </div>
 
+                    <div class="kt-portlet__body" style="margin-top:15px">
+
+
+                        <div class="tab-content">
+                            <div class="tab-pane @if(Session::get('status') != 'Animal Incluido') active @endif" id="kt_portlet_base_demo_1_1_tab_content" role="tabpanel">
+
+
+                                <h5 class="text-c-blue"><i class="fa fa-dollar-sign m-r-5 text-c-blue" style="font-size:28px"></i>  Parcelas</h5>
+
+
+
+                                <div class="row table-responsive" style="padding:0px 20px">
+
+
+
+                                    <table class="table table-hover  table-list" id="myTable2">
+                                    <thead>
+                                        <tr>
+                                            <th style="padding:5px">Parcela</th>
+                                            <th style="padding:5px">Vencimento</th>
+                                            <th style="padding:5px">Valor Parcela</th>
+                                            <th style="padding:5px">Valor Documento</th>
+                                            <th style="padding:5px">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                          @foreach($parcelas as $parcela)
+
+                                            <tr>
+
+                                                  <td>{{$parcela->numero_parcela}}</td>
+                                                  <td>{{date('d/m/y',strtotime($parcela->data_vencimento))}}</td>
+                                                  <td>{{$parcela->valor_original}}</td>
+                                                  <td>{{$parcela->valor_documento}}</td>
+                                                  <td><a href="{{route('receber.edit', $parcela->id)}}">{{$parcela->status}} </a></td>
+
+                                            </tr>
+
+                                          @endforeach
+                                    </tbody>
+                                </table>
+
+
+                                </div>
+
+
+
+
+                            </div>
+
+                        </div>
+                    </div>
+
 
                 </div>
 
                 <div class="col-md-3">
 
 
+
                     <div class="accordion" id="accordionExample">
                         <div class="card" style="margin-bottom:10px">
                             <div class="card-header" style="padding:15px 25px" id="headingOne">
-                                <h5 class="mb-0"><a href="#!" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="collapsed">Opções</a></h5>
+                                <h5 class="mb-0"><a href="#!" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="collapsed">Pagamento</a></h5>
                             </div>
                             <div id="collapseOne" class="card-body collapse show" aria-labelledby="headingOne" data-parent="#accordionExample" style="">
-
-                                <button type="button" class="btn btn-outline-primary btn-block"><i class="fa fa-check"></i>Salvar</button>
-                                <a href="{{route('receber.index')}}"> <button type="button" class="btn btn-outline-secondary btn-block"><i class="fa fa-angle-left"></i>Voltar</button></a>
-                                <button type="button" class="btn btn-outline-danger btn-block"><i class="fa fa-ban"></i>Cancelar</button>
-
-                            </div>
-                        </div>
-                        <div class="card" style="margin-bottom:10px">
-                            <div class="card-header" id="headingTwo"  style="padding:15px 25px">
-                                <h5 class="mb-0"><a href="#!" class="collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Parcelas</a></h5>
-                            </div>
-                            <div id="collapseTwo" class="card-body collapse" aria-labelledby="headingTwo" data-parent="#accordionExample" style="">
-
-
-
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header" id="headingThree"  style="padding:15px 25px">
-                                <h5 class="mb-0"><a href="#!" class="collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">Pagamentos</a></h5>
-                            </div>
-                            <div id="collapseThree" class="card-body collapse" aria-labelledby="headingThree" data-parent="#accordionExample" style="">
-
-                                    <div class="card-block">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>Data Pagamento</label>
-                                                    <input type="date"  class="form-control form-control-sm" name="data_pagamento"   value="{{$registro->data_pagamento}}">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>Descontos</label>
-                                                    <input type="number" step="0.01" class="form-control form-control-sm" name="valor_original"   value="{{$registro->valor_desconto}}">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>Juros</label>
-                                                    <input type="number" step="0.01" class="form-control form-control-sm" name="valor_original"   value="{{$registro->valor_juros}}">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>Multas</label>
-                                                    <input type="number" step="0.01" class="form-control form-control-sm" name="valor_original"   value="{{$registro->valor_multa}}">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>Valor Pagamento</label>
-                                                    <input type="number" step="0.01" class="form-control form-control-sm" name="valor_original"   value="{{$registro->valor_pago}}">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-
-                                                    <button type="button" class="btn btn-primary btn-block" >Efetuar Pagamento</button>
-                                                </div>
+                                <div class="card-block">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Data Pagamento</label>
+                                                <input type="date"  class="form-control form-control-sm" name="data_pagamento"   value="{{$registro->data_pagamento}}">
                                             </div>
                                         </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Descontos</label>
+                                                <input type="number" step="0.01" class="form-control form-control-sm" name="valor_desconto"   value="{{$registro->valor_desconto}}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Juros</label>
+                                                <input type="number" step="0.01" class="form-control form-control-sm" name="valor_juros"   value="{{$registro->valor_juros}}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Multas</label>
+                                                <input type="number" step="0.01" class="form-control form-control-sm" name="valor_multa"   value="{{$registro->valor_multa}}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Valor Pagamento</label>
+                                                <input type="number" step="0.01" class="form-control form-control-sm" name="valor_pago"   value="{{$registro->valor_pago}}">
+                                            </div>
+                                        </div>
+
+
                                     </div>
+                                </div>
 
                             </div>
                         </div>
+
+
                     </div>
 
 

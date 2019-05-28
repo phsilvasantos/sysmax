@@ -21,4 +21,14 @@ class Receber extends ModelDefault
     {
         return $this->belongsTo('App\Models\Clientes\Cliente');
     }
+
+
+    public function Parcelas()
+    {
+        return $this->hasMany('App\Models\Contas\Receber','receber_id','id');
+    }
+
+
+
+
 }
