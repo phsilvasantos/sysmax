@@ -56,6 +56,7 @@ Route::resource('/vacinas', 'VacinaController');
 Route::resource('/associacao', 'AssociacaoController');
 Route::resource('/planos', 'PlanoController');
 Route::resource('/receber', 'ReceberController');
+Route::resource('/setores', 'SetorController');
 
 Route::resource('/permissions', 'PermissionController');
 Route::resource('/roles', 'RoleController');

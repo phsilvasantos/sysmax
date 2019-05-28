@@ -329,11 +329,11 @@ class NfceController extends AppController
 
         $std = new \stdClass();
         $std->item = $item->sequencial; //item da NFe
-        $std->CST = '01';
+        $std->CST = '07';
         $std->vBC = number_format($item->valor_total,2,'.','');
         $std->pPIS = 0.65;
         $std->vPIS = number_format(($item->valor_total  * 0.0065),2,'.','');
-          $this->total_pis += number_format(($item->valor_total  * 0.0065),2,'.','');
+          $this->total_pis += 0.00; //number_format(($item->valor_total  * 0.0065),2,'.','');
         $std->qBCProd = $item->quantidade;
         $std->vAliqProd = null;
 
@@ -344,11 +344,11 @@ class NfceController extends AppController
 
         $std = new \stdClass();
         $std->item = $item->sequencial; //item da NFe
-        $std->CST = '01';
+        $std->CST = '07';
         $std->vBC = number_format($item->valor_total,2,'.','');
         $std->pCOFINS = 3.00;
         $std->vCOFINS = number_format(($item->valor_total * 0.03) ,2,'.','') ;
-          $this->total_cofins += number_format(($item->valor_total  * 0.03),2,'.','');
+          $this->total_cofins += 0.00; //number_format(($item->valor_total  * 0.03),2,'.','');
         $std->qBCProd = $item->quantidade;
         $std->vAliqProd = null;
 
@@ -361,9 +361,9 @@ class NfceController extends AppController
         $std = new \stdClass();
         $std->item = $item->sequencial; //item da NFe
         $std->vBC = number_format($item->valor_total,2,'.','');
-        $std->vAliq = 5.00;
-        $std->vISSQN = number_format(($item->valor_total * 0.05),2,'.','');
-          $this->total_iss += number_format(($item->valor_total  * 0.05),2,'.','');
+        $std->vAliq = 0.00;
+        $std->vISSQN = number_format(($item->valor_total * 0.00),2,'.','');
+          $this->total_iss += number_format(($item->valor_total  * 0.00),2,'.','');
         $std->cMunFG = $empresa->cMunFG;
         $std->cListServ = $empresa->cListServ;
         $std->vDeducao = null;
@@ -420,9 +420,9 @@ class NfceController extends AppController
         $std = new \stdClass();
         $std->vServ = number_format($venda->total_venda_bruto ,2,'.','') ;
         $std->vBC = number_format($venda->total_venda_liquido ,2,'.','') ;
-        $std->vISS = number_format($this->total_iss ,2,'.','') ;
-        $std->vPIS = number_format($this->total_pis ,2,'.','') ;
-        $std->vCOFINS = number_format($this->total_cofins ,2,'.','') ;
+        //$std->vISS = number_format($this->total_iss ,2,'.','') ;
+        //$std->vPIS = number_format($this->total_pis ,2,'.','') ;
+        //$std->vCOFINS = number_format($this->total_cofins ,2,'.','') ;
         $std->dCompet = date('Y-m-d');
         $std->vDeducao = null;
         $std->vOutro = null;
@@ -489,7 +489,7 @@ class NfceController extends AppController
 
         $std = new \stdClass();
         $std->item = $item->sequencial; //item da NFe
-        $std->vTotTrib = (number_format(($item->valor_total * 0.0865),2,'.',''));
+        $std->vTotTrib = 0.00; //(number_format(($item->valor_total * 0.05),2,'.',''));
 
         $nfe = $this->make->tagimposto($std);
     }

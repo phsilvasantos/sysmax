@@ -31,9 +31,13 @@
                     <a href="{{route('associacao.index')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-star "></i></span><span class="pcoded-mtext">Associação</span></a>
                 </li>
 
+
+
                 <li  class="nav-item">
                     <a href="{{route('receber.index')}}" class="nav-link"><span class="pcoded-micon"><i class="fa fa-money-bill "></i></span><span class="pcoded-mtext">Contas a Receber</span></a>
                 </li>
+
+
 
                 <li class="nav-item pcoded-menu-caption">
                     <label>Cadastro</label>
@@ -43,6 +47,7 @@
                     <ul class="pcoded-submenu">
                         <li class=""><a href="{{route('categorias.index')}}" class="">Categorias</a></li>
                         <li class=""><a href="{{route('produtos.index')}}" class="">Produtos</a></li>
+                        <li class=""><a href="{{route('setores.index')}}" class="">Setores</a></li>
                         <li class=""><a href="{{route('forma_pagamentos.index')}}" class="">Forma de Pagamentos</a></li>
                         <li class=""><a href="{{route('racas.index')}}" class="">Raças</a></li>
                         <li class=""><a href="{{route('vacinas.index')}}" class="">Vacinas</a></li>
@@ -51,6 +56,9 @@
 
                     </ul>
                 </li>
+
+                 
+
 
                 <li class="nav-item pcoded-menu-caption">
                     <label>Administração</label>
@@ -63,6 +71,8 @@
                         <li class=""><a href="{{route('permissions.index')}}" class="" >Permissões</a></li>
                     </ul>
                 </li>
+
+
 
             </ul>
         </div>

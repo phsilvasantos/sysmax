@@ -63,7 +63,7 @@
                                     </div>
 
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Cliente</label>
                                             <select class="form-control form-control-sm js-select" name="cliente_id" id="cliente_id">
@@ -72,10 +72,11 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Plano de Contas</label>
                                             <select  class="form-control form-control-sm" name="categoria_id" >
+
                                                 @foreach($instace->TodasCategorias() as $categoria)
                                                     <option value="{{$categoria->id}}">{{$categoria->categoria}}</option>
                                                 @endforeach
@@ -83,21 +84,35 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Data Vencimento</label>
                                             <input type="date" class="form-control form-control-sm" name="data_vencimento"    value="{{date('Y-m-d')}}" >
                                         </div>
                                     </div>
 
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Setor</label>
+                                            <select  class="form-control form-control-sm" name="categoria_id" >
+                                                <option value=""></option>
+                                                @foreach(\App\Models\Setores\Setor::all() as $setor)
+                                                    <option value="{{$setor->id}}">{{$setor->nome}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Data Emissão</label>
                                             <input type="date" class="form-control form-control-sm" name="data_emissao"    value="" >
                                         </div>
                                     </div>
 
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Numero Documento</label>
                                             <input type="text" class="form-control form-control-sm" name="documento"   value="">
@@ -125,7 +140,7 @@
                             </div>
                             <div class="tab-pane" id="kt_portlet_base_demo_1_2_tab_content" role="tabpanel">
 
-                                Outras Parcelas
+
 
                             </div>
                             <div class="tab-pane @if(Session::get('status') == 'Animal Incluido') active @endif" id="kt_portlet_base_demo_1_3_tab_content" role="tabpanel">
@@ -161,10 +176,57 @@
                         </div>
                         <div class="card" style="margin-bottom:10px">
                             <div class="card-header" id="headingTwo"  style="padding:15px 25px">
-                                <h5 class="mb-0"><a href="#!" class="collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Parcelas</a></h5>
+                                <h5 class="mb-0"><a href="#!" class="collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Parcelamento</a></h5>
                             </div>
                             <div id="collapseTwo" class="card-body collapse" aria-labelledby="headingTwo" data-parent="#accordionExample" style="">
 
+
+                                <div class="card-block">
+                                    <div class="row">
+
+                                        <div class="col-md-12">
+                                            <div class="custom-control custom-radio custom-control-inline">
+                                                <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input" checked onclick="unica()">
+                                                <label class="custom-control-label" for="customRadioInline1">Única</label>
+                                            </div>
+
+                                            <div class="custom-control custom-radio custom-control-inline">
+                                                <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input" onclick="fixo()">
+                                                <label class="custom-control-label" for="customRadioInline2">Fixa</label>
+                                            </div>
+
+                                            <div class="custom-control custom-radio custom-control-inline">
+                                                <input type="radio" id="customRadioInline3" name="customRadioInline1" class="custom-control-input" onclick="parcelas()">
+                                                <label class="custom-control-label" for="customRadioInline3">Parcelas</label>
+                                            </div>
+                                        </div>
+
+                                        <br>
+                                        <br>
+
+
+                                        <div class="col-md-12" id="parcela" style="display:none">
+                                            <div class="form-group">
+                                                <label>Parcelas</label>
+                                                <input type="number"  class="form-control form-control-sm" name="parcelas"   value="1">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12" id="periodicidade" style="display:none">
+                                            <div class="form-group">
+                                                <label>Repetição a cada (Dias)</label>
+                                                <input type="number"  class="form-control form-control-sm" name="periodicidade"   value="30">
+                                            </div>
+                                        </div>
+
+
+
+
+
+
+
+                                    </div>
+                                </div>
 
 
                             </div>
@@ -277,6 +339,27 @@
             placeholder: 'Digite pelo menos 3 caracteres',
             minimumInputLength: 3,
         });
+
+        function fixo(){
+
+            document.getElementById('periodicidade').style.display = 'block';
+            document.getElementById('parcelas').style.display = 'none';
+
+        }
+
+        function parcelas(){
+
+            document.getElementById('periodicidade').style.display = 'block';
+            document.getElementById('parcela').style.display = 'block';
+
+        }
+
+        function unica(){
+
+            document.getElementById('periodicidade').style.display = 'none';
+            document.getElementById('parcelas').style.display = 'none';
+
+        }
 
     </script>
 

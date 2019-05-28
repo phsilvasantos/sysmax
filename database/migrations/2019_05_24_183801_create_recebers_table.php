@@ -32,12 +32,13 @@ class CreateRecebersTable extends Migration
             $table->string('parcelas')->nullable();
             $table->string('numero_parcela')->nullable();
             $table->text('observacao')->nullable();
-            $table->text('setor')->nullable();
             $table->text('imagem')->nullable();
 
 
             $table->unsignedBigInteger('receber_id')->nullable();
             $table->foreign('receber_id')->references('id')->on('receber');
+            $table->unsignedBigInteger('setor_id')->nullable();
+            $table->foreign('setor_id')->references('id')->on('setores');
             $table->unsignedBigInteger('empresa_id');
             $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->unsignedBigInteger('cliente_id')->nullable();
