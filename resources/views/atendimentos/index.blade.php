@@ -78,7 +78,7 @@
 
                             @endforeach
 
-                            @endforeach
+                            @endif
 
                         </tbody>
                     </table>
@@ -131,7 +131,7 @@
                                     @endif
 
                                 @endforeach
-                                    @endforeach
+                                @endif
 
                                 </tbody>
                             </table>
@@ -184,7 +184,7 @@
                                     @endif
 
                                 @endforeach
-                                    @endforeach
+                                @endif
 
                                 </tbody>
                             </table>
@@ -235,7 +235,7 @@
                                     @endif
 
                                 @endforeach
-                                    @endforeach
+                                    @endif
 
                                 </tbody>
                             </table>
