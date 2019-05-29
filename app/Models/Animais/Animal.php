@@ -32,4 +32,10 @@ class Animal extends ModelDefault
         return $this->hasMany('App\Models\Atendimentos\Atendimento_Detalhes');
     }
 
+    public function Atendimentos()
+    {
+
+        return $this->hasMany('App\Models\Atendimentos\Atendimento');
+    }
+
 }

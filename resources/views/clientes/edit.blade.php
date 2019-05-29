@@ -306,7 +306,11 @@
                                                     </div>
                                                     @endif
                                                     <div class="col-6">
-                                                        <a href="#!" class="btn  border btn-block btn-outline-secondary">Prontuário</a>
+                                                        @if(isset($animal->Atendimentos[0]))
+                                                            <a href="{{route('atendimentos.edit', $animal->Atendimentos[0]->id)}}" class="btn  border btn-block btn-outline-secondary">Prontuário</a>
+                                                        @else
+                                                            <a href="#" class="btn  border btn-block btn-outline-secondary" onclick="alert('Não é possivel acessar o prontuário pois esse animal não possui nenhum atendimento registrado!')">Prontuário</a>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
