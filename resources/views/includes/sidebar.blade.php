@@ -17,9 +17,11 @@
                 <li class="nav-item active">
                     <a href="{{route('home')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
                 </li>
+                @if(Auth::user()->can('view-cliente'))
                 <li  class="nav-item">
                     <a href="{{route('clientes.index')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-user"></i></span><span class="pcoded-mtext">Clientes</span></a>
                 </li>
+                @endif
                 <li  class="nav-item">
                     <a href="{{route('vendas.index')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-shopping-cart "></i></span><span class="pcoded-mtext">Vendas</span></a>
                 </li>

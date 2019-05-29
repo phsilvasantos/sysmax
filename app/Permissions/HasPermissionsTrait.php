@@ -33,7 +33,7 @@ trait HasPermissionsTrait {
     }
 
     protected function hasPermission($permission) {
-        return (bool) $this->permissions->where('name', $permission->slug)->count();
+        return (bool) $this->permissions->where('name', $permission->name)->count();
     }
 
 
