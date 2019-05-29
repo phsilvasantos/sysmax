@@ -54,7 +54,7 @@
                         </tr></thead>
                         <tbody>
 
-
+                            @if(isset($registros))
 
                             @foreach($registros as $atendimento)
 
@@ -75,6 +75,8 @@
                                 <td style="padding:10px">  <a class="text-white label theme-bg" href="{{route('atendimentos.edit', $atendimento->id)}}">Acessar</a>  </td>
 
                             </tr>
+
+                            @endforeach
 
                             @endforeach
 
@@ -103,7 +105,7 @@
                                 <tbody>
 
 
-
+                                @if(isset($registros))
                                 @foreach($registros as $atendimento)
 
                                     @if($atendimento->status == 'Aguardando')
@@ -129,6 +131,7 @@
                                     @endif
 
                                 @endforeach
+                                    @endforeach
 
                                 </tbody>
                             </table>
@@ -155,7 +158,7 @@
                                 <tbody>
 
 
-
+                                @if(isset($registros))
                                 @foreach($registros as $atendimento)
 
                                     @if($atendimento->status == 'Em Atendimento')
@@ -181,6 +184,7 @@
                                     @endif
 
                                 @endforeach
+                                    @endforeach
 
                                 </tbody>
                             </table>
@@ -205,7 +209,7 @@
                                 <tbody>
 
 
-
+                                @if(isset($registros))
                                 @foreach($registros as $atendimento)
 
                                     @if($atendimento->status == 'Atendido')
@@ -231,6 +235,7 @@
                                     @endif
 
                                 @endforeach
+                                    @endforeach
 
                                 </tbody>
                             </table>
