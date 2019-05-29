@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Atendimentos\Atendimento;
 use App\Models\Atendimentos\Atendimento_Detalhes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AtendimentoController extends AppController
 {
@@ -26,6 +27,7 @@ class AtendimentoController extends AppController
     public function filtrar(Request $request)
     {
         //
+
 
         //dd($request->data);
 
