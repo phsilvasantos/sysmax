@@ -2,7 +2,7 @@
 
 @section('content')
 
-   <?php dd($registros); ?>
+  
 
     <div class="row">
 
