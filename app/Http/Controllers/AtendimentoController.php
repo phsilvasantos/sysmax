@@ -29,7 +29,7 @@ class AtendimentoController extends AppController
 
         //dd($request->data);
 
-        $registros = $this->model::whereBetween('data_recepcao', [$request->data . ' 00:00:00',$request->data . ' 23:59:59'])->get();
+        $registros = $this->model::whereBetween('data_recepcao', [$request->data . ' 00:00:00',$request->data . ' 23:59:59'])->where('user_id', Auth::user()->id)->get();
 
 
         return view($this->name.'.index', compact('registros'));
