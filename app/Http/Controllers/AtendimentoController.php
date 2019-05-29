@@ -11,6 +11,16 @@ class AtendimentoController extends AppController
     //
     public $model = Atendimento::class;
 
+    public function index()
+    {
+        //
+        $registros = $this->model::whereBetween('data_recepcao', [date('Y-m-d') . ' 00:00:00',date('Y-m-d') . ' 23:59:59'])->get();
+
+
+        return view($this->name.'.index', compact('registros'));
+
+    }
+
 
     public function filtrar(Request $request)
     {
