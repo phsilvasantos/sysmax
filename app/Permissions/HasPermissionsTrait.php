@@ -28,6 +28,16 @@ trait HasPermissionsTrait {
     }
 
 
+    public function HasAPermission( ... $permission ) {
+
+            if ($this->roles->HasPermission($permission)) {
+                return true;
+            }
+
+            return false;
+    }
+
+
     protected function hasPermissionTo($permission) {
         return $this->hasPermission($permission);
     }
@@ -38,7 +48,14 @@ trait HasPermissionsTrait {
 
 
     public function hasPermissionThroughRole($permission) {
-        foreach ($permission->roles as $role){
+
+        $permissao = Permission::where('name', $permission)->first();
+
+        //dd($permissao[0]->roles);
+
+        foreach ($permissao->roles as $role){
+
+
             if($this->roles->contains($role)) {
                 return true;
             }
