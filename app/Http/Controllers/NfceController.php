@@ -469,7 +469,9 @@ class NfceController extends AppController
 
     public function tagdetPag($pagamento) {
 
-        dd($pagamento);
+        $pagament = Forma_Pagamento::where('id', $pagamento->id)->with('Formas')->get();
+
+        dd($pagament);
 
         $std = new \stdClass();
         $std->tPag = $pagamento->Formas->tPag;
@@ -926,9 +928,7 @@ class NfceController extends AppController
 
             self::tagpag();
 
-            foreach ($venda->Pagamentos()->with('forma_pagamentos') as $key => $pagamento) {
-
-                dd($pagamento);
+            foreach ($venda->Pagamentos as $key => $pagamento) {
 
                 self::tagdetPag($pagamento);
             }
