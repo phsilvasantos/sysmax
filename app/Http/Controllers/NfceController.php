@@ -467,7 +467,7 @@ class NfceController extends AppController
 
     public function tagdetPag($pagamento) {
 
-        dd($pagamento->Formas);
+        dd($pagamento);
 
         $std = new \stdClass();
         $std->tPag = $pagamento->Formas->tPag;
