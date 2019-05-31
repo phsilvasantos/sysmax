@@ -17,4 +17,9 @@ class Atendimento extends ModelDefault
     {
         return $this->hasMany('App\Models\Atendimentos\Atendimento_Detalhes');
     }
+
+    public function Veterinario()
+    {
+        return $this->belongsTo('App\User','user_id','id');
+    }
 }

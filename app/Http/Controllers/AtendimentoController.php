@@ -15,7 +15,14 @@ class AtendimentoController extends AppController
     public function index()
     {
         //
-        $registros = $this->model::whereBetween('data_recepcao', [date('Y-m-d') . ' 00:00:00',date('Y-m-d') . ' 23:59:59'])->where('user_id', Auth::user()->id)->get();
+        if(!Auth::user()->roles->contains('name','Veterinário')){
+            $registros = $this->model::whereBetween('data_recepcao', [date('Y-m-d') . ' 00:00:00',date('Y-m-d') . ' 23:59:59'])->get();
+
+        }else{
+            $registros = $this->model::whereBetween('data_recepcao', [date('Y-m-d') . ' 00:00:00',date('Y-m-d') . ' 23:59:59'])->where('user_id', Auth::user()->id)->orwhere('user_id','3')->get();
+
+        }
+
 
 
 
@@ -27,11 +34,15 @@ class AtendimentoController extends AppController
     public function filtrar(Request $request)
     {
         //
+        if(!Auth::user()->roles->contains('name','Veterinário')){
+            $registros = $this->model::whereBetween('data_recepcao', [$request->data . ' 00:00:00',$request->data . ' 23:59:59'])->get();
+
+        }else{
+            $registros = $this->model::whereBetween('data_recepcao', [$request->data . ' 00:00:00',$request->data . ' 23:59:59'])->where('user_id', Auth::user()->id)->orwhere('user_id','3')->get();
+
+        }
 
 
-        //dd($request->data);
-
-        $registros = $this->model::whereBetween('data_recepcao', [$request->data . ' 00:00:00',$request->data . ' 23:59:59'])->where('user_id', Auth::user()->id)->get();
 
 
         return view($this->name.'.index', compact('registros'));

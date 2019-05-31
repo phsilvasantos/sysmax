@@ -447,7 +447,9 @@
 
                             <select class="form-control form-control-sm" name="user_id" id="user_id">
                                 @foreach(\App\User::all() as $user)
-                                    <option value="{{$user->id}}">{{$user->name}}</option>
+                                    @if($user->roles->contains('name', 'Veterinário'))
+                                        <option value="{{$user->id}}">{{$user->name}}</option>
+                                    @endif
                                 @endforeach()
                             </select>
                         </div>

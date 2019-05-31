@@ -50,8 +50,9 @@
                             <th>Hora</th>
                             <th>Cliente</th>
                             <th>Animal</th>
+                            <th>Fila</th>
                             <th>Status</th>
-                            <th width="50">Opção</th>
+
 
                         </tr></thead>
                         <tbody>
@@ -60,10 +61,13 @@
 
                             @foreach($registros as $atendimento)
 
-                            <tr>
+
+                            <tr onclick="window.location='{{route("atendimentos.edit", $atendimento->id)}}'">
+
                                 <td style="padding-left:10px;"> {{date('H:m', strtotime($atendimento->created_at))}} </td>
                                 <td>{{$atendimento->Animal->Cliente->nome}} </td>
                                 <td>{{$atendimento->Animal->nome}} </td>
+                                <td>{{$atendimento->Veterinario->name}} </td>
                                 <td>
 
                                     @if($atendimento->status == 'Aguardando')
@@ -74,7 +78,6 @@
                                         <label class="label label-primary"> {{$atendimento->status}} </label>
                                     @endif
                                 </td>
-                                <td style="padding:10px">  <a class="text-white label theme-bg" href="{{route('atendimentos.edit', $atendimento->id)}}">Acessar</a>  </td>
 
                             </tr>
 
@@ -100,8 +103,9 @@
                                     <th>Hora</th>
                                     <th>Cliente</th>
                                     <th>Animal</th>
+                                    <th>Fila</th>
                                     <th>Status</th>
-                                    <th width="50">Opção</th>
+
 
                                 </tr></thead>
                                 <tbody>
@@ -112,10 +116,11 @@
 
                                     @if($atendimento->status == 'Aguardando')
 
-                                    <tr>
+                                     <tr onclick="window.location='{{route("atendimentos.edit", $atendimento->id)}}'">
                                         <td style="padding-left:10px;"> {{date('H:m', strtotime($atendimento->created_at))}} </td>
                                         <td>{{$atendimento->Animal->Cliente->nome}} </td>
                                         <td>{{$atendimento->Animal->nome}} </td>
+                                        <td>{{$atendimento->Veterinario->name}} </td>
                                         <td>
 
                                             @if($atendimento->status == 'Aguardando')
@@ -126,7 +131,7 @@
                                                 <label class="label label-primary"> {{$atendimento->status}} </label>
                                             @endif
                                         </td>
-                                        <td style="padding:10px">  <a class="text-white label theme-bg" href="{{route('atendimentos.edit', $atendimento->id)}}">Acessar</a>  </td>
+
 
                                     </tr>
 
@@ -153,8 +158,9 @@
                                     <th>Hora</th>
                                     <th>Cliente</th>
                                     <th>Animal</th>
+                                    <th>Fila</th>
                                     <th>Status</th>
-                                    <th width="50">Opção</th>
+
 
                                 </tr></thead>
                                 <tbody>
@@ -165,10 +171,11 @@
 
                                     @if($atendimento->status == 'Em Atendimento')
 
-                                        <tr>
+                                        <tr onclick="window.location='{{route("atendimentos.edit", $atendimento->id)}}'">
                                             <td style="padding-left:10px;"> {{date('H:m', strtotime($atendimento->created_at))}} </td>
                                             <td>{{$atendimento->Animal->Cliente->nome}} </td>
                                             <td>{{$atendimento->Animal->nome}} </td>
+                                            <td>{{$atendimento->Veterinario->name}} </td>
                                             <td>
 
                                                 @if($atendimento->status == 'Aguardando')
@@ -179,7 +186,6 @@
                                                     <label class="label label-primary"> {{$atendimento->status}} </label>
                                                 @endif
                                             </td>
-                                            <td style="padding:10px">  <a class="text-white label theme-bg" href="{{route('atendimentos.edit', $atendimento->id)}}">Acessar</a>  </td>
 
                                         </tr>
 
@@ -204,8 +210,9 @@
                                     <th>Hora</th>
                                     <th>Cliente</th>
                                     <th>Animal</th>
+                                    <th>Fila</th>
                                     <th>Status</th>
-                                    <th width="50">Opção</th>
+
 
                                 </tr></thead>
                                 <tbody>
@@ -216,10 +223,11 @@
 
                                     @if($atendimento->status == 'Atendido')
 
-                                        <tr>
+                                        <tr onclick="window.location='{{route("atendimentos.edit", $atendimento->id)}}'">
                                             <td style="padding-left:10px;"> {{date('H:m', strtotime($atendimento->created_at))}} </td>
                                             <td>{{$atendimento->Animal->Cliente->nome}} </td>
                                             <td>{{$atendimento->Animal->nome}} </td>
+                                            <td>{{$atendimento->Veterinario->name}} </td>
                                             <td>
 
                                                 @if($atendimento->status == 'Aguardando')
@@ -230,7 +238,6 @@
                                                     <label class="label label-primary"> {{$atendimento->status}} </label>
                                                 @endif
                                             </td>
-                                            <td style="padding:10px">  <a class="text-white label theme-bg" href="{{route('atendimentos.edit', $atendimento->id)}}">Acessar</a>  </td>
 
                                         </tr>
 
@@ -280,9 +287,6 @@
             .on('changeDate', function(e) {
                 // `e` here contains the extra attributes
                 mudar_data(e.format(0,'yyyy-mm-dd'));
-
-
-
 
             });
 
