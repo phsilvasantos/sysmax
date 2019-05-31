@@ -861,6 +861,9 @@ class NfceController extends AppController
         $nfce = Nfce::where('venda_id', $id)->get();
 
         $venda = Venda::where('id', $id)->with('cliente','itens','pagamentos')->get()[0];
+
+        dd($venda);
+
         $empresa = Empresa::where('id', 1)->get()[0]; //todo alterar para pegar a empresa logada
 
         self::tools($empresa);
