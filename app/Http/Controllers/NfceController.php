@@ -926,7 +926,7 @@ class NfceController extends AppController
 
             self::tagpag();
 
-            foreach ($venda->Pagamentos as $key => $pagamento) {
+            foreach ($venda->Pagamentos->with('Formas') as $key => $pagamento) {
 
 
                 self::tagdetPag($pagamento);
