@@ -469,7 +469,7 @@ class NfceController extends AppController
 
     public function tagdetPag($pagamento) {
 
-        $pagament = Forma_Pagamento::where('id', $pagamento->id)->with('Formas')->get();
+        $pagament = Forma_Pagamento::where('id', $pagamento->id)->with('forma_pagamentos')->get();
 
         dd($pagament);
 
