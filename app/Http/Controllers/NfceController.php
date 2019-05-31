@@ -467,6 +467,8 @@ class NfceController extends AppController
 
     public function tagdetPag($pagamento) {
 
+        dd($pagamento->Formas);
+
         $std = new \stdClass();
         $std->tPag = $pagamento->Formas->tPag;
         $std->vPag = number_format($pagamento->valor ,2,'.','') ; //Obs: deve ser informado o valor pago pelo cliente
@@ -861,8 +863,6 @@ class NfceController extends AppController
         $nfce = Nfce::where('venda_id', $id)->get();
 
         $venda = Venda::where('id', $id)->with('cliente','itens','pagamentos')->get()[0];
-
-        dd($venda);
 
         $empresa = Empresa::where('id', 1)->get()[0]; //todo alterar para pegar a empresa logada
 
