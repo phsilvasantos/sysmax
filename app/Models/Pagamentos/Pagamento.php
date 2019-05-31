@@ -5,7 +5,7 @@ namespace App\Models\Pagamentos;
 use App\Models\ModelDefault;
 
 
-class Pagamento extends ModelDefault
+class Forma_Pagamento extends ModelDefault
 {
 
 
