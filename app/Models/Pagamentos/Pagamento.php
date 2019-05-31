@@ -11,7 +11,7 @@ class Pagamento extends ModelDefault
 
     public function Formas()
     {
-        return $this->belongsTo('App\Models\Forma_Pagamentos\Forma_pagamento','forma_pagamento_id','id');
+        return $this->belongsTo('App\Models\Forma_Pagamentos\Forma_pagamento','id','forma_pagamento_id');
     }
 
     public function Usuario()

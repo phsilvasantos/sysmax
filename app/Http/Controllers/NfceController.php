@@ -7,6 +7,7 @@ use App\Models\Empresas\Empresa;
 use App\Models\Nfces\Nfce;
 use App\Models\Nfces\NfceDetalhe;
 use App\Models\Pagamentos\Pagamento;
+use App\Models\Forma_Pagamentos\Forma_Pagamento;
 use App\Models\Vendas\Venda;
 use http\Env\Response;
 use Illuminate\Http\Request;
@@ -468,6 +469,7 @@ class NfceController extends AppController
 
     public function tagdetPag($pagamento) {
 
+        $pagamento =
 
         $std = new \stdClass();
         $std->tPag = $pagamento->Formas->tPag;
