@@ -469,15 +469,14 @@ class NfceController extends AppController
 
     public function tagdetPag($pagamento) {
 
-        $pagament = Pagamento::where('id', $pagamento->id)->with('forma_pagamentos')->get();
+        $forma = Forma_Pagamento::where('id', $pagamento->forma_pagamento_id)->get()[0];
 
-        dd($pagament);
 
         $std = new \stdClass();
-        $std->tPag = $pagamento->Formas->tPag;
+        $std->tPag = $forma->tPag;
         $std->vPag = number_format($pagamento->valor ,2,'.','') ; //Obs: deve ser informado o valor pago pelo cliente
         //$std->CNPJ = '12345678901234';
-        $std->tBand = $pagamento->Formas->tBand;
+        $std->tBand = $forma->tBand;
         //$std->cAut = '3333333';
         $std->tpIntegra = 2; //incluso na NT 2015/002
         if ($pagamento->parcelas == 1) {
