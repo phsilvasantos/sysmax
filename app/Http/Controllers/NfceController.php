@@ -6,6 +6,7 @@ use App\Models\Clientes\Cliente;
 use App\Models\Empresas\Empresa;
 use App\Models\Nfces\Nfce;
 use App\Models\Nfces\NfceDetalhe;
+use App\Models\Pagamentos\Pagamento;
 use App\Models\Vendas\Venda;
 use http\Env\Response;
 use Illuminate\Http\Request;
@@ -467,7 +468,6 @@ class NfceController extends AppController
 
     public function tagdetPag($pagamento) {
 
-        dd($pagamento);
 
         $std = new \stdClass();
         $std->tPag = $pagamento->Formas->tPag;
@@ -925,6 +925,11 @@ class NfceController extends AppController
             self::tagpag();
 
             foreach ($venda->Pagamentos as $key => $pagamento) {
+
+                $pagament = Pagamento::where('id', $pagamento->id)->with('Formas')->get();
+
+                dd($pagament);
+
                 self::tagdetPag($pagamento);
             }
 
