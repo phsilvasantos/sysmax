@@ -881,11 +881,6 @@ class NfceController extends AppController
                 $consulta = self::consulta($venda, $empresa, $recibo);
 
 
-                $url = Storage::get($nfce[0]->arquivo.'.pdf');
-
-                dd($url);
-
-
                 return response()->file(__DIR__ .'\..\..\..\storage\app\public\arquivos\empresa_id_'. $empresa->id .'\\'.'xml\\'.$nfce[0]->mesAno .'\\PDFs\\'.$nfce[0]->arquivo.'.pdf');
 
             }else{
