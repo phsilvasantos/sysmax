@@ -881,7 +881,7 @@ class NfceController extends AppController
                 $consulta = self::consulta($venda, $empresa, $recibo);
 
 
-                return response()->file(url('storage/arquivos/empresa_id_'.'\\'.'xml\\'.$nfce[0]->mesAno .'\\PDFs\\'.$nfce[0]->arquivo.'.pdf'));    // __DIR__ .'\..\..\..\storage\app\public\arquivos\empresa_id_'. $empresa->id .'\\'.'xml\\'.$nfce[0]->mesAno .'\\PDFs\\'.$nfce[0]->arquivo.'.pdf');
+                return response()->file(url('storage/arquivos/empresa_id_'. $empresa->id .'\\'.'xml\\'.$nfce[0]->mesAno .'\\PDFs\\'.$nfce[0]->arquivo.'.pdf'));    // __DIR__ .'\..\..\..\storage\app\public\arquivos\empresa_id_'. $empresa->id .'\\'.'xml\\'.$nfce[0]->mesAno .'\\PDFs\\'.$nfce[0]->arquivo.'.pdf');
 
             }else{
 
