@@ -881,7 +881,7 @@ class NfceController extends AppController
                 $consulta = self::consulta($venda, $empresa, $recibo);
 
 
-                $url = Storage::url($nfce[0]->arquivo.'.pdf');
+                $url = Storage::get($nfce[0]->arquivo.'.pdf');
 
                 dd($url);
 
