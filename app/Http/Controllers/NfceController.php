@@ -11,6 +11,7 @@ use App\Models\Forma_Pagamentos\Forma_Pagamento;
 use App\Models\Vendas\Venda;
 use http\Env\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use NFePHP\Common\Certificate;
 use NFePHP\DA\NFe\Danfce;
@@ -867,7 +868,7 @@ class NfceController extends AppController
 
         $venda = Venda::where('id', $id)->with('cliente','itens','pagamentos')->get()[0];
 
-        $empresa = Empresa::where('id', 1)->get()[0]; //todo alterar para pegar a empresa logada
+        $empresa = Empresa::where('id', Auth::user()->empresa_id)->get()[0]; //todo alterar para pegar a empresa logada
 
         self::tools($empresa);
 
