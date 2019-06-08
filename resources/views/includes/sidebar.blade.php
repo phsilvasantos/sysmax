@@ -5,7 +5,7 @@
                 <div class="b-bg">
                     <i class="feather icon-trending-up"></i>
                 </div>
-                <span class="b-title">SYSMAX</span>
+                <span class="b-title">SYSVET</span>
             </a>
             <a class="mobile-menu" id="mobile-collapse" href="javascript:"><span></span></a>
         </div>
