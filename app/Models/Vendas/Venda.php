@@ -42,6 +42,10 @@ class Venda extends ModelDefault
     }
 
 
+    public function Nfce()
+    {
+        return $this->belongsTo('App\Models\Nfces\Nfce', 'venda_id','id');
+    }
 
 
 }

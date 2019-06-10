@@ -333,10 +333,25 @@
                     </span>
                     @endif
 
-                    <span class="label theme-bg text-white f-14 f-w-400 float-right btn-rounded btn-block" style="padding:10px" onclick="gerar_nfce()">
+
+                    @if($venda[0]->status == 'Quitada' and $venda[0]->Nfce->status == '4 - OK - Autorizado uso')
+
+                            <span class="label theme-bg text-white f-14 f-w-400 float-right btn-rounded btn-block" style="padding:10px" >
                         <i class="fa fa-edit"></i>
-                        <a href="#" class="float-right" style="color:white;" >Gerar NFCE</a>
+                        <a href="#" class="float-right" style="color:white;" >Imprimir NFCE</a>
+
+                     @else
+
+                            <span class="label theme-bg text-white f-14 f-w-400 float-right btn-rounded btn-block" style="padding:10px" onclick="gerar_nfce()">
+                            <i class="fa fa-edit"></i>
+                            <a href="#" class="float-right" style="color:white;" >Gerar NFCE</a>
+                        </span>
+
+
+
                     </span>
+
+                    @endif
 
 
                 </div>
