@@ -112,7 +112,7 @@ class VendaController extends AppController
 
     public function edit($id){
 
-        $venda = Venda::where('id', $id)->get();
+        $venda = Venda::where('id', $id)->with('Nfce')->get();
 
         $instace = new $this->model;
 
