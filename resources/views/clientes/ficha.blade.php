@@ -20,7 +20,10 @@
                                 <div class="col-md-12">
 
                                     <div class="" style="text-align:center;">
-                                        <div><i class="fas fa-globe m-r-5" style="font-size:38px; padding-top:50px;"></i></div>
+                                        <div>
+                                            {{--<i class="fas fa-globe m-r-5" style="font-size:38px; padding-top:50px;"></i>--}}
+                                            <img class="img-fluid rounded-circle" style="width:40px;" src="{{ str_replace('public','storage', url(Auth::user()->Empresa->logo))}}" alt="dashboard-user">
+                                        </div>
                                     </div>
 
                                     <br>
