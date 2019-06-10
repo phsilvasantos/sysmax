@@ -63,7 +63,7 @@
         <div class="card" style="background:#f4f7fa; box-shadow:0 0 0 0;-webkit-box-shadow:0 0 0 0;">
             <span class="label theme-bg text-white f-14 f-w-400 float-right btn-rounded btn-block" style="padding:10px"   onclick="pagamento()">
                 <i class="fa fa-edit"></i>
-                <a href="{{route('nfce.regerar',$registros[0]->id )}}" class="float-right" style="color:white;">Regerar XML</a>
+                <a href="{{route('nfce.regerar',$registros[0]->Nfce->venda_id )}}" class="float-right" style="color:white;">Regerar XML</a>
             </span>
             <span class="label theme-bg text-white f-14 f-w-400 float-right btn-rounded btn-block" style="padding:10px" onclick="lancar()">
                         <i class="fa fa-edit"></i>
