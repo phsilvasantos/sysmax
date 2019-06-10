@@ -64,10 +64,11 @@ class UserController extends Controller
     public function store(Request $request)
     {
         //
+        $dados = $request->all();
 
+        $dados->empresa_id = Auth::user()->empresa_id;
 
-
-        $registro = new $this->model($request->except('_token','_method'));
+        $registro = new $this->model($dados);
         $registro->save();
 
 
