@@ -887,6 +887,10 @@ class NfceController extends AppController
             }else{
 
 
+                self::montaxml($empresa, $venda);
+                self::assina($empresa, $venda);
+
+
 
                 $envio = self::envia($venda, $empresa);
 
