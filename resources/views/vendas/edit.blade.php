@@ -333,6 +333,7 @@
                     </span>
                     @endif
 
+                    <?php dd($venda[0]->Nfce); ?>
 
                     @if($venda[0]->status == 'Quitada' and $venda[0]->Nfce->status == '4 - OK - Autorizado uso')
 
