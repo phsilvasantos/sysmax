@@ -887,11 +887,6 @@ class NfceController extends AppController
             }else{
 
 
-                self::montaxml($empresa, $venda);
-                self::assina($empresa, $venda);
-
-
-
                 $envio = self::envia($venda, $empresa);
 
                 sleep(2);
@@ -958,6 +953,78 @@ class NfceController extends AppController
             return response()->file(__DIR__ .'\..\..\..\storage\app\public\arquivos\empresa_id_'. $empresa->id .'\\'.'xml\\'.$nfce->mesAno .'\\PDFs\\'.$nfce->arquivo.'.pdf');
 
         };
+
+
+
+    }
+
+
+    public function regerar($id){
+
+
+
+
+        $nfce = Nfce::where('venda_id', $id)->get();
+
+        $venda = Venda::where('id', $id)->with('cliente','itens','pagamentos')->get()[0];
+
+        $empresa = Empresa::where('id', Auth::user()->empresa_id)->get()[0]; //todo alterar para pegar a empresa logada
+
+        self::tools($empresa);
+
+
+
+
+            self::taginfNFe($empresa);
+            self::tagide($empresa, $venda);
+            self::tagemit($empresa);
+            self::tagenderEmit($empresa);
+
+            $cpf =  '';
+
+
+            foreach ($venda->Itens as $key => $item) {
+
+                $item->sequencial = $key + 1;
+                self::tagprod($item);
+                self::tagimposto($item);
+
+                if ($item->produto->tipo == 'servico') {
+                    self::tagISSQN($item, $empresa);
+                }
+
+                self::tagPIS($item);
+                self::tagCOFINS($item);
+
+            }
+
+            self::tagpag();
+
+            foreach ($venda->Pagamentos as $key => $pagamento) {
+
+                self::tagdetPag($pagamento);
+            }
+
+            self::tagICMSTot($venda);
+            self::tagISSQNTot($venda, $empresa);
+            self::tagtransp();
+
+            self::montaxml($empresa, $venda);
+
+            self::assina($empresa, $venda);
+
+            $envio = self::envia($venda, $empresa);
+
+
+
+            $nfce = Nfce::where('venda_id', $venda->id)->get()[0];
+            $recibo = $nfce->recibo;
+
+            $consulta = self::consulta($venda, $empresa, $recibo);
+
+            return response()->file(__DIR__ .'\..\..\..\storage\app\public\arquivos\empresa_id_'. $empresa->id .'\\'.'xml\\'.$nfce->mesAno .'\\PDFs\\'.$nfce->arquivo.'.pdf');
+
+
 
 
 
