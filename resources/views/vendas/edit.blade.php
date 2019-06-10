@@ -333,9 +333,9 @@
                     </span>
                     @endif
 
-                    <?php dd($venda[0]->Nfce); ?>
+                    
 
-                    @if($venda[0]->status == 'Quitada' and $venda[0]->Nfce->status == '4 - OK - Autorizado uso')
+                    @if($venda[0]->status == 'Quitada' and $venda[0]->Nfce[0]->status == '4 - OK - Autorizado uso')
 
                             <span class="label theme-bg text-white f-14 f-w-400 float-right btn-rounded btn-block" style="padding:10px" >
                         <i class="fa fa-edit"></i>
