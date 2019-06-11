@@ -1033,7 +1033,7 @@ class NfceController extends AppController
 
     public function consulta_recibo($id){
 
-        $nfce = Nfce::where('venda_id', $id)->get()[0];
+        $nfce = Nfce::where('venda_id', $id)->get();
 
         $venda = Venda::where('id', $id)->with('cliente','itens','pagamentos')->get()[0];
 
@@ -1041,9 +1041,11 @@ class NfceController extends AppController
 
         self::tools($empresa);
 
-        $recibo = $nfce->recibo;
+        $recibo = $nfce[0]->recibo;
 
         $consulta = self::consulta($venda, $empresa, $recibo);
+
+        return redirect()->away(url('storage/arquivos/empresa_id_'. $empresa->id .'\\'.'xml\\'.$nfce[0]->mesAno .'\\PDFs\\'.$nfce[0]->arquivo.'.pdf'));
 
 
     }
