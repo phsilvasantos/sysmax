@@ -67,7 +67,7 @@
             </span>
             <span class="label theme-bg text-white f-14 f-w-400 float-right btn-rounded btn-block" style="padding:10px" onclick="lancar()">
                         <i class="fa fa-edit"></i>
-                        <a href="" target="_blank" class="float-right" style="color:white;" >Gerar NFCE</a>
+                        <a href="{{route('nfce.consulta',$registros[0]->Nfce->venda_id )}}" target="_blank" class="float-right" style="color:white;" >Consulta Recibo</a>
                     </span>
 
 

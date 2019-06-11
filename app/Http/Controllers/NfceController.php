@@ -896,7 +896,7 @@ class NfceController extends AppController
 
                 $consulta = self::consulta($venda, $empresa, $recibo);
 
-                return response()->file(__DIR__ .'\..\..\..\storage\app\public\arquivos\empresa_id_'. $empresa->id .'\\'.'xml\\'.$nfce->mesAno .'\\PDFs\\'.$nfce->arquivo.'.pdf');
+                return redirect()->away(url('storage/arquivos/empresa_id_'. $empresa->id .'\\'.'xml\\'.$nfce[0]->mesAno .'\\PDFs\\'.$nfce[0]->arquivo.'.pdf'));
             };
 
         }else {
@@ -1026,6 +1026,24 @@ class NfceController extends AppController
 
 
 
+
+
+    }
+
+
+    public function consulta_recibo($id){
+
+        $nfce = Nfce::where('venda_id', $id)->get();
+
+        $venda = Venda::where('id', $id)->with('cliente','itens','pagamentos')->get()[0];
+
+        $empresa = Empresa::where('id', Auth::user()->empresa_id)->get()[0]; //todo alterar para pegar a empresa logada
+
+        self::tools($empresa);
+
+        $recibo = $nfce->recibo;
+
+        $consulta = self::consulta($venda, $empresa, $recibo);
 
 
     }
