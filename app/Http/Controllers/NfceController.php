@@ -1033,7 +1033,7 @@ class NfceController extends AppController
 
     public function consulta_recibo($id){
 
-        $nfce = Nfce::where('venda_id', $id)->get();
+        $nfce = Nfce::where('venda_id', $id)->get()[0];
 
         $venda = Venda::where('id', $id)->with('cliente','itens','pagamentos')->get()[0];
 
