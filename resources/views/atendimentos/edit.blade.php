@@ -621,7 +621,7 @@
                         <div class="form-group col-md-6">
                             <label for="nome" class="control-label">Data Hora:</label>
 
-                            <input type="text" class="form-control form-control-sm" id="data_hora" readonly value="{{date('d/m/y H:m', strtotime(now()))}}"></input>
+                            <input type="text" class="form-control form-control-sm" id="data_hora" readonly value="{{date('d/m/y H:m')}}"></input>
 
                         </div>
 
