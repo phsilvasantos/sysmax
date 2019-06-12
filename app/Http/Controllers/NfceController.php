@@ -554,6 +554,10 @@ class NfceController extends AppController
 
     public function assina($empresa, $venda){
 
+        $this->tool = new \NFePHP\NFe\Tools($this->config, $this->certificado);
+        $this->tool->Model($empresa->mod);
+        $this->tool->tpAmb = $empresa->tpAmb;
+
 
         if( is_numeric($empresa)){
 
@@ -564,12 +568,12 @@ class NfceController extends AppController
         }
 
 
-        $nfce = Nfce::where('venda_id', $venda->id)->get()[0];
+        $nfce = Nfce::where('venda_id', $venda->id)->orderby('id','desc')->get()[0];
         $xml = Storage::get('public/arquivos/empresa_id_'. $empresa->id .'/'.'xml/'.$nfce->mesAno .'/'.$nfce->arquivo.'.xml');
 
 
 
-        $this->xmlAssinado = $this->tools->signNFe($xml);
+        $this->xmlAssinado = $this->tool->signNFe($xml);
 
 
         //obtem a chave para salvar como nome do arquivo
@@ -580,7 +584,7 @@ class NfceController extends AppController
         Storage::put('public/arquivos/empresa_id_'. $empresa->id .'/'.'xml/'.$mesAno .'/Assinados/'.$nome.'-assinado.xml', $this->xmlAssinado);
 
 
-        $nfce = Nfce::where('venda_id', $venda->id)->get()[0];
+        $nfce = Nfce::where('venda_id', $venda->id)->orderby('id','desc')->get()[0];
 
         $detalhes = NfceDetalhe::create([
             'venda_id' => $venda->id,
@@ -870,7 +874,7 @@ class NfceController extends AppController
 
 
 
-        $nfce = Nfce::where('venda_id', $id)->get();
+        $nfce = Nfce::where('venda_id', $id)->orderby('id','desc')->get();
 
         $venda = Venda::where('id', $id)->with('cliente','itens','pagamentos')->get()[0];
 
@@ -951,7 +955,7 @@ class NfceController extends AppController
 
 
 
-            $nfce = Nfce::where('venda_id', $venda->id)->get()[0];
+            $nfce = Nfce::where('venda_id', $venda->id)->orderby('id','desc')->get()[0];
             $recibo = $nfce->recibo;
 
             $consulta = self::consulta($venda, $empresa, $recibo);
@@ -970,7 +974,7 @@ class NfceController extends AppController
 
 
 
-        $nfce = Nfce::where('venda_id', $id)->get();
+        $nfce = Nfce::where('venda_id', $id)->orderby('id','desc')->get();
 
         $venda = Venda::where('id', $id)->with('cliente','itens','pagamentos')->get()[0];
 
@@ -1023,7 +1027,7 @@ class NfceController extends AppController
 
 
 
-            $nfce = Nfce::where('venda_id', $venda->id)->get()[0];
+            $nfce = Nfce::where('venda_id', $venda->id)->orderby('id','desc')->get()[0];
             $recibo = $nfce->recibo;
 
             $consulta = self::consulta($venda, $empresa, $recibo);
