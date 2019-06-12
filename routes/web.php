@@ -35,6 +35,7 @@ Route::get('/nfce/{venda_id}', 'NfceController@gerar')->name('nfce.gerar');
 Route::get('/nfce/regerar/{venda_id}', 'NfceController@regerar')->name('nfce.regerar');
 Route::get('/nfce/consulta_recibo/{venda_id}', 'NfceController@consulta_recibo')->name('nfce.consulta');
 Route::get('/nfce/consulta_chave/{venda_id}', 'NfceController@consulta_chave')->name('nfce.consulta_chave');
+Route::get('/nfce/download/{venda_id}', 'NfceController@download')->name('nfce.download');
 Route::get('/nfce/assina/{empresa}/{venda}', 'NfceController@assina')->name('nfce.assina');
 Route::get('/nfce/detalhes/{nfce_id}', 'NfceDetalheController@detalhes')->name('nfce.detalhes');
 Route::get('/atendimento/imprimir/{id}', 'AtendimentoController@imprimir')->name('atendimento.imprimir');

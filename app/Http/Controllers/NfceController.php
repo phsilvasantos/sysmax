@@ -1155,4 +1155,38 @@ class NfceController extends AppController
     }
 
 
+
+    public function download($id){
+
+        $nfce = Nfce::where('venda_id', $id)->orderby('id','desc')->get();
+
+        $venda = Venda::where('id', $id)->with('cliente','itens','pagamentos')->get()[0];
+
+        $empresa = Empresa::where('id', Auth::user()->empresa_id)->get()[0]; //todo alterar para pegar a empresa logada
+
+        self::tools($empresa);
+
+
+
+        try {
+
+
+            $tool = new \NFePHP\NFe\Tools($this->config, $this->certificado);
+            $tool->Model($empresa->mod);
+            $tool->tpAmb = $empresa->tpAmb;
+
+
+            $chave = '35180174283375000142550010000234761182919182';
+            $response = $tool->sefazDownload($chave);
+            header('Content-type: text/xml; charset=UTF-8');
+            echo $response;
+
+        } catch (\Exception $e) {
+            echo str_replace("\n", "<br/>", $e->getMessage());
+        }
+
+
+    }
+
+
 }

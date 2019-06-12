@@ -75,6 +75,12 @@
                         <a href="{{route('nfce.consulta_chave',$registros[0]->Nfce->venda_id )}}" target="_blank" class="float-right" style="color:white;" >Consulta Chave</a>
                     </span>
 
+            <span class="label theme-bg text-white f-14 f-w-400 float-right btn-rounded btn-block" style="padding:10px" onclick="lancar()">
+                        <i class="fa fa-edit"></i>
+                        <a href="{{route('nfce.download',$registros[0]->Nfce->venda_id )}}" target="_blank" class="float-right" style="color:white;" >Download</a>
+                    </span>
+
+
 
         </div>
 
