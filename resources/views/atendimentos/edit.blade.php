@@ -2,6 +2,7 @@
 
 @section('content')
 
+    <?php date_default_timezone_set('America/Sao_Paulo'); ?>
 
     <div class="row">
         <div class="col-md-12">
