@@ -1191,6 +1191,8 @@ class NfceController extends AppController
 
             } catch (\Exception $e) {
                 echo $e->getMessage();
+
+                dd($e->getMessage());
                 //tratar o erro
             }
 
