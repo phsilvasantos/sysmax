@@ -1167,22 +1167,60 @@ class NfceController extends AppController
         self::tools($empresa);
 
 
+        $tool = new \NFePHP\NFe\Tools($this->config, $this->certificado);
+        $tool->Model($empresa->mod);
+        $tool->tpAmb = $empresa->tpAmb;
 
-        try {
+        //este numero deverá vir do banco de dados nas proximas buscas para reduzir
+        //a quantidade de documentos, e para não baixar várias vezes as mesmas coisas.
+        $ultNSU = 0;
+        $maxNSU = $ultNSU;
+        $loopLimit = 50;
+        $iCount = 0;
 
+        //executa a busca de DFe em loop
+        while ($ultNSU <= $maxNSU) {
+            $iCount++;
+            if ($iCount >= $loopLimit) {
+                break;
+            }
+            try {
+                //executa a busca pelos documentos
+                $resp = $tool->sefazDistDFe($ultNSU);
+            } catch (\Exception $e) {
+                echo $e->getMessage();
+                //tratar o erro
+            }
 
-            $tool = new \NFePHP\NFe\Tools($this->config, $this->certificado);
-            $tool->Model($empresa->mod);
-            $tool->tpAmb = $empresa->tpAmb;
-
-
-            $chave = '35180174283375000142550010000234761182919182';
-            $response = $tool->sefazDownload($chave);
-            header('Content-type: text/xml; charset=UTF-8');
-            echo $response;
-
-        } catch (\Exception $e) {
-            echo str_replace("\n", "<br/>", $e->getMessage());
+            //extrair e salvar os retornos
+            $dom = new \DOMDocument();
+            $dom->loadXML($resp);
+            $node = $dom->getElementsByTagName('retDistDFeInt')->item(0);
+            $tpAmb = $node->getElementsByTagName('tpAmb')->item(0)->nodeValue;
+            $verAplic = $node->getElementsByTagName('verAplic')->item(0)->nodeValue;
+            $cStat = $node->getElementsByTagName('cStat')->item(0)->nodeValue;
+            $xMotivo = $node->getElementsByTagName('xMotivo')->item(0)->nodeValue;
+            $dhResp = $node->getElementsByTagName('dhResp')->item(0)->nodeValue;
+            $ultNSU = $node->getElementsByTagName('ultNSU')->item(0)->nodeValue;
+            $maxNSU = $node->getElementsByTagName('maxNSU')->item(0)->nodeValue;
+            $lote = $node->getElementsByTagName('loteDistDFeInt')->item(0);
+            if (empty($lote)) {
+                //lote vazio
+                continue;
+            }
+            //essas tags irão conter os documentos zipados
+            $docs = $lote->getElementsByTagName('docZip');
+            foreach ($docs as $doc) {
+                $numnsu = $doc->getAttribute('NSU');
+                $schema = $doc->getAttribute('schema');
+                //descompacta o documento e recupera o XML original
+                $content = gzdecode(base64_decode($doc->nodeValue));
+                //identifica o tipo de documento
+                $tipo = substr($schema, 0, 6);
+                //processar o conteudo do NSU, da forma que melhor lhe interessar
+                //esse processamento depende do seu aplicativo
+            }
+            sleep(2);
         }
 
 
