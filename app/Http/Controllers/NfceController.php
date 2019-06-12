@@ -1187,6 +1187,8 @@ class NfceController extends AppController
             try {
                 //executa a busca pelos documentos
                 $resp = $tool->sefazDistDFe($ultNSU);
+                dd($resp);
+
             } catch (\Exception $e) {
                 echo $e->getMessage();
                 //tratar o erro
