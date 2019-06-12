@@ -13,7 +13,7 @@ class Atendimento_Detalhes extends ModelDefault
 
     public function Usuario()
     {
-        return $this->belongsTo('App\User', 'user_id', 'id');
+        return $this->belongsTo('App\User', 'user_id', 'id')->withTrashed();
     }
 
     public function TodasVacinas()
