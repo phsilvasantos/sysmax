@@ -593,6 +593,12 @@ class NfceController extends AppController
 
     public function montaxml($empresa, $venda){
 
+
+        $this->tool = new \NFePHP\NFe\Tools($this->config, $this->certificado);
+        $this->tool->Model($empresa->mod);
+        $this->tool->tpAmb = $empresa->tpAmb;
+
+
         $result = $this->make->monta();
 
 
