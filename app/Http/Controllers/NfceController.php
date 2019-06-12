@@ -639,7 +639,7 @@ class NfceController extends AppController
         $this->tool->Model($empresa->mod);
         $this->tool->tpAmb = $empresa->tpAmb;
 
-        $nfce = Nfce::where('venda_id', $venda->id)->get()[0];
+        $nfce = Nfce::where('venda_id', $venda->id)->orderby('id', 'desc')->get()[0];
 
         $xmlAssinado = Storage::get('public/arquivos/empresa_id_'. $empresa->id .'/'.'xml/'.$nfce->mesAno .'/Assinados/'.$nfce->arquivo.'-assinado.xml');
 
