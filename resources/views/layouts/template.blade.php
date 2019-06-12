@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<?php date_default_timezone_set('America/Sao_Paulo'); ?>
 <head>
     <title>SYSVET</title>
     <!-- HTML5 Shim and Respond.js IE10 support of HTML5 elements and media queries -->
