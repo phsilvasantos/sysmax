@@ -1101,6 +1101,58 @@ class NfceController extends AppController
 
 
 
+    public function consulta_chave($id){
+
+        $nfce = Nfce::where('venda_id', $id)->orderby('id','desc')->get();
+
+        $venda = Venda::where('id', $id)->with('cliente','itens','pagamentos')->get()[0];
+
+        $empresa = Empresa::where('id', Auth::user()->empresa_id)->get()[0]; //todo alterar para pegar a empresa logada
+
+        self::tools($empresa);
+
+
+
+        try {
+
+            $tool = new \NFePHP\NFe\Tools($this->config, $this->certificado);
+            $tool->Model($empresa->mod);
+            $tool->tpAmb = $empresa->tpAmb;
+
+
+            /*$certificate = Certificate::readPfx($content, 'senha');
+            $tools = new Tools($configJson, $certificate);
+            $tools->model('55');*/
+
+            $chave = $nfce[0]->arquivo; //'52170522555994000145550010000009651275106690';
+            $response = $tool->sefazConsultaChave($chave);
+
+            //você pode padronizar os dados de retorno atraves da classe abaixo
+            //de forma a facilitar a extração dos dados do XML
+            //NOTA: mas lembre-se que esse XML muitas vezes será necessário,
+            //      quando houver a necessidade de protocolos
+            $stdCl = new Standardize($response);
+            //nesse caso $std irá conter uma representação em stdClass do XML
+            $std = $stdCl->toStd();
+            //nesse caso o $arr irá conter uma representação em array do XML
+            //$arr = $stdCl->toArray();
+            //nesse caso o $json irá conter uma representação em JSON do XML
+            //$json = $stdCl->toJson();
+
+            dd($std);
+
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+        }
+
+
+
+
+
+
+
+
+    }
 
 
 }
