@@ -955,8 +955,8 @@ class NfceController extends AppController
 
 
 
-            $nfce = Nfce::where('venda_id', $venda->id)->orderby('id','desc')->get()[0];
-            $recibo = $nfce->recibo;
+            $nfce = Nfce::where('venda_id', $venda->id)->orderby('id','desc')->get();
+            $recibo = $nfce[0]->recibo;
 
             $consulta = self::consulta($venda, $empresa, $recibo);
 
