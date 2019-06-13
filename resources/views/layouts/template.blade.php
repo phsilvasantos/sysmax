@@ -38,7 +38,7 @@
     <!-- datetimepicker css -->
     <link rel="stylesheet" href="{{url('dattaable/assets/plugins/data-tables/css/datatables.min.css')}}">
 
-
+    <script src="https://cdn.ckeditor.com/4.11.4/standard/ckeditor.js"></script>
 
 
 </head>
