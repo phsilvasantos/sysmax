@@ -828,9 +828,7 @@
         </div>
     </div>
 
-    <script>
-        CKEDITOR.replace( 'descricao' );
-    </script>
+
 
 @endsection
 

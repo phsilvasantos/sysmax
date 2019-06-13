@@ -207,7 +207,7 @@
                     </div>
                     <div class="card-block pb-0">
                         <div class="table-responsive">
-                            <table class="table table-hover  table-list" id="myTable">
+                            <table class="table table-hover  table-list" id="myTable3">
                                 <thead>
                                 <tr>
 
