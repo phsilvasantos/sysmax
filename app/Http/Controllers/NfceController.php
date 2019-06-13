@@ -899,7 +899,7 @@ class NfceController extends AppController
 
                 $envio = self::envia($venda, $empresa);
 
-                sleep(2);
+                sleep(10);
 
                 $nfce = Nfce::where('venda_id', $venda->id)->get()[0];
                 $recibo = $nfce->recibo;
@@ -1224,7 +1224,7 @@ class NfceController extends AppController
                 //processar o conteudo do NSU, da forma que melhor lhe interessar
                 //esse processamento depende do seu aplicativo
             }
-            sleep(2);
+            sleep(10);
         }
 
 
