@@ -901,8 +901,8 @@ class NfceController extends AppController
 
                 sleep(10);
 
-                $nfce = Nfce::where('venda_id', $venda->id)->get()[0];
-                $recibo = $nfce->recibo;
+                $nfce = Nfce::where('venda_id', $venda->id)->get();
+                $recibo = $nfce[0]->recibo;
 
                 $consulta = self::consulta($venda, $empresa, $recibo);
 
