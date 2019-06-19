@@ -342,7 +342,7 @@
                         <i class="fa fa-edit"></i>
                         <a href="{{ str_replace('public','storage', url($venda[0]->Nfce[0]->nfce_pdf))}}" target="_blank" class="float-right" style="color:white;" >Imprimir NFCE</a>
 
-                     @else
+                     @elseif($venda[0]->status == 'Quitada')
 
                             <span class="label theme-bg text-white f-14 f-w-400 float-right btn-rounded btn-block" style="padding:10px" onclick="gerar_nfce()">
                             <i class="fa fa-edit"></i>
