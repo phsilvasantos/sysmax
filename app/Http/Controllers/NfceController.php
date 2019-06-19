@@ -634,6 +634,12 @@ class NfceController extends AppController
             ]);
 
 
+            $empresa->update([
+                'nNF' => $empresa->nNF +1,
+            ]);
+
+
+
         }
     }
 
@@ -777,9 +783,6 @@ class NfceController extends AppController
                     ]);
 
 
-                    $empresa->update([
-                        'nNF' => $empresa->nNF +1,
-                    ]);
 
 
                     $pdf = self::autoriza($nfce, $empresa);
