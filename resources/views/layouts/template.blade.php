@@ -309,6 +309,10 @@
         });
     } );
 
+    $(document).ready( function () {
+        $('#myTable4').DataTable();
+    } );
+
 
     function selecionar(){
 

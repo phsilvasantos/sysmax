@@ -40,7 +40,8 @@ Route::get('/nfce/assina/{empresa}/{venda}', 'NfceController@assina')->name('nfc
 Route::get('/nfce/detalhes/{nfce_id}', 'NfceDetalheController@detalhes')->name('nfce.detalhes');
 Route::get('/atendimento/imprimir/{id}', 'AtendimentoController@imprimir')->name('atendimento.imprimir');
 Route::post('/atendimentos/filtrar', 'AtendimentoController@filtrar')->name('atendimento.filtrar');
-
+Route::get('/relatorios/caixa', 'RelatorioController@caixa')->name('relatorio.caixa');
+Route::post('/relatorios/caixa', 'RelatorioController@caixa')->name('relatorio.caixa');
 
 
 Route::resource('/empresas', 'EmpresaController');
