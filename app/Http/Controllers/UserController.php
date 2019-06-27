@@ -67,8 +67,10 @@ class UserController extends Controller
         //
         $dados = $request->all();
 
-        $dados->empresa_id = Auth::user()->empresa_id;
-        
+
+
+        $dados['empresa_id'] = Auth::user()->empresa_id;
+
 
         $registro = new $this->model($dados);
         $registro->save();
