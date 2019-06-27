@@ -6,6 +6,7 @@ use App\Models\Auth\Roles\Role;
 use App\User;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Support\Facades\Auth;
 
 
 class UserController extends Controller
@@ -67,6 +68,7 @@ class UserController extends Controller
         $dados = $request->all();
 
         $dados->empresa_id = Auth::user()->empresa_id;
+        
 
         $registro = new $this->model($dados);
         $registro->save();
