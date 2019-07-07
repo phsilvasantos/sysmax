@@ -69,6 +69,8 @@ class UserController extends Controller
 
 
 
+        $dados['password'] = md5($request->password);
+
         $dados['empresa_id'] = Auth::user()->empresa_id;
 
 
