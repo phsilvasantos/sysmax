@@ -19,7 +19,7 @@ class AtendimentoController extends AppController
             $registros = $this->model::whereBetween('data_recepcao', [date('Y-m-d') . ' 00:00:00',date('Y-m-d') . ' 23:59:59'])->get();
 
         }else{
-            $registros = $this->model::whereBetween('data_recepcao', [date('Y-m-d') . ' 00:00:00',date('Y-m-d') . ' 23:59:59'])->where('user_id', Auth::user()->id)->get();
+            $registros = $this->model::whereBetween('data_recepcao', [date('Y-m-d') . ' 00:00:00',date('Y-m-d') . ' 23:59:59'])->whereIn('user_id', [Auth::user()->id, 3])->get();
 
         }
 
@@ -38,7 +38,7 @@ class AtendimentoController extends AppController
             $registros = $this->model::whereBetween('data_recepcao', [$request->data . ' 00:00:00',$request->data . ' 23:59:59'])->get();
 
         }else{
-            $registros = $this->model::whereBetween('data_recepcao', [$request->data . ' 00:00:00',$request->data . ' 23:59:59'])->where('user_id', Auth::user()->id)->orwhere('user_id','3')->get();
+            $registros = $this->model::whereBetween('data_recepcao', [$request->data . ' 00:00:00',$request->data . ' 23:59:59'])->whereIn('user_id', [Auth::user()->id, 3])->get();
 
         }
 
@@ -60,6 +60,7 @@ class AtendimentoController extends AppController
         if($registro->status == 'Aguardando'){
 
             $registro->status = 'Em Atendimento';
+            $registro->user_id = Auth::user()->id;
             $registro->data_atendimento = now();
             $registro->save();
         }

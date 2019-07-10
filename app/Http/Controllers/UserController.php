@@ -142,9 +142,14 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $dados = $request->except('_token','_method');
+
+        $dados['password'] = md5($request->password);
+
+
         $registro = $this->model::where('id',$id)->get()[0];
 
-        $registro->update($request->except('_token','_method'));
+        $registro->update($dados);
 
 
         DB::table('users_roles')->where('user_id', $registro->id)->delete();
