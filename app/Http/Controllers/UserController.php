@@ -152,7 +152,7 @@ class UserController extends Controller
         $registro->update($dados);
 
 
-        if(!isset($dados->roles)) {
+        if(count($dados->roles)>0) {
 
             DB::table('users_roles')->where('user_id', $registro->id)->delete();
 
