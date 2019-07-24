@@ -68,7 +68,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-5">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label>Nome do Usuário</label>
                                 <input type="text" class="form-control form-control-sm" name="name"  value="{{$registro->name}}">
@@ -76,33 +76,21 @@
                         </div>
 
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label>email</label>
                                 <input type="email" class="form-control form-control-sm" name="email"  required value="{{$registro->email}}">
                             </div>
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label>CPF</label>
                                 <input type="text" class="form-control form-control-sm" name="cpf"  required value="{{$registro->cpf}}">
                             </div>
                         </div>
 
-                        {{--<div class="col-md-4">
-                            <div class="form-group">
-                                <label>Senha</label>
-                                <input type="password" class="form-control form-control-sm" name="password"  required value="{{$registro->password}}">
-                            </div>
-                        </div>
 
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label>Confirme a senha</label>
-                                <input type="password" class="form-control form-control-sm"   required value="{{$registro->password}}">
-                            </div>
-                        </div>--}}
 
 
 
@@ -171,6 +159,51 @@
 
 
     </form>
+
+
+
+        <div class="kt-portlet__body"  style="margin-top: 20px;">
+            <div class="tab-content">
+                <div class="tab-pane active" id="kt_portlet_base_demo_1_1_tab_content" role="tabpanel">
+                    <h5>Nova Senha</h5>
+                    <hr>
+
+                    <div class="row">
+
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Senha</label>
+                                <input type="password" class="form-control form-control-sm" name="password"  required value="{{$registro->password}}">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Confirme a senha</label>
+                                <input type="password" class="form-control form-control-sm"   required value="{{$registro->password}}">
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                
+                                <button class="btn btn-primary" >Confirmar</button>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+
+
+
 
 
 
