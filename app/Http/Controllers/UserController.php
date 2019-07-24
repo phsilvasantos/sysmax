@@ -152,7 +152,7 @@ class UserController extends Controller
         $registro->update($dados);
 
 
-        if(count($dados->roles)>0) {
+
 
             DB::table('users_roles')->where('user_id', $registro->id)->delete();
 
@@ -165,7 +165,7 @@ class UserController extends Controller
 
             }
 
-        }
+
 
 
         if($request->origem == 'novo'){
@@ -216,6 +216,33 @@ class UserController extends Controller
         return response()->json($resultado);
 
 
+
+    }
+
+    public function password(Request $request, $id)
+    {
+        //
+        $dados = $request->except('_token','_method');
+
+        $dados['password'] = md5($request->password);
+
+
+        $registro = $this->model::where('id',$id)->get()[0];
+
+        $registro->update($dados);
+
+
+
+        if($request->origem == 'novo'){
+
+            return redirect()->route($this->name.'.create')->with('status', 'Registro Incluído');
+
+        }elseif($request->origem == 'voltar'){
+
+            return redirect()->route($this->name.'.index')->with('status', 'Registro Incluído');
+        }
+
+        return redirect()->route($this->name.'.edit', $registro)->with('status', 'Registro Atualizado');
 
     }
 }
