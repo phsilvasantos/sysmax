@@ -164,7 +164,7 @@
     <form action="{{route('users.password', $registro->id)}}" method="post" name="form2">
 
         @csrf
-        <input type="hidden" name="_method" value="put">
+        
         <input type="hidden" id="origem" name="origem" value="">
 
 
