@@ -71,7 +71,7 @@
                         <div class="col-md-5">
                             <div class="form-group">
                                 <label>Nome do Usuário</label>
-                                <input type="text" class="form-control form-control-sm" name="raca_id"  value="{{$registro->name}}">
+                                <input type="text" class="form-control form-control-sm" name="name"  value="{{$registro->name}}">
                             </div>
                         </div>
 
@@ -86,11 +86,11 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>CPF</label>
-                                <input type="text" class="form-control form-control-sm" name="cpf"  requiredc value="{{$registro->cpf}}">
+                                <input type="text" class="form-control form-control-sm" name="cpf"  required value="{{$registro->cpf}}">
                             </div>
                         </div>
 
-                        <div class="col-md-4">
+                        {{--<div class="col-md-4">
                             <div class="form-group">
                                 <label>Senha</label>
                                 <input type="password" class="form-control form-control-sm" name="password"  required value="{{$registro->password}}">
@@ -102,7 +102,7 @@
                                 <label>Confirme a senha</label>
                                 <input type="password" class="form-control form-control-sm"   required value="{{$registro->password}}">
                             </div>
-                        </div>
+                        </div>--}}
 
 
 
