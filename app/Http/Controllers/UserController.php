@@ -152,14 +152,18 @@ class UserController extends Controller
         $registro->update($dados);
 
 
-        DB::table('users_roles')->where('user_id', $registro->id)->delete();
+        if(isset($dados->roles)) {
 
-        //Associando as papel ao usuario
-        foreach($request->roles as $key => $role){
+            DB::table('users_roles')->where('user_id', $registro->id)->delete();
 
-            $papel = Role::where('name', $key )->first();
+            //Associando as papel ao usuario
+            foreach ($request->roles as $key => $role) {
 
-            $registro->roles()->attach($papel);
+                $papel = Role::where('name', $key)->first();
+
+                $registro->roles()->attach($papel);
+
+            }
 
         }
 
