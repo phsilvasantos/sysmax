@@ -161,6 +161,12 @@
     </form>
 
 
+    <form action="{{route('users.update', $registro->id)}}" method="post" name="form1">
+
+        @csrf
+        <input type="hidden" name="_method" value="put">
+        <input type="hidden" id="origem" name="origem" value="">
+
 
         <div class="kt-portlet__body"  style="margin-top: 20px;">
             <div class="tab-content">
@@ -174,22 +180,22 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Senha</label>
-                                <input type="password" class="form-control form-control-sm" name="password"  required value="{{$registro->password}}">
+                                <input type="password" class="form-control form-control-sm" name="password"  required value="">
                             </div>
                         </div>
 
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Confirme a senha</label>
-                                <input type="password" class="form-control form-control-sm"   required value="{{$registro->password}}">
+                                <input type="password" class="form-control form-control-sm"   required value="">
                             </div>
                         </div>
 
 
                         <div class="col-md-4">
                             <div class="form-group">
-                                
-                                <button class="btn btn-primary" >Confirmar</button>
+
+                                <button type="submit" class="btn btn-primary" >Confirmar</button>
                             </div>
                         </div>
 
@@ -204,7 +210,7 @@
 
 
 
-
+    </form>
 
 
 
