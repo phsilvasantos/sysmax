@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Http\Request;
 use DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 
 class UserController extends Controller
@@ -69,7 +70,7 @@ class UserController extends Controller
 
 
 
-        $dados['password'] = md5($request->password);
+        $dados['password'] = Hash::make($request->password);
 
         $dados['empresa_id'] = Auth::user()->empresa_id;
 
@@ -144,7 +145,7 @@ class UserController extends Controller
         //
         $dados = $request->except('_token','_method');
 
-        $dados['password'] = md5($request->password);
+        //$dados['password'] = md5($request->password);
 
 
         $registro = $this->model::where('id',$id)->get()[0];
@@ -224,7 +225,9 @@ class UserController extends Controller
         //
         $dados = $request->except('_token','_method');
 
-        $dados['password'] = md5($request->password);
+        $dados['password'] = Hash::make($request->password);
+
+
 
 
         $registro = $this->model::where('id',$id)->get()[0];
