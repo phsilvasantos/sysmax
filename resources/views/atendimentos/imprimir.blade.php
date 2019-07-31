@@ -3,24 +3,13 @@
 @section('content')
 
 
-    <div class="row">
-        <div class="col-md-12">
 
             <div class="row">
 
 
                 <div class="col-md-12 col-sm-12">
 
-                    @if($registro->status == 'Em Atendimento')
 
-                    <div class="card-block text-right">
-                        <button type="button" class="btn btn-outline-accent" onclick=" window.print();"><i class="feather icon-search"></i>Imprimir</button>
-
-                    </div>
-
-                    @endif
-
-                    <br>
 
                     <div class="tab-content print col-xl-12" id="printable">
                         <div class="tab-pane fade show @if(Session::get('status') != 'Evolução' and Session::get('status') != 'Receituário' and Session::get('status') != 'Vacina'  and Session::get('status') != 'Ocorrência' and Session::get('status') != 'Anexo' and Session::get('status') != 'Peso') active @endif " id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
@@ -74,7 +63,7 @@
                                 <br>
                                 <br>
 
-                                                <textarea class="form-control" data-autoresize rows="2">{{$detalhes->descricao}}</textarea>
+                                                <textarea id="campo" class="form-control" data-autoresize rows="2" disabled="">{{$detalhes->descricao}}</textarea>
 
 
 
@@ -103,10 +92,23 @@
                         </div>
 
                     </div>
+
+
+                    @if($registro->status == 'Em Atendimento')
+
+                        <div class="card-block text-right">
+                            <button type="button" class="btn btn-outline-accent" onclick=" window.print();"><i class="feather icon-search"></i>Imprimir</button>
+
+                        </div>
+
+                    @endif
+
+                    <br>
+
                 </div>
             </div>
-        </div>
-    </div>
+
+
 
 
 
@@ -118,18 +120,32 @@
 
     <script>
 
-        jQuery(document).ready(function() { resizeTextarea(this);});
+        window.addEventListener('load', function() {
 
+
+        var elemento = document.getElementById('campo');
+
+        var off = elemento.offsetHeight - elemento.clientHeight;
+
+        jQuery(elemento).css('height', 'auto').css('height', elemento.scrollHeight + off);
+
+
+/*
         jQuery.each(jQuery('textarea[data-autoresize]'), function() {
             var offset = this.offsetHeight - this.clientHeight;
 
             var resizeTextarea = function(el) {
                 jQuery(el).css('height', 'auto').css('height', el.scrollHeight + offset);
             };
-            jQuery(this).on('keyup input', function() { resizeTextarea(this); }).removeAttr('data-autoresize');
+            jQuery(this).on('click', function() { resizeTextarea(this); }).removeAttr('data-autoresize');
+
+
+        });*/
+
+
+
 
         });
-
 
 
     </script>

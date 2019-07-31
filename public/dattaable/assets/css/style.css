@@ -10632,14 +10632,19 @@ select.form-control.form-control-sm {
 @media print {
     body * {
         visibility: hidden;
+        width: 100%;
     }
     #printable, #printable * {
         visibility: visible;
+        width: 100%;
     }
     #printable {
-        position: fixed;
+        width: 100%;
         left: 0;
         top: 0;
+        margin-top:-80px;
+        margin-left:-80px;
+
     }
 
 
