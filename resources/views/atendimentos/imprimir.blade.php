@@ -94,14 +94,15 @@
                     </div>
 
 
-                    @if($registro->status == 'Em Atendimento')
+                    <br>
+
 
                         <div class="card-block text-right">
                             <button type="button" class="btn btn-outline-accent" onclick=" window.print();"><i class="feather icon-search"></i>Imprimir</button>
 
                         </div>
 
-                    @endif
+
 
                     <br>
 
