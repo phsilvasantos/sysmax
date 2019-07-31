@@ -21,7 +21,7 @@
 
 
 
-        <div class="row">
+        <div class="row"   id="printable">
             <div class="col-md-9">
                 <div class="kt-portlet__body">
                     <div class="tab-content" style="padding:20px">
@@ -441,7 +441,7 @@
     </form>
 
 
-    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"  id="printable">
+    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
