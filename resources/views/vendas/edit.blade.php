@@ -326,6 +326,13 @@
 
                 <div class="card" style="background:#f4f7fa; box-shadow:0 0 0 0;-webkit-box-shadow:0 0 0 0;">
 
+
+                    <span class="label theme-bg text-white f-14 f-w-400 float-right btn-rounded btn-block" style="padding:10px"   onclick="window.print()">
+                        <i class="fa fa-edit"></i>
+                        <a href="#!" class="float-right" style="color:white;">Imprimir Venda</a>
+                    </span>
+
+
                     @if($venda[0]->status != 'Quitada')
                     <span class="label theme-bg text-white f-14 f-w-400 float-right btn-rounded btn-block" style="padding:10px"   onclick="pagamento()">
                         <i class="fa fa-edit"></i>
