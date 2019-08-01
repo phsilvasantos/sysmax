@@ -14,8 +14,12 @@
                     <div class="tab-content print col-xl-12" id="printable">
                         <div class="tab-pane fade show @if(Session::get('status') != 'Evolução' and Session::get('status') != 'Receituário' and Session::get('status') != 'Vacina'  and Session::get('status') != 'Ocorrência' and Session::get('status') != 'Anexo' and Session::get('status') != 'Peso') active @endif " id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
 
+                            <div class="col-md-1"><img src="{{url('storage/arquivos/empresa_id_'. Auth::user()->Empresa->id.'/'.Auth::user()->Empresa->logo)}}" width="60px"></div>
 
-                                <h4><img src="{{url('storage/arquivos/empresa_id_'. Auth::user()->Empresa->id.'/'.Auth::user()->Empresa->logo)}}" width="60px">  {{Auth::user()->Empresa->nome_fantasia}}</h4>
+                            <div class="col-md-11">
+                                <h3> {{Auth::user()->Empresa->nome_fantasia}}</h3>
+
+                            </div>
                                 <hr>
 
                                 <div class="row"  style="background-color:#f3f3f3; padding:30px">
@@ -24,7 +28,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Nome do Animal</label>
-                                            <h6 style="color:darkgrey">{{$registro->Animal->nome}}</h6>
+                                            <h5 style="color:darkgrey">{{$registro->Animal->nome}}</h5>
                                         </div>
                                     </div>
 
@@ -34,7 +38,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Proprietario</label>
-                                            <h6 style="color:darkgrey">{{$registro->Animal->Cliente->nome}}</h6>
+                                            <h5 style="color:darkgrey">{{$registro->Animal->Cliente->nome}}</h5>
                                         </div>
                                     </div>
 
@@ -42,7 +46,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Telefones</label>
-                                            <h6 style="color:darkgrey">{{$registro->Animal->Cliente->celular}} {{$registro->Animal->Cliente->telefone}}</h6>
+                                            <h5 style="color:darkgrey">{{$registro->Animal->Cliente->celular}} {{$registro->Animal->Cliente->telefone}}</h5>
                                         </div>
                                     </div>
 
@@ -63,7 +67,7 @@
                                 <br>
                                 <br>
 
-                                                <textarea id="campo" class="form-control" data-autoresize rows="2" disabled="">{{$detalhes->descricao}}</textarea>
+                                                <textarea id="campo" class="form-control" data-autoresize rows="2" disabled="" style="font-size:18px">{{$detalhes->descricao}}</textarea>
 
 
 
@@ -74,12 +78,12 @@
                             <br>
                             <br>
 
-                                <div class="">Brasília, {{ date('d/m/Y', strtotime($detalhes->created_at))}}</div>
+                                <div class="" style="font-size:16px">Brasília, {{ date('d/m/Y', strtotime($detalhes->created_at))}}</div>
                                 <br>
                                 <br>
                                 <br>
 
-                                <div align="center">  {{$detalhes->Usuario->name}}</div>
+                                <div align="center" style="font-size:16px">  {{$detalhes->Usuario->name}}</div>
 
 
                                 <br>
@@ -87,7 +91,7 @@
 
                                 <hr>
 
-                                <div align="center"> {{Auth::user()->Empresa->endereco}} - {{Auth::user()->Empresa->cidade}} - {{Auth::user()->Empresa->estado}}   {{Auth::user()->Empresa->telefone}}</div>
+                                <div align="center" style="font-size:16px"> {{Auth::user()->Empresa->endereco}} - {{Auth::user()->Empresa->cidade}} - {{Auth::user()->Empresa->estado}}   {{Auth::user()->Empresa->telefone}}</div>
 
                         </div>
 
