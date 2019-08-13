@@ -40,6 +40,8 @@
 
     <script src="https://cdn.ckeditor.com/4.11.4/standard/ckeditor.js"></script>
 
+    @yield('preScript')
+
 
 </head>
 
@@ -389,7 +391,6 @@
 
 
     }
-
 
 
 

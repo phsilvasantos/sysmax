@@ -47,5 +47,8 @@ class Venda extends ModelDefault
         return $this->hasMany('App\Models\Nfces\Nfce', 'venda_id','id');
     }
 
-
+    public function Animal()
+    {
+        return $this->belongsTo('App\Models\Animais\Animal', 'animal_id', 'id');
+    }
 }

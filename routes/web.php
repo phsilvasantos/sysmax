@@ -31,6 +31,7 @@ Route::any('/product/localizar/{id}','ProdutoController@localizar_id')->name('pr
 Route::get('/clientes/{id}/ficha', 'ClienteController@ficha')->name('cliente.ficha');
 Route::post('/clientes/desassociar', 'ClienteController@desassociar')->name('cliente.desassociar');
 Route::any('/dynamic_dependent/fetch', 'RacaController@fetch')->name('dynamicdependent.fetch');
+Route::any('/dynamic_dependent/fetch2', 'RacaController@fetch2')->name('dynamicdependent.fetch2');
 Route::get('/nfce/{venda_id}', 'NfceController@gerar')->name('nfce.gerar');
 Route::get('/nfce/regerar/{venda_id}', 'NfceController@regerar')->name('nfce.regerar');
 Route::get('/nfce/consulta_recibo/{venda_id}', 'NfceController@consulta_recibo')->name('nfce.consulta');
@@ -42,6 +43,7 @@ Route::get('/atendimento/imprimir/{id}', 'AtendimentoController@imprimir')->name
 Route::post('/atendimentos/filtrar', 'AtendimentoController@filtrar')->name('atendimento.filtrar');
 Route::get('/relatorios/caixa', 'RelatorioController@caixa')->name('relatorio.caixa');
 Route::post('/relatorios/caixa', 'RelatorioController@caixa')->name('relatorio.caixa');
+Route::post('/vendas/pesquisar', 'VendaController@pesquisar')->name('vendas.pesquisar');
 Route::put('/users/password/{id}', 'UserController@password')->name('users.password');
 
 

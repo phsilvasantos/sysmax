@@ -10,6 +10,7 @@
 
         @csrf
         <input type="hidden" id="origem" name="origem" value="">
+        <input type="hidden" id="vendedor_id" name="vendedor_id" value="{{\Illuminate\Support\Facades\Auth::user()->id}}">
 
         <div class="row">
             <div class="col-md-12">
@@ -33,7 +34,7 @@
                                     <div class="form-group">
                                         <i class="fa fa-user"></i> <label>Cliente</label>
 
-                                        <select class="form-control form-control-sm js-select" name="cliente_id" id="cliente_id" required>
+                                        <select class="form-control form-control-sm js-select" name="cliente_id" id="cliente_id" required data-dependent="animal_id" onchange="atualiza_animal()">
                                             {{--<option value="0"  selected="selected">Cliente não Identificado</option>--}}
                                         </select>
 
@@ -42,13 +43,11 @@
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <i class="fa fa-shopping-cart"></i> <label>Vendedor</label>
+                                        <i class="fa fa-paw"></i> <label>Animal</label>
 
-                                        <select class="form-control form-control-sm js-select" name="vendedor_id" id="vendedor_id">
+                                        <select class="form-control form-control-sm" name="animal_id" id="animal_id">
                                             {{--<option value="0"  selected="selected">Vendedor Logado</option>--}}
-                                            @foreach($vendedores as $vendedor)
-                                                <option value="{{$vendedor->id}}">{{$vendedor->name}}</option>
-                                            @endforeach
+                                            <option value="">Selecione um cliente primeiro</option>
                                         </select>
                                     </div>
                                 </div>
@@ -419,6 +418,43 @@
 
     <script>
 
+        function atualiza_animal(){
+
+
+            if($('#cliente_id').val() != '')
+            {
+                var select = $('#cliente_id').attr("id");
+                console.log(select);
+                var value = $('#cliente_id').val();
+                console.log(value);
+                var dependent = $('#cliente_id').data('dependent');
+                console.log(dependent);
+                var _token = $('input[name="_token"]').val();
+                console.log(_token);
+                $.ajax({
+                    url:"{{ route('dynamicdependent.fetch2') }}",
+                    method:"POST",
+                    data:{select:select, value:value, _token:_token, dependent:dependent},
+                    success:function(result)
+                    {
+                        console.log('sucesso');
+                        $('#'+dependent).html(result);
+                    }
+
+                })
+            }
+
+
+
+            $('#cliente_id').change(function(){
+                $('#animal_id').val('');
+            });
+
+
+        };
+
+
+
             //codigo para popular o combo de clientes dinamicamente
             $('#cliente_id').select2({
                 ajax: {
@@ -463,13 +499,14 @@
             });
 
 
-            $('#vendedor_id').select2();
+            //$('#vendedor_id').select2();
             $('#user_id').select2();
 
 
 
             $('#produto_id').on('select2:select', function (e) {
                 var data = e.params.data;
+
 
                 $('#preco').text(data.preco);
                 $('#valor_liquido').text(data.preco);

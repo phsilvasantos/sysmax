@@ -11,8 +11,8 @@
 
 
 
-                    <div class="tab-content print col-xl-12" id="printable">
-                        <div class="tab-pane fade show @if(Session::get('status') != 'Evolução' and Session::get('status') != 'Receituário' and Session::get('status') != 'Vacina'  and Session::get('status') != 'Ocorrência' and Session::get('status') != 'Anexo' and Session::get('status') != 'Peso') active @endif " id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                    <div class="tab-content print col-xl-12" id="printable" >
+                        <div class="@if(Session::get('status') != 'Evolução' and Session::get('status') != 'Receituário' and Session::get('status') != 'Vacina'  and Session::get('status') != 'Ocorrência' and Session::get('status') != 'Anexo' and Session::get('status') != 'Peso') active @endif " >
 
                             <div class="col-md-1"><img src="{{url('storage/arquivos/empresa_id_'. Auth::user()->Empresa->id.'/'.Auth::user()->Empresa->logo)}}" width="60px"></div>
 

@@ -12,6 +12,7 @@
         <input type="hidden" name="origem" value="">
         <input type="hidden" name="_method" value="PUT">
         <input type="hidden" id="venda_id" name="venda_id" value="{{$venda[0]->id}}">
+        <input type="hidden" id="vendedor_id" name="vendedor_id" value="{{\Illuminate\Support\Facades\Auth::user()->id}}">
 
         <div class="row">
             <div class="col-md-12">
@@ -62,7 +63,7 @@
 
 
                                         <div id="cli_id" style="display:none">
-                                        <select class="form-control form-control-sm js-select" name="cliente_id" id="cliente_id">
+                                        <select class="form-control form-control-sm js-select" name="cliente_id" id="cliente_id" name="cliente_id" id="cliente_id" required data-dependent="animal_id" onchange="atualiza_animal()">
                                             <option value="{{$venda[0]->cliente_id}}"  selected="selected">{{$venda[0]->Cliente->nome}}</option>
                                         </select>
                                         </div>
@@ -72,20 +73,36 @@
 
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <i class="fa fa-shopping-cart"></i> <label>Vendedor</label>
+                                        <i class="fa fa-paw"></i> <label>Animal</label>
 
-                                        <div id="ven_nome" onclick="document.getElementById('ven_id').style.display = 'block';document.getElementById('ven_nome').style.display = 'none'">
-                                        <h5>{{$venda[0]->Usuario->name}}</h5>
+                                        @if(isset($venda[0]->Animal->nome))
+                                        <div id="ven_nome" onclick="document.getElementById('ven_id').style.display = 'block';document.getElementById('ven_nome').style.display = 'none';atualiza_animal();">
+                                        <h5>{{$venda[0]->Animal->nome}}</h5>
                                         </div>
+
 
                                         <div id="ven_id" style="display:none">
-                                        <select class="form-control form-control-sm js-select" name="vendedor_id" id="vendedor_id">
-                                            <option value="0"  selected="selected">Vendedor Logado</option>
-                                            @foreach($vendedores as $vendedor)
-                                                <option value="{{$vendedor->id}}" @if($vendedor->id == $venda[0]->user_id) selected @endif>{{$vendedor->name}}</option>
-                                            @endforeach
-                                        </select>
+                                            <select class="form-control form-control-sm" name="animal_id" id="animal_id">
+                                                {{--<option value="0"  selected="selected">Vendedor Logado</option>--}}
+                                                <option value="">confirme o Cliente</option>
+                                            </select>
                                         </div>
+
+                                        @else
+
+                                            <div id="ven_id" style="display:none">
+                                                <select class="form-control form-control-sm" name="animal_id" id="animal_id">
+                                                    {{--<option value="0"  selected="selected">Vendedor Logado</option>--}}
+                                                    <option value="">confirme o cliente</option>
+                                                </select>
+                                            </div>
+
+                                            <div id="ven_id2" onclick="document.getElementById('ven_id').style.display = 'block';document.getElementById('ven_id2').style.display = 'none';atualiza_animal();">
+                                                <span class="text-danger mb-1" >Sem Animal definido...</span>
+                                            </div>
+
+                                        @endif
+
                                     </div>
                                 </div>
 
@@ -327,18 +344,30 @@
                 <div class="card" style="background:#f4f7fa; box-shadow:0 0 0 0;-webkit-box-shadow:0 0 0 0;">
 
 
-                    <span class="label theme-bg text-white f-14 f-w-400 float-right btn-rounded btn-block" style="padding:10px"   onclick="window.print()">
-                        <i class="fa fa-edit"></i>
-                        <a href="#!" class="float-right" style="color:white;">Imprimir Venda</a>
-                    </span>
+
 
 
                     @if($venda[0]->status != 'Quitada')
-                    <span class="label theme-bg text-white f-14 f-w-400 float-right btn-rounded btn-block" style="padding:10px"   onclick="pagamento()">
+
+                        <span class="label theme-bg2 text-white f-14 f-w-400 float-right btn-rounded btn-block" style="padding:10px" onclick="document.getElementById('vendas-form').submit()">
                         <i class="fa fa-edit"></i>
-                        <a href="#!" class="float-right" style="color:white;">Registrar Pagamento</a>
+                        <a href="#!" class="float-right" style="color:white;"  >Salvar Venda</a>
                     </span>
+
+                        <span class="label theme-bg text-white f-14 f-w-400 float-right btn-rounded btn-block" style="padding:10px"   onclick="pagamento()">
+                        <i class="fa fa-edit"></i>
+                        <a href="#!" class="float-right" style="color:white;">Registrar Pagamento1</a>
+                    </span>
+
+
                     @endif
+
+
+
+                        <span class="label theme-bg text-white f-14 f-w-400 float-right btn-rounded btn-block" style="padding:10px"   onclick="window.print()">
+                        <i class="fa fa-edit"></i>
+                        <a href="#!" class="float-right" style="color:white;">Imprimir Venda</a>
+                    </span>
 
 
 
@@ -742,6 +771,10 @@
 
     <script>
 
+
+
+
+
         $(document).ready(function () {
 
             calcula_total();
@@ -804,13 +837,15 @@
         });
 
 
-        $('#vendedor_id').select2();
+        //$('#vendedor_id').select2();
         $('#user_id').select2();
 
 
 
         $('#produto_id').on('select2:select', function (e) {
             var data = e.params.data;
+
+
 
             $('#preco').text(data.preco);
             $('#valor_liquido').text(data.preco);
@@ -868,8 +903,8 @@
 
                     var item_id = data.item_id;
 
-
-                    addRow(item_id)
+                    location.reload();
+                    //addRow(item_id);
                 },
                 error: function(data){
 
@@ -892,6 +927,8 @@
             var total = (preco * qtd);
             var item_id = item_id;
 
+
+
             $('table#myTable').dataTable().fnAddData( [
 
                 '<input type="hidden" id="item_id-' + count + '" name="item_id[]" value="'+ item_id +'"><input type="hidden" name="produto_id[]" id="produto_id-' + count + '" value="' + produto_id +'"> <input type="text" value="' + produto + '"  readonly class="form-control form-control-sm " name="produto_nome[]" id="produto_nome-' + count + '">',
@@ -910,6 +947,8 @@
 
             calcula_total();
 
+
+
         }
 
         function confirmar_exclusao(){
@@ -925,7 +964,8 @@
                 data: '_token={{csrf_token()}}',
                 success: function(data){
 
-                    deleteRow(linha)
+                    //deleteRow(linha)
+                    location.reload();
                     $("#exampleModal4").modal('hide');
                 },
                 error: function(data){
@@ -949,7 +989,8 @@
                 data: '_token={{csrf_token()}}',
                 success: function(data){
 
-                    deleteRow_pag(linha);
+                    //deleteRow_pag(linha);
+                    location.reload();
                     $("#exampleModal5").modal('hide');
                 },
                 error: function(data){
@@ -1301,6 +1342,40 @@
         }
 
 
+        function atualiza_animal(){
+
+
+            if($('#cliente_id').val() != '')
+            {
+                var select = $('#cliente_id').attr("id");
+                console.log(select);
+                var value = $('#cliente_id').val();
+                console.log(value);
+                var dependent = $('#cliente_id').data('dependent');
+                console.log(dependent);
+                var _token = $('input[name="_token"]').val();
+                console.log(_token);
+                $.ajax({
+                    url:"{{ route('dynamicdependent.fetch2') }}",
+                    method:"POST",
+                    data:{select:select, value:value, _token:_token, dependent:dependent},
+                    success:function(result)
+                    {
+                        console.log('sucesso');
+                        $('#'+dependent).html(result);
+                    }
+
+                })
+            }
+
+
+
+            $('#cliente_id').change(function(){
+                $('#animal_id').val('');
+            });
+
+
+        };
 
     </script>
 

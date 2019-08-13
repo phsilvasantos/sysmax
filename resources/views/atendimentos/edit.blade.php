@@ -45,6 +45,7 @@
                     @if($registro->status == 'Em Atendimento')
 
                     <div class="card-block text-right">
+                        <button type="button" class="btn btn-dark" onclick="adicionar('peso');"><i class="feather icon-exclamation"></i>Internar</button>
                         <button type="button" class="btn btn-outline-accent" onclick="adicionar('peso');"><i class="feather icon-clock"></i>Peso</button>
                         <button type="button" class="btn btn-primary" onclick="adicionar('evolucao');"><i class="feather icon-thumbs-up"></i>Evolução</button>
                         <button type="button" class="btn btn-success" onclick="adicionar('receituario');"><i class="feather icon-check-circle"></i>Receituário</button>

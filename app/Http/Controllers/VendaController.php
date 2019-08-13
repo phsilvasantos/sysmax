@@ -16,6 +16,19 @@ class VendaController extends AppController
     public $model = Venda::class;
 
 
+    public function index()
+    {
+        //
+        $data_ini = date('Y-m-d', strtotime('-1 months', strtotime(date('Y-m-d'))));
+        $data_fim = date('Y-m-d');
+
+
+        $registros = $this->model::whereBetween('created_at', [$data_ini . ' 00:00:00',date('Y-m-d') . ' 23:59:59'])->orderby('id','desc')->get();
+
+
+        return view($this->name.'.index', compact('registros','data_ini','data_fim'));
+
+    }
    
     public function create()
     {
@@ -33,6 +46,7 @@ class VendaController extends AppController
 
         $dados['cliente_id'] = $request->cliente_id;
         $dados['user_id'] = $request->vendedor_id;
+        $dados['animal_id'] = $request->animal_id;
         $dados['tipo'] = 'Venda';
         $dados['status'] = 'Aberta';
 
@@ -127,10 +141,13 @@ class VendaController extends AppController
     public function update(Request $request, $id)
     {
 
-
+        if($request->animal_id != null){
+            $dados['animal_id'] = $request->animal_id;
+        }
 
         $dados['cliente_id'] = $request->cliente_id;
         $dados['user_id'] = $request->vendedor_id;
+
 
 
         Venda::where('id',$id)->update($dados);
@@ -197,6 +214,20 @@ class VendaController extends AppController
 
         return redirect()->route('vendas.edit', $id );
 
+
+    }
+
+    public function pesquisar(Request $request)
+    {
+        //
+        $data_ini = $request->data_ini;
+        $data_fim = $request->data_fim;
+
+
+        $registros = $this->model::whereBetween('created_at', [$data_ini . ' 00:00:00',$data_fim . ' 23:59:59'])->orderby('id','desc')->get();
+
+
+        return view($this->name.'.index', compact('registros','data_ini','data_fim'));
 
     }
 
