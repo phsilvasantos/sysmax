@@ -62,6 +62,7 @@ class AtendimentoController extends AppController
             $registro->status = 'Em Atendimento';
             $registro->user_id = Auth::user()->id;
             $registro->data_atendimento = now();
+            $registro->tipo = 'Ambulatorial';
             $registro->save();
         }
 
