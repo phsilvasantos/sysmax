@@ -35,7 +35,7 @@ class Animal extends ModelDefault
     public function Atendimentos()
     {
 
-        return $this->hasMany('App\Models\Atendimentos\Atendimento');
+        return $this->hasMany('App\Models\Atendimentos\Atendimento')->orderBy('id', 'desc');
     }
 
 }

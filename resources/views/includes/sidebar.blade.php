@@ -35,6 +35,13 @@
                 </li>
                 @endif
 
+                @if(auth()->check() && auth()->user()->hasPermissionThroughRole('view-atendimento'))
+                    <li  class="nav-item">
+                        <a href="{{route('atendimento.internacao')}}" class="nav-link"><span class="pcoded-micon"><i class="fa fa-bed "></i></span><span class="pcoded-mtext">Fila Internação</span></a>
+                    </li>
+                @endif
+
+
                 @if(auth()->check() && auth()->user()->hasPermissionThroughRole('view-associacao'))
                 <li  class="nav-item">
                     <a href="{{route('associacao.index')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-star "></i></span><span class="pcoded-mtext">Associação</span></a>
@@ -67,6 +74,10 @@
                         @if(auth()->check() && auth()->user()->hasPermissionThroughRole('view-setor'))
                         <li class=""><a href="{{route('setores.index')}}" class="">Setores</a></li>
                         @endif
+
+                            @if(auth()->check() && auth()->user()->hasPermissionThroughRole('view-setor'))
+                                <li class=""><a href="{{route('leitos.index')}}" class="">Leitos</a></li>
+                            @endif
 
                         @if(auth()->check() && auth()->user()->hasPermissionThroughRole('view-formaPagamento'))
                         <li class=""><a href="{{route('forma_pagamentos.index')}}" class="">Forma de Pagamentos</a></li>

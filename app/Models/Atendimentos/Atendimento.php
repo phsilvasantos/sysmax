@@ -22,4 +22,9 @@ class Atendimento extends ModelDefault
     {
         return $this->belongsTo('App\User','user_id','id');
     }
+
+    public function Leito()
+    {
+        return $this->belongsTo('App\Models\Leitos\Leito','leito_id','id');
+    }
 }

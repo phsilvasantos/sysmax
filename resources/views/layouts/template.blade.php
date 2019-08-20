@@ -315,6 +315,23 @@
         $('#myTable4').DataTable();
     } );
 
+    $(document).ready( function () {
+        $('#myTable5').DataTable({
+            'bInfo': false,
+            'lengthChange': false,
+            'language':{
+                'sSearch': 'Buscar:',
+                "oPaginate": {
+                    "sFirst":    "Primero",
+                    "sLast":    "Último",
+                    "sNext":    "Próximo",
+                    "sPrevious": "Anterior"
+                },
+            },
+
+        });
+    } );
+
 
     function selecionar(){
 

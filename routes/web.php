@@ -41,6 +41,8 @@ Route::get('/nfce/assina/{empresa}/{venda}', 'NfceController@assina')->name('nfc
 Route::get('/nfce/detalhes/{nfce_id}', 'NfceDetalheController@detalhes')->name('nfce.detalhes');
 Route::get('/atendimento/imprimir/{id}', 'AtendimentoController@imprimir')->name('atendimento.imprimir');
 Route::post('/atendimentos/filtrar', 'AtendimentoController@filtrar')->name('atendimento.filtrar');
+Route::post('/atendimentos/internar', 'AtendimentoController@internar')->name('atendimento.internar');
+Route::get('/atendimentos/internacao', 'AtendimentoController@internacao')->name('atendimento.internacao');
 Route::get('/relatorios/caixa', 'RelatorioController@caixa')->name('relatorio.caixa');
 Route::post('/relatorios/caixa', 'RelatorioController@caixa')->name('relatorio.caixa');
 Route::post('/vendas/pesquisar', 'VendaController@pesquisar')->name('vendas.pesquisar');
@@ -69,6 +71,7 @@ Route::resource('/setores', 'SetorController');
 Route::resource('/permissions', 'PermissionController');
 Route::resource('/roles', 'RoleController');
 Route::resource('/users', 'UserController');
+Route::resource('/leitos', 'LeitoController');
 
 
 

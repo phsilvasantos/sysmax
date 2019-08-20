@@ -303,6 +303,7 @@
                                                     @if($animal->status != 'Obito')
                                                     <div class="col-6 p-r-0">
                                                         <a href="#!" class="btn  border btn-block btn-outline-secondary" onclick="incluir_fila({{$animal->id}})">Atendimento</a>
+                                                        <a href="#!" class="btn  border btn-block btn-outline-secondary" onclick="internar({{$animal->id}})">Internar</a>
                                                     </div>
                                                     @endif
                                                     <div class="col-6">
@@ -311,6 +312,9 @@
                                                         @else
                                                             <a href="#" class="btn  border btn-block btn-outline-secondary" onclick="alert('Não é possivel acessar o prontuário pois esse animal não possui nenhum atendimento registrado!')">Prontuário</a>
                                                         @endif
+
+                                                            <a href="#!" class="btn @if($animal->status != 'Obito') btn-primary @else btn-danger  @endif  btn-block" onclick="editar_animal({{$animal->id}})">Editar</a>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -318,7 +322,7 @@
                                             <div class="project-main" style="padding: 0px">
                                                 <div class="row text-center">
                                                     <div class="col-12">
-                                                        <a href="#!" class="btn @if($animal->status != 'Obito') btn-primary @else btn-danger  @endif  btn-block" onclick="editar_animal({{$animal->id}})">Editar</a>
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -484,6 +488,73 @@
     </div>
 
 
+    <div class="modal fade" id="exampleModal9" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Internar</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form id="internacao-form" action="{{ route('atendimento.internar') }}" method="post">
+
+                    @csrf
+
+
+                    <div class="modal-body">
+
+
+                        <div class="form-group col-md-12">
+                            <label for="nome" class="control-label">Selecione o Profissional:</label>
+
+                            <select class="form-control form-control-sm" name="user_id" id="user_id">
+                                @foreach(\App\User::all() as $user)
+                                    @if($user->roles->contains('name', 'Veterinário'))
+                                        <option value="{{$user->id}}">{{$user->name}}</option>
+                                    @endif
+                                @endforeach()
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <label for="nome" class="control-label">Selecione o Leito:</label>
+
+
+                            <select class="form-control form-control-sm" name="leito_id" id="leito_id">
+                                @foreach(\App\Models\Leitos\Leito::all() as $leito)
+
+                                        <option value="{{$leito->id}}">{{$leito->nome}}</option>
+
+                                @endforeach()
+                            </select>
+
+                        </div>
+
+                        <input type="hidden" name="atendimento_id"  value="{{$registro->id}}">
+                        <input type="hidden" name="animal_id1" id="animal_id1" value="">
+                        <input type="hidden" name="data_recepcao" value="{{now()}}">
+                        <input type="hidden" name="tipo" value="Internacao">
+                        <input type="hidden" name="status" value="Em Atendimento">
+                        <input type="hidden" name="atendente_id" value="{{Auth::user()->id}}">
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <a href="{{route('atendimento.internar')}}" class="btn btn-primary" onclick="event.preventDefault();
+                                                         document.getElementById('internacao-form').submit();">Salvar</a>
+
+
+
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
 
 
 
@@ -649,6 +720,14 @@
             document.getElementById('animal_id').value = animal_id;
 
             $("#exampleModal3").modal();
+        }
+
+
+        function internar(animal_id){
+
+            document.getElementById('animal_id1').value = animal_id;
+
+            $("#exampleModal9").modal();
         }
 
 

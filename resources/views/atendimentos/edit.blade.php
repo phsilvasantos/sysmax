@@ -9,20 +9,28 @@
 
             <div class="row">
 
+
+
                 <div class="col-md-3 col-sm-12">
 
                     @if($registro->status == 'Em Atendimento')
 
-                        <button type="button" onclick="finalizar()" class="btn btn-danger btn-block"><i class="feather icon-slash"></i>Finalizar Atendimento</button>
+                    <div class="card  <?php if($registro->tipo == 'Ambulatorial'){ echo 'bg-c-blue';} elseif($registro->tipo == 'Internacao') {echo 'bg-c-green';} else {echo 'bg-c-red';} ?>" style="padding:18px;margin-bottom: 20px;">
+                        <div class="card-block <?php if($registro->tipo == 'Ambulatorial'){ echo 'bg-c-blue';} elseif($registro->tipo == 'Internacao') {echo 'bg-c-green';} else {echo 'bg-c-red';} ?>">
+                            <div class="counter text-center">
+                               <h4 class="text-white m-0">{{ ($registro->tipo == '')? 'Ambulatorial': $registro->tipo}}</h4>
+                            </div>
+                        </div>
+                    </div>
 
                     @endif
 
-                    <br>
-
-
                     <ul class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
 
+
+
                         <div class="text-center m-b-30" style="padding-top:20px">
+
                             <i class="fa fa-paw" style="font-size:60px;"></i>
                             <h5 class="mt-3">{{$registro->Animal->nome}}</h5>
                             <span class="d-block">{{$registro->Animal->Cliente->nome}}</span>
@@ -40,21 +48,53 @@
                         <li><a class="nav-link text-left " id="v-pills-historico-tab" data-toggle="pill" href="#v-pills-historico" role="tab" aria-controls="v-pills-historico" aria-selected="false">Historico</a></li>
                     </ul>
                 </div>
+
+
+
                 <div class="col-md-9 col-sm-12">
 
-                    @if($registro->status == 'Em Atendimento')
 
-                    <div class="card-block text-right">
-                        {{--<button type="button" class="btn btn-dark" onclick="adicionar('peso');"><i class="feather icon-exclamation"></i>Internar</button>--}}
-                        <button type="button" class="btn btn-outline-accent" onclick="adicionar('peso');"><i class="feather icon-clock"></i>Peso</button>
-                        <button type="button" class="btn btn-primary" onclick="adicionar('evolucao');"><i class="feather icon-thumbs-up"></i>Evolução</button>
-                        <button type="button" class="btn btn-success" onclick="adicionar('receituario');"><i class="feather icon-check-circle"></i>Receituário</button>
-                        <button type="button" class="btn btn-secondary"  onclick="adicionar('vacina');"><i class="feather icon-info"></i>Vacina</button>
-                        <button type="button" class="btn btn-warning"   onclick="adicionar('ocorrencia');"><i class="feather icon-alert-triangle"></i>Ocorrência</button>
-                        <button type="button" class="btn btn-info"  onclick="adicionar('anexo');"><i class="feather icon-camera"></i>Anexos</button>
-                    </div>
 
-                    @endif
+
+                        {{--<button type="button" class="btn btn-dark" onclick="internar('internar');"><i class="feather icon-exclamation"></i>Internar</button>--}}
+
+                        <nav class="navbar p-10" style="background-color: white">
+                            <ul class="nav">
+                                <li class="nav-item f-text active">
+                                    @if($registro->tipo == 'Internacao')
+                                        <a class="nav-link text-secondary" href="{{route('atendimento.internacao')}}"><i class="fa fa-backward"></i> Voltar <span class="sr-only">(current)</span></a>
+                                    @else
+                                        <a class="nav-link text-secondary" href="{{route('atendimentos.index')}}"><i class="fa fa-backward"></i> Voltar <span class="sr-only">(current)</span></a>
+                                    @endif
+                                </li>
+
+                                @if($registro->status == 'Em Atendimento' and $registro->tipo == 'Ambulatorial')
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link text-secondary" href="#" onclick="internar()"><i class="far fa-clock"></i> Internação</a>
+
+                                </li>
+                                @endif
+
+
+                            </ul>
+                            <div class="nav-item nav-grid f-view">
+
+                                @if($registro->status == 'Em Atendimento')
+
+                                    <button type="button" onclick="finalizar()" class="btn btn-metal"><i class="feather icon-slash"></i>@if($registro->tipo == 'Internacao') Dar Alta @else Finalizar Atendimento @endif    </button>
+
+                                @endif
+
+                            </div>
+                        </nav>
+
+
+
+
+
+
+
+
 
                     <br>
 
@@ -62,13 +102,13 @@
                         <div class="tab-pane fade show @if(Session::get('status') != 'Evolução' and Session::get('status') != 'Receituário' and Session::get('status') != 'Vacina'  and Session::get('status') != 'Ocorrência' and Session::get('status') != 'Anexo' and Session::get('status') != 'Peso') active @endif " id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
 
 
-                                <h5><i class="fa fa-user"></i>  Dados do Tutor</h5>
+                                <h5><i class="fa fa-user"></i>  Dados do Tutor  </h5>
                                 <hr>
 
                                 <div class="row">
 
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Nome</label>
                                             <h6 style="color:darkgrey">{{$registro->Animal->Cliente->nome}}</h6>
@@ -77,11 +117,10 @@
 
 
 
-
                                     <div class="col-md-3">
                                         <div class="form-group">
-                                            <label>CPF/CNPJ</label>
-                                            <h6 style="color:darkgrey">{{$registro->Animal->Cliente->cpf_cnpj}}</h6>
+                                            <label>Email</label>
+                                            <h6 style="color:darkgrey">{{$registro->Animal->Cliente->email}}</h6>
                                         </div>
                                     </div>
 
@@ -95,7 +134,7 @@
 
 
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Telefone</label>
                                             <h6 style="color:darkgrey">{{$registro->Animal->Cliente->telefone}}</h6>
@@ -104,45 +143,7 @@
 
 
 
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label>Email</label>
-                                            <h6 style="color:darkgrey">{{$registro->Animal->Cliente->email}}</h6>
-                                        </div>
-                                    </div>
 
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label>Número</label>
-                                            <h6 style="color:darkgrey">{{$registro->Animal->Cliente->numero}}</h6>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Endereço</label>
-                                            <h6 style="color:darkgrey">{{$registro->Animal->Cliente->endereco}}</h6>
-                                        </div>
-                                    </div>
-
-
-
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label>Bairro</label>
-                                            <h6 style="color:darkgrey">{{$registro->Animal->Cliente->bairro}}</h6>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label>Cidade</label>
-                                            <h6 style="color:darkgrey">{{$registro->Animal->Cliente->cidade}}</h6>
-                                            
-                                        </div>
-                                    </div>
 
 
                                 </div>
@@ -223,6 +224,9 @@
                                         <h5>Peso</h5>
                                         <div class="card-header-right">
 
+                                            @if($registro->status == 'Em Atendimento')
+                                            <button type="button" class="btn btn-info" onclick="adicionar('peso');"><i class="feather icon-clock"></i>NOVO</button>
+                                            @endif
 
                                         </div>
                                     </div>
@@ -272,8 +276,9 @@
                                     <div class="card-header">
                                         <h5>Evoluções</h5>
                                         <div class="card-header-right">
-
-
+                                            @if($registro->status == 'Em Atendimento')
+                                            <button type="button" class="btn btn-info" onclick="adicionar('evolucao');"><i class="feather icon-thumbs-up"></i>NOVO</button>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="card-block pb-0">
@@ -321,8 +326,9 @@
                                 <div class="card-header">
                                     <h5>Receituários</h5>
                                     <div class="card-header-right">
-
-
+                                        @if($registro->status == 'Em Atendimento')
+                                        <button type="button" class="btn btn-info" onclick="adicionar('receituario');"><i class="feather icon-check-circle"></i>NOVO</button>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="card-block pb-0">
@@ -370,8 +376,9 @@
                                 <div class="card-header">
                                     <h5>Vacinas</h5>
                                     <div class="card-header-right">
-
-
+                                        @if($registro->status == 'Em Atendimento')
+                                        <button type="button" class="btn btn-info"  onclick="adicionar('vacina');"><i class="feather icon-info"></i>NOVO</button>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="card-block pb-0">
@@ -419,8 +426,9 @@
                                 <div class="card-header">
                                     <h5>Ocorrências</h5>
                                     <div class="card-header-right">
-
-
+                                        @if($registro->status == 'Em Atendimento')
+                                        <button type="button" class="btn btn-info"   onclick="adicionar('ocorrencia');"><i class="feather icon-alert-triangle"></i>NOVO</button>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="card-block pb-0">
@@ -468,8 +476,9 @@
                                 <div class="card-header">
                                     <h5>Anexos</h5>
                                     <div class="card-header-right">
-
-
+                                        @if($registro->status == 'Em Atendimento')
+                                        <button type="button" class="btn btn-info"  onclick="adicionar('anexo');"><i class="feather icon-camera"></i>NOVO</button>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="card-block pb-0">
@@ -831,6 +840,76 @@
 
 
 
+    <div class="modal fade" id="exampleModal7" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="titulo">Internar Animal</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form id="create-form" action="{{ route('atendimento.internar') }}" method="post" enctype="multipart/form-data">
+
+                    @csrf
+
+                    <input type="hidden" name="tipo" value="Internacao">
+                    <input type="hidden" name="animal_id" value="{{$registro->Animal->id}}">
+                    <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                    <input type="hidden" name="atendente_id" value="{{Auth::user()->id}}">
+                    <input type="hidden" name="data_recepcao" value="{{date('Y-m-d')}}">
+                    <input type="hidden" name="origem" value="prontuario">
+                    <input type="hidden" name="atendimento_id" value="{{$registro->id}}">
+
+
+                    <div class="modal-body" >
+
+                        <div class="alert alert-danger">
+
+                        <H5 class="color-grey">Ao confirmar esta opção o atendimento ambulatorial será finalizado.</H5>
+                        <h5>Você confirma a internação?</h5>
+
+                        </div>
+
+
+
+                        <div class="form-group col-md-12">
+                            <label for="nome" class="control-label">Selecione o Leito:</label>
+
+
+                            <select class="form-control form-control-sm" name="leito_id" id="leito_id">
+                                @foreach(\App\Models\Leitos\Leito::all() as $leito)
+
+                                    <option value="{{$leito->id}}">{{$leito->nome}}</option>
+
+                                @endforeach()
+                            </select>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <div class="modal-footer">
+
+
+                        <button type="submit"  class="btn btn-danger">Confirmar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+
+
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+
 @endsection
 
 @section('posScript')
@@ -894,6 +973,15 @@
          document.getElementById('btn_salvar').style.display = 'block'
 
          $("#exampleModal3").modal();
+
+     }
+
+
+
+     function internar(){
+
+
+         $("#exampleModal7").modal();
 
      }
 

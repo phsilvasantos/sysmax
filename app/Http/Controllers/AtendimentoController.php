@@ -16,10 +16,10 @@ class AtendimentoController extends AppController
     {
         //
         if(!Auth::user()->roles->contains('name','Veterinário')){
-            $registros = $this->model::whereBetween('data_recepcao', [date('Y-m-d') . ' 00:00:00',date('Y-m-d') . ' 23:59:59'])->get();
+            $registros = $this->model::whereBetween('data_recepcao', [date('Y-m-d') . ' 00:00:00',date('Y-m-d') . ' 23:59:59'])->wherein('tipo',['Ambulatorial',''])->get();
 
         }else{
-            $registros = $this->model::whereBetween('data_recepcao', [date('Y-m-d') . ' 00:00:00',date('Y-m-d') . ' 23:59:59'])->whereIn('user_id', [Auth::user()->id, 3])->get();
+            $registros = $this->model::whereBetween('data_recepcao', [date('Y-m-d') . ' 00:00:00',date('Y-m-d') . ' 23:59:59'])->wherein('tipo',['Ambulatorial',''])->whereIn('user_id', [Auth::user()->id, 3])->get();
 
         }
 
@@ -109,7 +109,8 @@ class AtendimentoController extends AppController
                 'atendimento_id' => $registro->id,
                 'categoria' => 'Peso',
                 'descricao' => $request->peso,
-                'animal_id' => $request->animal_id
+                'animal_id' => $request->animal_id,
+                'tipo' => 'Ambulatorial'
             ]);
         }
 
@@ -118,5 +119,74 @@ class AtendimentoController extends AppController
 
 
     }
+
+
+    public function internar(Request $request)
+    {
+        //
+
+        $dados = $request->except('_token','_method','animal_id1');
+
+        if(!isset($request->origem)){
+            $dados['animal_id'] = $request->animal_id1;
+        }
+
+        $dados['data_atendimento'] = $request->data_recepcao;
+        $dados['status'] = 'Em Atendimento';
+        $dados['tipo'] = 'Internacao';
+
+
+        $registro = new $this->model($dados);
+        $registro->save();
+
+
+        if(isset($request->origem)){
+
+            //encerrar o atendimento ambulatorial
+            $registro_amb = $this->model::where('id',$request->atendimento_id)->get()[0];
+            $registro_amb->update([
+                'status' => 'Atendido',
+                'atendimento_origem' => $registro->id
+            ]);
+
+            return redirect()->route('atendimento.internacao')->with('status', 'Internação Efetuada com sucesso!');
+
+        }else{
+
+            return redirect()->route('clientes.edit', $registro->Animal->Cliente->id)->with('status', 'Internação Efetuada com sucesso!');
+
+        }
+
+
+
+    }
+
+
+    public function internacao(Request $request)
+    {
+
+        if(isset($request->data_ini)){
+
+            $registros = $this->model::where('tipo','Internacao')->get();
+            $registros_alta = $this->model::where('tipo','Internacao')->whereBetween('data_recepcao', [$request->data_ini . ' 00:00:00', $request->data_fim . ' 23:59:59'])->get();
+            $data_ini = $request->data_ini;
+            $data_fim = $request->data_fim;
+
+        }else{
+
+            $registros = $this->model::where('tipo','Internacao')->get();
+            $registros_alta = $this->model::where('tipo','Internacao')->whereBetween('data_recepcao', [date('Y-m-d') . ' 00:00:00', date('Y-m-d') . ' 23:59:59'])->get();
+            $data_ini = date('Y-m-d');
+            $data_fim = date('Y-m-d');
+        }
+
+
+
+
+        return view($this->name.'.internacao', compact('registros','registros_alta','data_ini','data_fim'));
+
+    }
+
+
 
 }
