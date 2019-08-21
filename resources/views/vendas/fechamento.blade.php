@@ -21,7 +21,7 @@
                         <span></span> <i class="fa fa-caret-down"></i>
                     </div>
 
-                    <form id="pesquisa" name="pesquisa" method="post" action="{{route('vendas.pesquisar')}}">
+                    <form id="pesquisa" name="pesquisa" method="post" action="{{route('vendas.fechamento')}}">
                         @csrf
                         <input type="hidden" name="data_ini" id="data_ini">
                         <input type="hidden" name="data_fim" id="data_fim">
@@ -35,23 +35,24 @@
 
 
 
-                    <a href="{{route('vendas.create')}}" ><button type="button" class="btn btn-primary btn-sm btn-rounded">+ Nova</button></a>
-
 
 
                 </div>
             </div>
             <div class="card-block pb-0">
                 <div class="table-responsive">
-                    <table class="table table-hover  table-list" id="myTable">
+                    <table class="table table-list" id="myTable6">
                         <thead>
                         <tr>
+
                             <th width="50">ID</th>
                             <th width="50">Status</th>
                             <th>Data</th>
                             <th>Cliente</th>
                             <th>Pet</th>
+                            <th>Forma</th>
                             <th>Valor</th>
+                            <th>Contrib?</th>
                             <th width="50">Opção</th>
 
                         </tr></thead>
@@ -62,6 +63,7 @@
                             @foreach($registros as $venda)
 
                             <tr>
+
                                 <td width="50">{{$venda->id}} </td>
                                 <td width="50">{{$venda->status}} </td>
                                 <td style="padding-left:10px;"> {{date('d/m/Y', strtotime($venda->created_at))}} </td>
@@ -75,7 +77,9 @@
                                 @endif
 
                                 </td>
-                                <td>{{$venda->total_venda_liquido}} </td>
+                                <td>{{$venda->forma}} </td>
+                                <td>{{$venda->valor}} </td>
+                                <td>{{($venda->contribuicao >0)? 'S' : 'N'}} </td>
                                 <td style="padding:8px"> <a class="text-white label theme-bg" href="{{route('vendas.edit', $venda->id)}}">Acessar</a> </td>
 
                             </tr>

@@ -333,6 +333,33 @@
     } );
 
 
+    $(document).ready( function () {
+        $('#myTable6').DataTable({
+            'bInfo': false,
+            'filter': false,
+            'paginate': false,
+            'lengthChange': false,
+            dom: 'Bfrtip',
+            buttons: [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5'
+            ],
+            'language':{
+                'sSearch': 'Buscar:',
+                "oPaginate": {
+                    "sFirst":    "Primero",
+                    "sLast":    "Último",
+                    "sNext":    "Próximo",
+                    "sPrevious": "Anterior"
+                },
+            },
+
+        });
+    } );
+
+
     function selecionar(){
 
         $('#produto_id').autocomplete({

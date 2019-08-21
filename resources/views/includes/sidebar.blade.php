@@ -23,11 +23,26 @@
                 </li>
                 @endif
 
-                @if(auth()->check() && auth()->user()->hasPermissionThroughRole('view-venda'))
-                <li  class="nav-item">
-                    <a href="{{route('vendas.index')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-shopping-cart "></i></span><span class="pcoded-mtext">Vendas</span></a>
+
+
+                <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
+                    <a href="javascript:" class="nav-link "><span class="pcoded-micon"><i class="feather icon-shopping-cart"></i></span><span class="pcoded-mtext">Vendas</span></a>
+                    <ul class="pcoded-submenu">
+
+                        @if(auth()->check() && auth()->user()->hasPermissionThroughRole('view-venda'))
+                            <li class=""><a href="{{route('vendas.index')}}" class="">Listagem de Vendas</a></li>
+                        @endif
+
+                        @if(auth()->check() && auth()->user()->hasPermissionThroughRole('view-venda'))
+                            <li class=""><a href="{{route('vendas.fechamento')}}" class="">Fechamento de Caixa</a></li>
+                        @endif
+
+
+                    </ul>
                 </li>
-                @endif
+
+
+
 
                 @if(auth()->check() && auth()->user()->hasPermissionThroughRole('view-atendimento'))
                 <li  class="nav-item">
