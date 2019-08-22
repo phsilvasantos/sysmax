@@ -70,7 +70,7 @@
 
                                 @if($registro->status == 'Em Atendimento' and $registro->tipo == 'Ambulatorial')
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link text-secondary" href="#" onclick="internar()"><i class="far fa-clock"></i> Internação</a>
+                                    <a class="nav-link text-secondary" href="#" onclick="internar()"><i class="far fa-clock"></i> INTERNAR</a>
 
                                 </li>
                                 @endif
@@ -878,7 +878,7 @@
                             <label for="nome" class="control-label">Selecione o Leito:</label>
 
 
-                            <select class="form-control form-control-sm" name="leito_id" id="leito_id">
+                            <select class="form-control form-control-sm" name="leito_id" id="leito_id" required>
                                 @foreach(\App\Models\Leitos\Leito::all() as $leito)
 
                                     <option value="{{$leito->id}}">{{$leito->nome}}</option>
