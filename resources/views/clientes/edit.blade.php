@@ -509,7 +509,7 @@
                         <div class="form-group col-md-12">
                             <label for="nome" class="control-label">Selecione o Profissional:</label>
 
-                            <select class="form-control form-control-sm" name="user_id" id="user_id">
+                            <select class="form-control form-control-sm" name="user_id" id="user_id" required>
                                 @foreach(\App\User::all() as $user)
                                     @if($user->roles->contains('name', 'Veterinário'))
                                         <option value="{{$user->id}}">{{$user->name}}</option>
@@ -522,7 +522,7 @@
                             <label for="nome" class="control-label">Selecione o Leito:</label>
 
 
-                            <select class="form-control form-control-sm" name="leito_id" id="leito_id">
+                            <select class="form-control form-control-sm" name="leito_id" id="leito_id" required>
                                 @foreach(\App\Models\Leitos\Leito::all() as $leito)
 
                                         <option value="{{$leito->id}}">{{$leito->nome}}</option>
