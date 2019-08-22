@@ -35,10 +35,10 @@ class AtendimentoController extends AppController
     {
         //
         if(!Auth::user()->roles->contains('name','Veterinário')){
-            $registros = $this->model::whereBetween('data_recepcao', [$request->data . ' 00:00:00',$request->data . ' 23:59:59'])->get();
+            $registros = $this->model::whereBetween('data_recepcao', [$request->data . ' 00:00:00',$request->data . ' 23:59:59'])->wherein('tipo',['Ambulatorial',''])->get();
 
         }else{
-            $registros = $this->model::whereBetween('data_recepcao', [$request->data . ' 00:00:00',$request->data . ' 23:59:59'])->whereIn('user_id', [Auth::user()->id, 3])->get();
+            $registros = $this->model::whereBetween('data_recepcao', [$request->data . ' 00:00:00',$request->data . ' 23:59:59'])->whereIn('user_id', [Auth::user()->id, 3])->wherein('tipo',['Ambulatorial',''])->get();
 
         }
 
