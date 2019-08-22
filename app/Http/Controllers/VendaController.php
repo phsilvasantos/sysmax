@@ -252,8 +252,10 @@ class VendaController extends AppController
         $registros1 = $this->model::select('vendas.*', 'pagamentos.valor','forma_pagamentos.nome as forma', 'vendas.deleted_at as contribuicao')
                                     ->join('pagamentos', 'vendas.id', '=', 'pagamentos.venda_id')
                                     ->join('forma_pagamentos', 'pagamentos.forma_pagamento_id', '=', 'forma_pagamentos.id')
+                                    ->join('items', 'vendas.id', '=','items.venda_id')
                                     ->whereBetween('pagamentos.created_at', [$data_ini . ' 00:00:00',$data_fim . ' 23:59:59'])
                                     ->whereIn('vendas.status',['Quitada','Parcialmente Quitada'])
+                                    ->where('items.produto_id','<>', '713')
                                     ->orderby('vendas.id','desc')
                                     ;
 
