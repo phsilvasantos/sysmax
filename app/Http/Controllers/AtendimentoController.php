@@ -102,7 +102,7 @@ class AtendimentoController extends AppController
         $dados['tipo'] = 'Ambulatorial';
 
 
-        dd($dados);
+
 
         $registro = new $this->model($dados);
         $registro->save();
