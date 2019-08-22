@@ -85,13 +85,31 @@
                             </tr>
 
                             @endforeach
-
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
+
+        <div class="col-sm-6">
+            <table class="table table-hover table-list">
+                <thead>
+                <th>Forma</th>
+                <th>Valor</th>
+                </thead>
+                <tbody>
+
+                @foreach($resumo as $res)
+                <tr>
+                    <td>{{$res->forma}}</td>
+                    <td>{{$res->valor}}</td>
+                </tr>
+                @endforeach
+
+                </tbody>
+            </table>
+        </div>
 
     </div>
 

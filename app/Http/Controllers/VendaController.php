@@ -9,6 +9,7 @@ use App\Models\Vendas\Venda;
 use App\User;
 use Illuminate\Http\Request;
 use phpDocumentor\Reflection\Types\Array_;
+use DB;
 
 class VendaController extends AppController
 {
@@ -274,16 +275,16 @@ class VendaController extends AppController
 
 
 
-        $resumo = $this->model::select('forma_pagamentos.nome as forma')
+        $resumo = DB::table('vendas')->select(DB::raw('sum(pagamentos.valor) as valor, forma_pagamentos.nome as forma'))
             ->join('pagamentos', 'vendas.id', '=', 'pagamentos.venda_id')
             ->join('forma_pagamentos', 'pagamentos.forma_pagamento_id', '=', 'forma_pagamentos.id')
             ->whereBetween('pagamentos.created_at', [$data_ini . ' 00:00:00',$data_fim . ' 23:59:59'])
             ->whereIn('vendas.status',['Quitada','Parcialmente Quitada'])
-            ->orderby('vendas.id','desc')
+            ->groupBy('forma_pagamentos.nome')
             ->get();
 
 
-        return view($this->name.'.fechamento', compact('registros','data_ini','data_fim'));
+        return view($this->name.'.fechamento', compact('registros','data_ini','data_fim','resumo'));
 
     }
 
