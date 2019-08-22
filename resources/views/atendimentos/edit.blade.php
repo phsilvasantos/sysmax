@@ -18,7 +18,7 @@
                     <div class="card  <?php if($registro->tipo == 'Ambulatorial'){ echo 'bg-c-blue';} elseif($registro->tipo == 'Internacao') {echo 'bg-c-green';} else {echo 'bg-c-red';} ?>" style="padding:18px;margin-bottom: 20px;">
                         <div class="card-block <?php if($registro->tipo == 'Ambulatorial'){ echo 'bg-c-blue';} elseif($registro->tipo == 'Internacao') {echo 'bg-c-green';} else {echo 'bg-c-red';} ?>">
                             <div class="counter text-center">
-                               <h4 class="text-white m-0">{{ ($registro->tipo == '')? 'Ambulatorial': $registro->tipo}}</h4>
+                               <h4 class="text-white m-0">{{ ($registro->tipo == '')? 'AMBULATORIAL': 'INTERNAÇÃO'}}</h4>
                             </div>
                         </div>
                     </div>
