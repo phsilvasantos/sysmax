@@ -98,8 +98,11 @@ class AtendimentoController extends AppController
     public function store(Request $request)
     {
         //
+        $dados = $request->except('_token','_method');
+        $dados['tipo'] = 'Ambulatorial';
 
-        $registro = new $this->model($request->except('_token','_method'));
+
+        $registro = new $this->model($dados);
         $registro->save();
 
 
@@ -110,7 +113,7 @@ class AtendimentoController extends AppController
                 'categoria' => 'Peso',
                 'descricao' => $request->peso,
                 'animal_id' => $request->animal_id,
-                'tipo' => 'Ambulatorial'
+
             ]);
         }
 
