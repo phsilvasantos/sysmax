@@ -92,7 +92,7 @@
         </div>
     </div>
 
-        <div class="col-sm-6">
+        {{--<div class="col-sm-6">
             <table class="table table-hover table-list">
                 <thead>
                 <th>Forma</th>
@@ -109,7 +109,7 @@
 
                 </tbody>
             </table>
-        </div>
+        </div>--}}
 
     </div>
 
