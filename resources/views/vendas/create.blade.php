@@ -270,9 +270,9 @@
 
                     <div class="modal-body" style="padding:0px;">
 
-                        <div class="row">
 
-                            <div class="col-md-12">
+
+
 
                                 <div class="table-responsive">
                                     <table class="table table-hover  table-list" id="myTable2">
@@ -303,9 +303,9 @@
 
 
 
-                            </div>
 
-                        </div>
+
+
 
                     </div>
                     <div class="modal-footer">

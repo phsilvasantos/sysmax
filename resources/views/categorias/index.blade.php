@@ -12,10 +12,19 @@
                     <a href="{{route('categorias.create')}}" class="btn btn-rounded btn-sm btn-primary text-white ">NOVO</a>
                 </div>
             </div>
-            <div class="card-block px-0 py-3">
+            <div class="card-block px-0">
                 <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table class="table table-hover  table-list" id="myTable5">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Categoria</th>
+                            <th>Tipo</th>
+                            <th  style="text-align:right">Opções</th>
+                        </tr>
+                        </thead>
                         <tbody>
+
                         @foreach($registros as $registro)
                             <tr class="unread">
                             <td class="col-auto"><div><i class="fas fa-list m-r-5" style="font-size:38px;margin-left: 20px;"></i></div></td>

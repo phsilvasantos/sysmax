@@ -14,7 +14,15 @@
             </div>
             <div class="card-block px-0 py-3">
                 <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table class="table table-hover   table-list" id="myTable">
+                        <thead>
+                            <tr>
+                                <td>#</td>
+                                <td>Nome</td>
+                                <td>Opções</td>
+                            </tr>
+                        </thead>
+
                         <tbody>
                         @foreach($registros as $registro)
                             <tr class="unread">
@@ -23,9 +31,7 @@
                                 <h6 class="mb-1">{{$registro->nome}}</h6>
                                 {{--<p class="m-0">{{$registro->categoria}}</p>--}}
                             </td>
-                            <td>
-                                {{--<h6 class="text-muted"><i class="fas fa-circle text-c-green f-10 m-r-15"></i>{{$registro->categoria_type}}</h6>--}}
-                            </td>
+
                             <td style="text-align:right;">
 
 

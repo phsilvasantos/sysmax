@@ -14,7 +14,16 @@
             </div>
             <div class="card-block px-0 py-3">
                 <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table class="table table-hover table-list" id="myTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Raça</th>
+                                <th>Espécie</th>
+                                <th style="text-align:right">Opções</th>
+                            </tr>
+                        </thead>
+
                         <tbody>
                         @foreach($registros as $registro)
                             <tr class="unread">

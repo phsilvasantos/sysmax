@@ -21,7 +21,7 @@
                                 <th>Nome</th>
                                 <th>Categoria</th>
                                 <th>Valor</th>
-                                <th>Opções</th>
+                                <th  style="text-align:right">Opções</th>
                             </tr>
                         </thead>
 

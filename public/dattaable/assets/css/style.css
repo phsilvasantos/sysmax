@@ -10652,5 +10652,7 @@ select.form-control.form-control-sm {
 }
 
 
-
-
+.modal-body{
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+}
