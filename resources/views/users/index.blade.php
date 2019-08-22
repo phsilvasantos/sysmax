@@ -14,18 +14,25 @@
             </div>
             <div class="card-block" style="padding:0px;">
                 <div class="table-responsive">
-                    <table class="table table-hover" id="myTable">
-
+                    <table class="table table-hover table-list" id="myTable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Usuário</th>
+                                <th>Papel</th>
+                                <th style="text-align:right">Opções</th>
+                            </tr>
+                        </thead>
                         <tbody>
                         @foreach($registros as $registro)
                             <tr class="unread">
                             <td class="col-auto"><div><img class="rounded-circle" style="width:40px;margin-left: 20px;" src="{{url('dattaable/assets/images/user/avatar-2.jpg')}}" alt="activity-user"></div></td>
                             <td>
                                 <h6 class="mb-1">{{$registro->name}}</h6>
-                                <p class="m-0">{{ (isset($registro->roles[0]->name)) ? $registro->roles[0]->name : ''   }}</p>
+
                             </td>
                             <td>
-                                {{--<h6 class="text-muted"><i class="fas fa-circle text-c-green f-10 m-r-15"></i>{{$registro->especie}}</h6>--}}
+                                <p class="m-0">{{ (isset($registro->roles[0]->name)) ? $registro->roles[0]->name : ''   }}</p>
                             </td>
                             <td style="text-align:right;">
 
