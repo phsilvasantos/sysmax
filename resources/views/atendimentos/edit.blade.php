@@ -81,7 +81,7 @@
 
                                 @if($registro->status == 'Em Atendimento')
 
-                                    <button type="button" onclick="finalizar()" class="btn btn-metal"><i class="feather icon-slash"></i>@if($registro->tipo == 'Internacao') Dar Alta @else Finalizar Atendimento @endif    </button>
+                                    <button type="button" onclick="finalizar()" class="btn btn-warning"><i class="feather icon-slash"></i>@if($registro->tipo == 'Internacao') Dar Alta @else Finalizar Atendimento @endif    </button>
 
                                 @endif
 
