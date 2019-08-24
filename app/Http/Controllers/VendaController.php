@@ -257,6 +257,7 @@ class VendaController extends AppController
                                     ->whereBetween('pagamentos.created_at', [$data_ini . ' 00:00:00',$data_fim . ' 23:59:59'])
                                     ->whereIn('vendas.status',['Quitada','Parcialmente Quitada'])
                                     ->where('items.produto_id','<>', '713')
+                                    ->groupBy('vendas.id','vendas.deleted_at','vendas.cliente_id','vendas.user_id','vendas.total_venda_bruto','vendas.total_desconto','vendas.total_venda_liquido','vendas.observacoes','vendas.tipo','vendas.status','vendas.empresa_id','vendas.updated_at','vendas.animal_id','vendas.created_at','forma_pagamentos.nome','pagamentos.valor')
                                     ->orderby('vendas.id','desc')
                                     ;
 
@@ -269,6 +270,7 @@ class VendaController extends AppController
             ->whereBetween('pagamentos.created_at', [$data_ini . ' 00:00:00',$data_fim . ' 23:59:59'])
             ->whereIn('vendas.status',['Quitada'])
             ->where('items.produto_id', '713')
+            ->groupBy('vendas.id','vendas.deleted_at','vendas.cliente_id','vendas.user_id','vendas.total_venda_bruto','vendas.total_desconto','vendas.total_venda_liquido','vendas.observacoes','vendas.tipo','vendas.status','vendas.empresa_id','vendas.updated_at','vendas.animal_id','vendas.created_at','forma_pagamentos.nome','pagamentos.valor')
             ->orderby('vendas.id','desc')
             ->unionAll ($registros1)
             ->get();

@@ -38,12 +38,13 @@
 
 
 
-                        <li><a class="nav-link text-left @if(Session::get('status') != 'Evolução' and Session::get('status') != 'Receituário' and Session::get('status') != 'Vacina' and Session::get('status') != 'Ocorrência' and Session::get('status') != 'Anexo' and Session::get('status') != 'Peso') active @endif " id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true"> Dados Cadastrais</a></li>
+                        <li><a class="nav-link text-left @if(Session::get('status') != 'Evolução' and Session::get('status') != 'Receituário' and Session::get('status') != 'Vacina' and Session::get('status') != 'Ocorrência' and Session::get('status') != 'Anexo' and Session::get('status') != 'Peso' and Session::get('status') != 'Prescrição') active @endif " id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true"> Dados Cadastrais</a></li>
                         <li><a class="nav-link text-left @if(Session::get('status') == 'Peso') active @endif " id="v-pills-peso-tab" data-toggle="pill" href="#v-pills-peso" role="tab" aria-controls="v-pills-peso" aria-selected="true"> Peso</a></li>
                         <li><a class="nav-link text-left @if(Session::get('status') == 'Evolução') active @endif "  id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Evolução</a></li>
                         <li><a class="nav-link text-left @if(Session::get('status') == 'Receituário') active @endif " id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Receituario</a></li>
                         <li><a class="nav-link text-left @if(Session::get('status') == 'Vacina') active @endif " id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Vacinas</a></li>
                         <li><a class="nav-link text-left @if(Session::get('status') == 'Ocorrência') active @endif " id="v-pills-ocorrencia-tab" data-toggle="pill" href="#v-pills-ocorrencia" role="tab" aria-controls="v-pills-ocorrencia" aria-selected="false">Ocorrências</a></li>
+                        <li><a class="nav-link text-left @if(Session::get('status') == 'Prescrição') active @endif " id="v-pills-prescricao-tab" data-toggle="pill" href="#v-pills-prescricao" role="tab" aria-controls="v-pills-prescricao" aria-selected="false">Prescrição</a></li>
                         <li><a class="nav-link text-left @if(Session::get('status') == 'Anexo') active @endif " id="v-pills-anexo-tab" data-toggle="pill" href="#v-pills-anexo" role="tab" aria-controls="v-pills-anexo" aria-selected="false">Anexos</a></li>
                         <li><a class="nav-link text-left " id="v-pills-historico-tab" data-toggle="pill" href="#v-pills-historico" role="tab" aria-controls="v-pills-historico" aria-selected="false">Historico</a></li>
                     </ul>
@@ -99,7 +100,7 @@
                     <br>
 
                     <div class="tab-content" id="v-pills-tabContent">
-                        <div class="tab-pane fade show @if(Session::get('status') != 'Evolução' and Session::get('status') != 'Receituário' and Session::get('status') != 'Vacina'  and Session::get('status') != 'Ocorrência' and Session::get('status') != 'Anexo' and Session::get('status') != 'Peso') active @endif " id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                        <div class="tab-pane fade show @if(Session::get('status') != 'Evolução' and Session::get('status') != 'Receituário' and Session::get('status') != 'Vacina'  and Session::get('status') != 'Ocorrência' and Session::get('status') != 'Anexo' and Session::get('status') != 'Peso' and Session::get('status') != 'Prescrição') active @endif " id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
 
 
                                 <h5><i class="fa fa-user"></i>  Dados do Tutor  </h5>
@@ -469,6 +470,60 @@
 
 
                         </div>
+
+                        <div class="tab-pane fade show @if(Session::get('status') == 'Prescrição') active @endif " id="v-pills-prescricao" role="tabpanel" aria-labelledby="v-pills-prescricao-tab">
+
+
+                            <div class="card code-table" style="margin: -25px;">
+                                <div class="card-header">
+                                    <h5>Prescrição</h5>
+                                    <div class="card-header-right">
+                                        @if($registro->status == 'Em Atendimento')
+                                            <button type="button" class="btn btn-info"   onclick="adicionar('prescricao');"><i class="feather icon-alert-triangle"></i>NOVO</button>
+                                            <button type="button" class="btn btn-info"   onclick="prevenda();"><i class="feather icon-alert-triangle"></i>NOVA PRE VENDA</button>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="card-block pb-0">
+                                    <div class="table-responsive">
+                                        <div id="myTable_wrapper" class="dataTables_wrapper no-footer">
+                                            <table class="table table-hover table-list dataTable no-footer" id="minhaTabela" role="grid">
+                                                <thead>
+                                                <tr role="row">
+                                                    <th >Data/Hora</th>
+                                                    <th >Profissional</th>
+                                                    <th >Descrição</th>
+                                                    <th >Opções</th>
+
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                @foreach($registro->Animal->Detalhes as $detalhe)
+
+                                                    @if($detalhe->categoria == 'Prescrição')
+                                                        <tr role="row" class="odd">
+                                                            <td> {{ date('d/m/y H:m', strtotime($detalhe->created_at)) }}</td>
+                                                            <td > {{$detalhe->Usuario->name}}</td>
+                                                            <td > {{ substr($detalhe->descricao,0,40) }} ...</td>
+                                                            <td> <a target="_blank" href="{{route('atendimento.imprimir', $detalhe->id)}}"> <i class="fa fa-print" style="font-size:18px;padding:5px"></i> </a> <i class="fa fa-edit" style="font-size:18px;padding:5px" onclick="editar_evolucao({{$detalhe->id}}, 'prescricao', {{($registro->status == 'Em Atendimento' and $detalhe->atendimento_id == $registro->id)}})"></i> </td>
+
+                                                        </tr>
+                                                    @endif
+
+
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+
                         <div class="tab-pane fade show @if(Session::get('status') == 'Anexo') active @endif " id="v-pills-anexo" role="tabpanel" aria-labelledby="v-pills-anexo-tab">
 
 
@@ -585,6 +640,12 @@
                             <select  class="form-control" name="descricao" id="descricao2">
                                 @foreach(\App\Models\Vacinas\Vacina::all() as $vacina)
                                     <option value="{{$vacina->nome}}">{{$vacina->nome}}</option>
+                                @endforeach
+                            </select>
+
+                            <select  class="form-control" name="descricao" id="descricao5">
+                                @foreach(\App\Models\Produtos\Produto::all() as $produto)
+                                    <option value="{{$produto->nome}}">{{$produto->nome}}</option>
                                 @endforeach
                             </select>
 
@@ -909,6 +970,58 @@
     </div>
 
 
+    <div class="modal fade" id="exampleModal8" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="titulo">Pre Venda</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form id="create-form" action="{{ route('atendimento.internar') }}" method="post" enctype="multipart/form-data">
+
+                    @csrf
+
+                    <input type="hidden" name="tipo" value="Internacao">
+                    <input type="hidden" name="animal_id" value="{{$registro->Animal->id}}">
+                    <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                    <input type="hidden" name="atendente_id" value="{{Auth::user()->id}}">
+                    <input type="hidden" name="data_recepcao" value="{{date('Y-m-d')}}">
+                    <input type="hidden" name="origem" value="prontuario">
+                    <input type="hidden" name="atendimento_id" value="{{$registro->id}}">
+
+
+                    <div class="modal-body" >
+
+
+
+
+                    
+
+
+
+                    </div>
+
+
+
+                    <div class="modal-footer">
+
+
+                        <button type="submit"  class="btn btn-danger">Confirmar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+
+
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
 
 @endsection
 
@@ -967,6 +1080,10 @@
              exibir('vacina');
              document.getElementById('titulo').innerHTML = "Vacina";
              document.getElementById('categoria').value = "Vacina";
+         }else if(categoria == 'prescricao'){
+             exibir('prescricao');
+             document.getElementById('titulo').innerHTML = "Prescricão";
+             document.getElementById('categoria').value = "Prescrição";
          }
 
 
@@ -1004,6 +1121,9 @@
             document.getElementById('descricao4').style.display = 'none';
             document.getElementById('descricao4').name = '';
 
+            document.getElementById('descricao5').style.display = 'none';
+            document.getElementById('descricao5').name = '';
+
             document.getElementById('checkboxModel').style.display = 'block';
 
         }else if(opcao == 'vacina'){
@@ -1020,9 +1140,12 @@
             document.getElementById('descricao4').style.display = 'none';
             document.getElementById('descricao4').name = '';
 
+            document.getElementById('descricao5').style.display = 'none';
+            document.getElementById('descricao5').name = '';
+
             document.getElementById('checkboxModel').style.display = 'none';
 
-        }else if(opcao == 'peso'){
+        }else if(opcao == 'peso') {
 
             document.getElementById('descricao4').style.display = 'block';
             document.getElementById('descricao4').name = 'descricao';
@@ -1036,7 +1159,30 @@
             document.getElementById('descricao3').style.display = 'none';
             document.getElementById('descricao3').name = '';
 
+            document.getElementById('descricao5').style.display = 'none';
+            document.getElementById('descricao5').name = '';
+
             document.getElementById('checkboxModel').style.display = 'none';
+
+        }else if(opcao == 'prescricao'){
+
+            document.getElementById('descricao4').style.display = 'none';
+            document.getElementById('descricao4').name = 'none';
+
+            document.getElementById('descricao2').style.display = 'none';
+            document.getElementById('descricao2').name = 'none';
+
+            document.getElementById('descricao1').style.display = 'none';
+            document.getElementById('descricao1').name = '';
+
+            document.getElementById('descricao3').style.display = 'none';
+            document.getElementById('descricao3').name = '';
+
+            document.getElementById('descricao5').style.display = 'block';
+            document.getElementById('descricao5').name = 'descricao';
+
+            document.getElementById('checkboxModel').style.display = 'none';
+
 
          }else{
 
@@ -1051,6 +1197,9 @@
 
             document.getElementById('descricao4').style.display = 'none';
             document.getElementById('descricao4').name = '';
+
+            document.getElementById('descricao5').style.display = 'none';
+            document.getElementById('descricao5').name = '';
 
 
             document.getElementById('checkboxModel').style.display = 'none';
@@ -1103,6 +1252,7 @@
                     document.getElementById('descricao1').value = obj.descricao;
                     document.getElementById('descricao2').value = obj.descricao;
                     document.getElementById('descricao4').value = obj.descricao;
+                    document.getElementById('descricao5').value = obj.descricao;
                     document.getElementById('resumo').value = obj.resumo;
                     document.getElementById('profissional').value = obj.usuario.name;
                     document.getElementById('data_hora').value = obj.created_at;
@@ -1185,6 +1335,12 @@
 
         }
 
+
+        function prevenda(){
+
+            $("#exampleModal8").modal();
+
+        }
 
 
     </script>
