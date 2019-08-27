@@ -52,6 +52,7 @@
                             <th>Pet</th>
                             <th>Forma</th>
                             <th>Valor</th>
+                            <th>Parcelas</th>
                             <th>Contrib?</th>
                             <th width="50">Opção</th>
 
@@ -79,6 +80,7 @@
                                 </td>
                                 <td>{{$venda->forma}} </td>
                                 <td>{{$venda->valor}} </td>
+                                <td>{{$venda->parcelas}} </td>
                                 <td>{{($venda->contribuicao >0)? 'S' : 'N'}} </td>
                                 <td style="padding:8px"> <a class="text-white label theme-bg" href="{{route('vendas.edit', $venda->id)}}">Acessar</a> </td>
 

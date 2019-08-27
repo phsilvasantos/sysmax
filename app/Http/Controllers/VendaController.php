@@ -250,27 +250,27 @@ class VendaController extends AppController
 
 
 
-        $registros1 = $this->model::select('vendas.*', 'pagamentos.valor','forma_pagamentos.nome as forma', 'vendas.deleted_at as contribuicao')
+        $registros1 = $this->model::select('vendas.*', 'pagamentos.valor','pagamentos.parcelas','forma_pagamentos.nome as forma', 'vendas.deleted_at as contribuicao')
                                     ->join('pagamentos', 'vendas.id', '=', 'pagamentos.venda_id')
                                     ->join('forma_pagamentos', 'pagamentos.forma_pagamento_id', '=', 'forma_pagamentos.id')
                                     ->join('items', 'vendas.id', '=','items.venda_id')
                                     ->whereBetween('pagamentos.created_at', [$data_ini . ' 00:00:00',$data_fim . ' 23:59:59'])
                                     ->whereIn('vendas.status',['Quitada','Parcialmente Quitada'])
                                     ->where('items.produto_id','<>', '713')
-                                    ->groupBy('vendas.id','vendas.deleted_at','vendas.cliente_id','vendas.user_id','vendas.total_venda_bruto','vendas.total_desconto','vendas.total_venda_liquido','vendas.observacoes','vendas.tipo','vendas.status','vendas.empresa_id','vendas.updated_at','vendas.animal_id','vendas.created_at','forma_pagamentos.nome','pagamentos.valor')
+                                    ->groupBy('vendas.id','vendas.deleted_at','pagamentos.parcelas','vendas.cliente_id','vendas.user_id','vendas.total_venda_bruto','vendas.total_desconto','vendas.total_venda_liquido','vendas.observacoes','vendas.tipo','vendas.status','vendas.empresa_id','vendas.updated_at','vendas.animal_id','vendas.created_at','forma_pagamentos.nome','pagamentos.valor')
                                     ->orderby('vendas.id','desc')
                                     ;
 
 
 
-        $registros = $this->model::select('vendas.*', 'pagamentos.valor','forma_pagamentos.nome as forma','vendas.empresa_id as contribuicao')
+        $registros = $this->model::select('vendas.*', 'pagamentos.valor','pagamentos.parcelas','forma_pagamentos.nome as forma','vendas.empresa_id as contribuicao')
             ->join('pagamentos', 'vendas.id', '=', 'pagamentos.venda_id')
             ->join('forma_pagamentos', 'pagamentos.forma_pagamento_id', '=', 'forma_pagamentos.id')
             ->join('items', 'vendas.id', '=','items.venda_id')
             ->whereBetween('pagamentos.created_at', [$data_ini . ' 00:00:00',$data_fim . ' 23:59:59'])
             ->whereIn('vendas.status',['Quitada'])
             ->where('items.produto_id', '713')
-            ->groupBy('vendas.id','vendas.deleted_at','vendas.cliente_id','vendas.user_id','vendas.total_venda_bruto','vendas.total_desconto','vendas.total_venda_liquido','vendas.observacoes','vendas.tipo','vendas.status','vendas.empresa_id','vendas.updated_at','vendas.animal_id','vendas.created_at','forma_pagamentos.nome','pagamentos.valor')
+            ->groupBy('vendas.id','vendas.deleted_at','pagamentos.parcelas','vendas.cliente_id','vendas.user_id','vendas.total_venda_bruto','vendas.total_desconto','vendas.total_venda_liquido','vendas.observacoes','vendas.tipo','vendas.status','vendas.empresa_id','vendas.updated_at','vendas.animal_id','vendas.created_at','forma_pagamentos.nome','pagamentos.valor')
             ->orderby('vendas.id','desc')
             ->unionAll ($registros1)
             ->get();
