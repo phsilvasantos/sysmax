@@ -331,15 +331,15 @@
 
 
 
-                                                        @if($animal->Atendimentos[0]->data_encerramento)
+                                                        {{--@if($animal->Atendimentos[0]->data_encerramento)--}}
 
                                                             <a href="#!" class="btn  border btn-block btn-outline-secondary" onclick="internar({{$animal->id}})">Internar</a>
 
-                                                        @else
+                                                        {{--@else--}}
 
-                                                            <a href="#!" class="btn  border btn-block btn-outline-secondary" onclick="alert('Este pet está com um registro de atendimento em aberto! Acesse o Prontuário!')">Internar</a>
+                                                            {{--<a href="#!" class="btn  border btn-block btn-outline-secondary" onclick="alert('Este pet está com um registro de atendimento em aberto! Acesse o Prontuário!')">Internar</a>--}}
 
-                                                        @endif
+                                                        {{--@endif--}}
 
                                                     </div>
                                                     @endif
