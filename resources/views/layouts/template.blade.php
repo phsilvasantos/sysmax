@@ -290,6 +290,13 @@
         $('#myTable').DataTable({
             'bInfo': false,
             'lengthChange': false,
+            dom: 'Bfrtip',
+            buttons: [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5'
+            ],
             'language':{
                 'sSearch': 'Buscar:',
                 "oPaginate": {
