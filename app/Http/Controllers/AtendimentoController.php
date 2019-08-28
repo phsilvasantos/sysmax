@@ -77,7 +77,8 @@ class AtendimentoController extends AppController
         $registro = $this->model::where('id',$id)->get()[0];
 
         $registro->update([
-            'status' => 'Atendido'
+            'status' => 'Atendido',
+            'data_encerramento' => date('Y-m-d')
         ]);
 
         return redirect()->route($this->name.'.index')->with('status', 'Registro Incluído');

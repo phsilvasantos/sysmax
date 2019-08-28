@@ -71,7 +71,17 @@
 
                                 @if($registro->status == 'Em Atendimento' and $registro->tipo == 'Ambulatorial')
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link text-secondary" href="#" onclick="internar()"><i class="far fa-clock"></i> INTERNAR</a>
+
+
+                                    @if($animal->Atendimentos[0]->data_encerramento)
+
+                                        <a class="nav-link text-secondary" href="#" onclick="internar()"><i class="far fa-clock"></i> INTERNAR</a>
+
+                                    @else
+
+                                        <a href="#!" class="btn  border btn-block btn-outline-secondary" onclick="alert('Este pet já tem um registro de internação em aberto!')">Internar</a>
+
+                                    @endif
 
                                 </li>
                                 @endif

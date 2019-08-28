@@ -298,12 +298,49 @@
 
                                                 <i class="fa fa-paw" style="font-size:60px;"></i>
                                                 <h5 class="mt-4">{{$animal->nome}}</h5>
-                                                <span>{{$animal->nome}}</span>
+                                                <span>{{$animal->nome}}</span><br><br>
+
+                                                @if($animal->Atendimentos[0]->data_encerramento)
+
+                                                @else
+
+                                                    <div class="alert alert-danger" role="alert">
+                                                         @if($animal->Atendimentos[0]->tipo == 'Ambulatorial')<H6> PET EM ATENDIMENTO</H6> @else<H6> PET INTERNADO </H6>@endif
+                                                    </div>
+
+
+
+                                                @endif
+
+
                                                 <div class="row m-t-30">
                                                     @if($animal->status != 'Obito')
                                                     <div class="col-6 p-r-0">
+
+
+                                                        @if($animal->Atendimentos[0]->data_encerramento)
+
                                                         <a href="#!" class="btn  border btn-block btn-outline-secondary" onclick="incluir_fila({{$animal->id}})">Atendimento</a>
-                                                        <a href="#!" class="btn  border btn-block btn-outline-secondary" onclick="internar({{$animal->id}})">Internar</a>
+
+                                                        @else
+
+                                                            <a href="#!" class="btn  border btn-block btn-outline-secondary" onclick="alert('Este pet está com um registro de atendimento em aberto! Acesse o Prontuário!')">Atendimento</a>
+
+                                                        @endif
+
+
+
+
+                                                        @if($animal->Atendimentos[0]->data_encerramento)
+
+                                                            <a href="#!" class="btn  border btn-block btn-outline-secondary" onclick="internar({{$animal->id}})">Internar</a>
+
+                                                        @else
+
+                                                            <a href="#!" class="btn  border btn-block btn-outline-secondary" onclick="alert('Este pet está com um registro de atendimento em aberto! Acesse o Prontuário!')">Internar</a>
+
+                                                        @endif
+
                                                     </div>
                                                     @endif
                                                     <div class="col-6">
