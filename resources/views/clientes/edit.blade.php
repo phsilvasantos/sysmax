@@ -300,7 +300,7 @@
                                                 <h5 class="mt-4">{{$animal->nome}}</h5>
                                                 <span>{{$animal->nome}}</span><br><br>
 
-                                                @if($animal->Atendimentos[0]->data_encerramento)
+                                                {{--@if($animal->Atendimentos[0]->data_encerramento)
 
                                                 @else
 
@@ -310,7 +310,7 @@
 
 
 
-                                                @endif
+                                                @endif--}}
 
 
                                                 <div class="row m-t-30">
@@ -318,15 +318,15 @@
                                                     <div class="col-6 p-r-0">
 
 
-                                                        @if($animal->Atendimentos[0]->data_encerramento)
+                                                        {{--@if($animal->Atendimentos[0]->data_encerramento)--}}
 
                                                         <a href="#!" class="btn  border btn-block btn-outline-secondary" onclick="incluir_fila({{$animal->id}})">Atendimento</a>
 
-                                                        @else
+                                                        {{--@else--}}
 
-                                                            <a href="#!" class="btn  border btn-block btn-outline-secondary" onclick="alert('Este pet está com um registro de atendimento em aberto! Acesse o Prontuário!')">Atendimento</a>
+                                                            {{--<a href="#!" class="btn  border btn-block btn-outline-secondary" onclick="alert('Este pet está com um registro de atendimento em aberto! Acesse o Prontuário!')">Atendimento</a>--}}
 
-                                                        @endif
+                                                        {{--@endif--}}
 
 
 
