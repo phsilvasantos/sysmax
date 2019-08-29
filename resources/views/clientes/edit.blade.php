@@ -300,17 +300,22 @@
                                                 <h5 class="mt-4">{{$animal->nome}}</h5>
                                                 <span>{{$animal->nome}}</span><br><br>
 
-                                                {{--@if($animal->Atendimentos[0]->data_encerramento)
+                                                @if(isset($animal->Atendimentos[0]))
 
-                                                @else
+                                                    @if($animal->Atendimentos[0]->data_encerramento)
 
-                                                    <div class="alert alert-danger" role="alert">
-                                                         @if($animal->Atendimentos[0]->tipo == 'Ambulatorial')<H6> PET EM ATENDIMENTO</H6> @else<H6> PET INTERNADO </H6>@endif
-                                                    </div>
+                                                    @else
+
+                                                        <div class="alert alert-danger" role="alert">
+                                                             @if($animal->Atendimentos[0]->tipo == 'Internacao')<H6> PET INTERNADO</H6> @else<H6> ATENDIMENTO EM ABERTO </H6>@endif
+                                                        </div>
 
 
 
-                                                @endif--}}
+                                                    @endif
+
+
+                                                @endif
 
 
                                                 <div class="row m-t-30">
@@ -318,28 +323,44 @@
                                                     <div class="col-6 p-r-0">
 
 
-                                                        {{--@if($animal->Atendimentos[0]->data_encerramento)--}}
+                                                        @if(isset($animal->Atendimentos[0]))
 
-                                                        <a href="#!" class="btn  border btn-block btn-outline-secondary" onclick="incluir_fila({{$animal->id}})">Atendimento</a>
+                                                            @if($animal->Atendimentos[0]->data_encerramento)
 
-                                                        {{--@else--}}
+                                                            <a href="#!" class="btn  border btn-block btn-outline-secondary" onclick="incluir_fila({{$animal->id}})">Atendimento</a>
 
-                                                            {{--<a href="#!" class="btn  border btn-block btn-outline-secondary" onclick="alert('Este pet está com um registro de atendimento em aberto! Acesse o Prontuário!')">Atendimento</a>--}}
+                                                            @else
 
-                                                        {{--@endif--}}
+                                                                <a href="#!" class="btn  border btn-block btn-outline-secondary" onclick="alert('Este pet está com um registro de atendimento em aberto! Acesse o Prontuário!')">Atendimento</a>
+
+                                                            @endif
+
+                                                        @else
+
+                                                            <a href="#!" class="btn  border btn-block btn-outline-secondary" onclick="incluir_fila({{$animal->id}})">Atendimento</a>
+
+                                                        @endif
 
 
 
+                                                            @if(isset($animal->Atendimentos[0]))
 
-                                                        {{--@if($animal->Atendimentos[0]->data_encerramento)--}}
+                                                                @if($animal->Atendimentos[0]->data_encerramento)
 
-                                                            <a href="#!" class="btn  border btn-block btn-outline-secondary" onclick="internar({{$animal->id}})">Internar</a>
+                                                                    <a href="#!" class="btn  border btn-block btn-outline-secondary" onclick="internar({{$animal->id}})">Internar</a>
 
-                                                        {{--@else--}}
+                                                                @else
 
-                                                            {{--<a href="#!" class="btn  border btn-block btn-outline-secondary" onclick="alert('Este pet está com um registro de atendimento em aberto! Acesse o Prontuário!')">Internar</a>--}}
+                                                                    <a href="#!" class="btn  border btn-block btn-outline-secondary" onclick="alert('Este pet está com um registro de atendimento em aberto! Acesse o Prontuário!')">Internar</a>
 
-                                                        {{--@endif--}}
+                                                                @endif
+
+                                                            @else
+
+
+                                                                <a href="#!" class="btn  border btn-block btn-outline-secondary" onclick="internar({{$animal->id}})">Internar</a>
+
+                                                            @endif
 
                                                     </div>
                                                     @endif

@@ -71,7 +71,7 @@
                                 @endif
                             </td>
                             <td>
-                                <h6 class="mb-1">{{$registro->nome}}</h6>
+                                <h6 class="mb-1">{{$registro->id}} - {{$registro->nome}}</h6>
                                 <p class="m-0">{{$registro->cpf_cnpj}}</p>
                             </td>
                             <td>

@@ -18,7 +18,7 @@
                     <div class="card  <?php if($registro->tipo == 'Ambulatorial'){ echo 'bg-c-blue';} elseif($registro->tipo == 'Internacao') {echo 'bg-c-green';} else {echo 'bg-c-red';} ?>" style="padding:18px;margin-bottom: 20px;">
                         <div class="card-block <?php if($registro->tipo == 'Ambulatorial'){ echo 'bg-c-blue';} elseif($registro->tipo == 'Internacao') {echo 'bg-c-green';} else {echo 'bg-c-red';} ?>">
                             <div class="counter text-center">
-                               <h4 class="text-white m-0">{{ ($registro->tipo == '')? 'AMBULATORIAL': 'INTERNAÇÃO'}}</h4>
+                               <h4 class="text-white m-0">{{ ($registro->tipo == 'Internacao')? 'INTERNAÇÃO': 'AMBULATORIAL'}}</h4>
                             </div>
                         </div>
                     </div>
@@ -73,15 +73,23 @@
                                 <li class="nav-item dropdown">
 
 
-                                    {{--@if($animal->Atendimentos[0]->data_encerramento)--}}
+                                    @if(isset($animal->Atendimentos[0]))
 
-                                        <a class="nav-link text-secondary" href="#" onclick="internar()"><i class="far fa-clock"></i> INTERNAR</a>
+                                        @if($animal->Atendimentos[0]->data_encerramento)
 
-                                    {{--@else--}}
+                                            <a class="nav-link text-secondary" href="#" onclick="internar()"><i class="far fa-clock"></i> INTERNAR</a>
 
-                                        {{--<a href="#!" class="btn  border btn-block btn-outline-secondary" onclick="alert('Este pet já tem um registro de internação em aberto!')">Internar</a>--}}
+                                        @else
 
-                                    {{--@endif--}}
+                                        <a href="#!" class="btn  border btn-block btn-outline-secondary" onclick="alert('Este pet já tem um registro de internação em aberto!')">Internar</a>
+
+                                        @endif
+
+                                    @else
+
+                                            <a class="nav-link text-secondary" href="#" onclick="internar()"><i class="far fa-clock"></i> INTERNAR</a>
+
+                                    @endif
 
                                 </li>
                                 @endif
