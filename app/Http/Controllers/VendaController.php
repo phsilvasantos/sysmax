@@ -112,7 +112,8 @@ class VendaController extends AppController
         }elseif($total_pago <= $total_itens && $total_pago > 0){
 
             Venda::where('id',$venda->id)->update(
-                ['status' => 'Parcialmente Quitada'
+                ['status' => 'Parcialmente Quitada',
+
                 ]);
 
         }
@@ -205,7 +206,8 @@ class VendaController extends AppController
         }else{
 
             Venda::where('id',$id)->update(
-                ['status' => 'Parcialmente Quitada'
+                ['status' => 'Parcialmente Quitada',
+
                 ]);
 
         }

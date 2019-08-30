@@ -5,6 +5,7 @@ namespace App\Models\Vendas;
 use App\Models\ModelDefault;
 use App\User;
 use App\Models\Produtos\Produto;
+use DB;
 
 class Venda extends ModelDefault
 {
@@ -51,4 +52,40 @@ class Venda extends ModelDefault
     {
         return $this->belongsTo('App\Models\Animais\Animal', 'animal_id', 'id');
     }
+
+    public function TotalItens($id)
+    {
+        $itens =  DB::table('items')->where('venda_id', $id)->where('deleted_at', null)->get();
+
+
+        $total = 0;
+
+        if(isset($itens)) {
+            foreach ($itens as $item) {
+
+                $total += $item->valor_total;
+            }
+        }
+
+        return $total;
+    }
+
+
+    public function TotalPagamentos($id)
+    {
+        $pagamentos =  DB::table('pagamentos')->where('venda_id', $id)->where('deleted_at', null)->get();
+
+        $total = 0;
+
+        if(isset($pagamentos)) {
+            foreach ($pagamentos as $pagamento) {
+
+                $total += $pagamento->valor;
+            }
+        }
+
+        return $total;
+    }
+
+
 }

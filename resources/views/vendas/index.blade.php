@@ -51,7 +51,8 @@
                             <th>Data</th>
                             <th>Cliente</th>
                             <th>Pet</th>
-                            <th>Valor</th>
+                            <th>Vlr Total</th>
+                            <th>Vlr Pago</th>
                             <th width="50">Opção</th>
 
                         </tr></thead>
@@ -75,7 +76,8 @@
                                 @endif
 
                                 </td>
-                                <td>{{$venda->total_venda_liquido}} </td>
+                                <td>{{$venda->TotalItens($venda->id)}} </td>
+                                <td>{{$venda->TotalPagamentos($venda->id)}} </td>
                                 <td style="padding:8px"> <a class="text-white label theme-bg" href="{{route('vendas.edit', $venda->id)}}">Acessar</a> </td>
 
                             </tr>
