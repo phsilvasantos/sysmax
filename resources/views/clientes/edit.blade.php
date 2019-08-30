@@ -318,6 +318,16 @@
                                                 @endif
 
 
+
+                                                @if($animal->status == 'Obito')
+
+                                                    <div class="alert alert-danger" role="alert">
+                                                        <H6> ÓBITO </H6>
+                                                    </div>
+
+
+                                                @endif
+
                                                 <div class="row m-t-30">
                                                     @if($animal->status != 'Obito')
                                                     <div class="col-6 p-r-0">
