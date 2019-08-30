@@ -307,7 +307,7 @@
                                                     @else
 
                                                         <div class="alert alert-danger" role="alert">
-                                                             @if($animal->Atendimentos[0]->tipo == 'Internacao')<H6> PET INTERNADO</H6> @else<H6> ATENDIMENTO EM ABERTO </H6>@endif
+                                                             @if($animal->Atendimentos[0]->tipo == 'Internacao')<H6> PET INTERNADO</H6> @else<H6> ATENDIMENTO EM ABERTO DESDE DE {{ date('d/m/Y', strtotime($animal->Atendimentos[0]->created_at))}} </H6>@endif
                                                         </div>
 
 
@@ -371,7 +371,11 @@
                                                             <a href="#" class="btn  border btn-block btn-outline-secondary" onclick="alert('Não é possivel acessar o prontuário pois esse animal não possui nenhum atendimento registrado!')">Prontuário</a>
                                                         @endif
 
-                                                            <a href="#!" class="btn @if($animal->status != 'Obito') btn-primary @else btn-danger  @endif  btn-block" onclick="editar_animal({{$animal->id}})">Editar</a>
+                                                            @if($animal->status != 'Obito')
+
+                                                                <a href="#!" class="btn @if($animal->status != 'Obito') btn-primary @else btn-danger  @endif  btn-block" onclick="editar_animal({{$animal->id}})">Editar</a>
+
+                                                            @endif
 
                                                     </div>
                                                 </div>
