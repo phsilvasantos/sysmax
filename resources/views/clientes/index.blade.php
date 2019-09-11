@@ -72,7 +72,7 @@
                             </td>
                             <td>
                                 <h6 class="mb-1">{{$registro->id}} - {{$registro->nome}}</h6>
-                                <p class="m-0">{{$registro->cpf_cnpj}}</p> - @if(count($registro->categorias)){{  $registro->categorias[0]->categoria }} @endif
+                                <p class="m-0">{{$registro->cpf_cnpj}} - @if(count($registro->categorias)){{  $registro->categorias[0]->categoria }} @endif</p>
                             </td>
                             <td>
 
