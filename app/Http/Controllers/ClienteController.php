@@ -131,6 +131,13 @@ class ClienteController extends AppController
                 //
                 $registros = $this->model::where('cpf_cnpj', 'like', '%'. $request->descricao .'%')->get();
                 break;
+
+            case 'id':
+                //
+                $registros = $this->model::where('id', '=', $request->descricao )->get();
+                break;
+
+
             default :
                 //
                 $registros = $this->model::where();

@@ -343,7 +343,7 @@
 
                     if(result.id){
 
-                        alert('Este CPF já está cadastrado no sistema no ID:' + result.id);
+                        alert('Este CPF já está cadastrado no sistema no ID:' + result.id + ' - ' + result.nome);
                     }
 
 

@@ -24,7 +24,7 @@
                         <select class="form-control" name="campo">
                             <option value="nome_cliente">Cliente</option>
                             <option value="CPF">CPF/CNPJ</option>
-                            {{--<option value="nascimento">Data Nascimento</option>--}}
+                            <option value="id">ID</option>
                             <option value="nome_animal">Animal</option>
                         </select>
 
