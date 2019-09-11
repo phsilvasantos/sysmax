@@ -24,10 +24,9 @@ class ClienteController extends AppController
 
     }
 
-    //sobrescrever o metodo store para salvar as categorias
+    //sobrescrever o metodo store para salvar
     public function store(Request $request)
     {
-
 
 
         $registro = new $this->model($request->except('_token','_method'));
@@ -146,6 +145,17 @@ class ClienteController extends AppController
 
     }
 
+
+    public function validar(Request $request){
+
+
+        $cpf = Cliente::where('cpf_cnpj', $request->cpf)->first();
+
+
+        return $cpf;
+
+
+    }
 
 
 }

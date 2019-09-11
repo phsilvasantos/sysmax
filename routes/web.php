@@ -26,6 +26,7 @@ Route::resource('/modulos', 'ModuloController');
 
 Route::any('/product/localizar','ProdutoController@localizar')->name('produto.localizar');
 Route::any('/cliente/localizar','ClienteController@localizar')->name('cliente.localizar');
+Route::any('/cliente/validar','ClienteController@validar')->name('cliente.validar');
 Route::post('/clientes/pesquisar','ClienteController@pesquisar')->name('clientes.pesquisar');
 Route::any('/product/localizar/{id}','ProdutoController@localizar_id')->name('produto.localizar_id');
 Route::get('/clientes/{id}/ficha', 'ClienteController@ficha')->name('cliente.ficha');

@@ -327,12 +327,49 @@
             return result;
         }
 
+
+        function valida(cpf){
+
+            var cpf = cpf;
+            var _token = $('input[name="_token"]').val();
+
+            $.ajax({
+                url: '{{url('cliente/validar')}}',
+                method:"GET",
+                data:{cpf:cpf, _token:_token},
+                success:function(result)
+                {
+
+
+                    if(result.id){
+
+                        alert('Este CPF já está cadastrado no sistema no ID:' + result.id);
+                    }
+
+
+                },
+                error:function() {
+                    console.log('pode cadastrar');
+
+                }
+
+            });
+
+
+
+
+        }
+
+
         function valida_cpf(){
 
             var vcpf = document.getElementById('cpf').value;
 
             if(!cpf(vcpf)){
                 alert('Este CPF não é Válido!');
+            }else{
+
+                valida(vcpf);
             }
 
         }
