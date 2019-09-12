@@ -91,7 +91,18 @@
 
                                     @endif
 
+
+
+
+
                                 </li>
+
+
+                                <li>
+                                    {{--<a class="nav-link text-secondary" href="{{route('vendas.pre', ['cliente_id' => $registro->Animal->Cliente->id, 'user_id' => $registro->user_id, 'animal_id' => $registro->animal_id])}}" ><i class="feather icon-shopping-cart"></i> PRÉ VENDA</a>--}}
+                                </li>
+
+
                                 @endif
 
 

@@ -47,6 +47,7 @@ Route::get('/atendimentos/internacao', 'AtendimentoController@internacao')->name
 Route::get('/relatorios/caixa', 'RelatorioController@caixa')->name('relatorio.caixa');
 Route::post('/relatorios/caixa', 'RelatorioController@caixa')->name('relatorio.caixa');
 Route::post('/vendas/pesquisar', 'VendaController@pesquisar')->name('vendas.pesquisar');
+Route::get('/vendas/pre', 'VendaController@prevenda')->name('vendas.pre');
 Route::any('/vendas/fechamento', 'VendaController@fechamento')->name('vendas.fechamento');
 Route::put('/users/password/{id}', 'UserController@password')->name('users.password');
 

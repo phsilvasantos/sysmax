@@ -292,4 +292,26 @@ class VendaController extends AppController
 
     }
 
+
+
+    public function prevenda(Request $request)
+    {
+
+        $dados['cliente_id'] = $request->cliente_id;
+        $dados['user_id'] = $request->user_id;
+        $dados['animal_id'] = $request->animal_id;
+        $dados['tipo'] = 'Pre_Venda';
+        $dados['status'] = 'Aberta';
+
+        $venda = new Venda($dados);
+        $venda->save();
+
+
+        return redirect()->route('vendas.edit', $venda->id );
+
+    }
+
+
+
+
 }
