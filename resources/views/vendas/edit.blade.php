@@ -141,7 +141,7 @@
                                     <input type="number" value="1" step="1"  class="form-control form-control-sm valor-qtd" name="qtd" id="qtd" onchange="calcula()" style="padding:4px 8px;">
                                 </div></div>
 
-                            <div class="col-md-7" style="padding:5px"><div class="form-group"><label>Produto ou Serviço</label>
+                            <div class="col-md-6" style="padding:5px"><div class="form-group"><label>Produto ou Serviço</label>
                                     <select class="form-control form-control-sm js-example-data-ajax" name="produto_id" id="produto_id"></select>
 
                                 </div></div>
@@ -149,12 +149,14 @@
                             <div class="col-md-3" style="padding:5px"><div class="form-group"><label>Usuário</label>
                                     <select class="form-control form-control-sm js-select" name="user_id" id="user_id">
                                         @foreach($vendedores as $vendedor)
-                                            <option value="{{$vendedor->id}}">{{$vendedor->name}}</option>
+                                            <option value="{{$vendedor->id}}" @if(auth()->user()->id == $vendedor->id)) selected  @endif>{{$vendedor->name}}</option>
                                         @endforeach
                                     </select>
                                 </div></div>
 
-                            <div class="col-md-1" style="padding:5px; margin-top:5px;"><label></label>
+
+
+                            <div class="col-md-2" style="padding:5px; margin-top:5px;"><label></label></br>
                                 <a href="#"  class="label theme-bg text-white f-14 f-w-400  btn-rounded" onclick="adicionar_item()"> Lançar</a>
                             </div>
 
@@ -231,12 +233,14 @@
                                     <th  width="300px">Produto/Serviço</th>
                                     <th>Usuário</th>
                                     <th width="50px">Qtd</th>
-                                    <th width="100px">Preço</th>
-                                    <th width="100px">Desconto</th>
-                                    <th width="100px">Total</th>
 
-                                    <th width="50px">Opções</th>
+                                    @if(auth()->check() && auth()->user()->hasPermissionThroughRole('view-venda'))
+                                        <th width="100px">Preço</th>
+                                        <th width="100px">Desconto</th>
+                                        <th width="100px">Total</th>
 
+                                        <th width="50px">Opções</th>
+                                    @endif
                                 </tr></thead>
                                 <tbody>
 
@@ -250,12 +254,18 @@
                                         <td class="sorting_1"><input type="hidden" id="item_id-{{$key}}" name="item_id[]" value="{{$registro->id}}"><input type="hidden" name="produto_id[]" id="produto_id-{{$key}}" value="{{$registro->produto_id}}"> <input type="text" value="{{$registro->Produto->nome}}" readonly="" class="form-control form-control-sm " name="produto_nome[]" id="produto_nome-{{$key}}"></td>
                                         <td><input type="hidden" name="user_id[]" id="user_id-{{$key}}" value="{{$registro->user_id}}"><input type="text" value="{{$registro->Usuario->name}}" step="0.01" readonly="" class="form-control form-control-sm" name="user_nome[]" id="user_nome-{{$key}}"></td>
                                         <td><input type="number" value="{{$registro->qtd}}" step="1" readonly="" class="form-control form-control-sm valor-qtd" name="qtd[]" id="qtd-{{$key}}" onchange="calcula();"></td>
-                                        <td><input type="number" value="{{$registro->valor_unitario}}" step="0.01" readonly="" class="form-control form-control-sm valor-preco" name="preco[]" id="preco-{{$key}}"></td>
-                                        <td><input type="number" step="0.01" class="form-control valor-desconto" readonly="" name="desconto[]" id="desconto-{{$key}}" value="{{$registro->desconto}}"></td>
-                                        <td><input type="number" value="{{$registro->valor_total}}" step="0.01" readonly="" class="form-control form-control-sm valor-liquido" name="valor_liquido[]" id="valor_liquido-{{$key}}"></td>
-                                        @if($venda[0]->status != 'Quitada')
-                                        <td><i class="fa fa-edit f-18 text-c-yellow" onclick="editar({{$key}})"></i><i class="fa fa-trash f-18 text-c-red" style="padding-left:15px" onclick="alerta_exclusao(this.parentNode.parentNode.rowIndex, {{$registro->id}});"></i></td>
+
+                                        @if(auth()->check() && auth()->user()->hasPermissionThroughRole('view-venda'))
+
+                                            <td><input type="number" value="{{$registro->valor_unitario}}" step="0.01" readonly="" class="form-control form-control-sm valor-preco" name="preco[]" id="preco-{{$key}}"></td>
+                                            <td><input type="number" step="0.01" class="form-control valor-desconto" readonly="" name="desconto[]" id="desconto-{{$key}}" value="{{$registro->desconto}}"></td>
+                                            <td><input type="number" value="{{$registro->valor_total}}" step="0.01" readonly="" class="form-control form-control-sm valor-liquido" name="valor_liquido[]" id="valor_liquido-{{$key}}"></td>
+                                            @if($venda[0]->status != 'Quitada')
+                                            <td><i class="fa fa-edit f-18 text-c-yellow" onclick="editar({{$key}})"></i><i class="fa fa-trash f-18 text-c-red" style="padding-left:15px" onclick="alerta_exclusao(this.parentNode.parentNode.rowIndex, {{$registro->id}});"></i></td>
+                                            @endif
+
                                         @endif
+
                                     </tr>
 
                                 @endforeach
@@ -266,6 +276,8 @@
                     </div>
                 </div>
 
+
+                @if(auth()->check() && auth()->user()->hasPermissionThroughRole('view-venda'))
 
                 <div class="card code-table" style="margin-top:25px">
                     <div class="card-header">
@@ -313,9 +325,15 @@
                     </div>
                 </div>
 
+                @endif
+
             </div>
 
             <div class="col-md-3">
+
+
+                @if(auth()->check() && auth()->user()->hasPermissionThroughRole('view-venda'))
+
                 <div class="card @if($venda[0]->status == 'Aberta')theme-bg2 @elseif($venda[0]->status == 'Parcialmente Quitada')  bg-c-blue bitcoin-wallet @else theme-bg bitcoin-wallet  @endif" style="padding:15px 20px; margin-bottom:-0px">
                     <div class="card-block">
                         <h5 class="text-white mb-2">Valor Total R$</h5>
@@ -341,6 +359,8 @@
 
                 </div>
 
+                @endif
+
                 <div class="card" style="background:#f4f7fa; box-shadow:0 0 0 0;-webkit-box-shadow:0 0 0 0;">
 
 
@@ -349,25 +369,43 @@
 
                     @if($venda[0]->status != 'Quitada')
 
-                        <span class="label theme-bg2 text-white f-14 f-w-400 float-right btn-rounded btn-block" style="padding:10px" onclick="document.getElementById('vendas-form').submit()">
-                        <i class="fa fa-edit"></i>
-                        <a href="#!" class="float-right" style="color:white;"  >Salvar Venda</a>
-                    </span>
 
-                        <span class="label theme-bg text-white f-14 f-w-400 float-right btn-rounded btn-block" style="padding:10px"   onclick="pagamento()">
-                        <i class="fa fa-edit"></i>
-                        <a href="#!" class="float-right" style="color:white;">Registrar Pagamento1</a>
-                    </span>
+                        @if(auth()->check() && !auth()->user()->hasPermissionThroughRole('view-venda'))
 
+                            <a href="{{route('atendimentos.edit', [$venda[0]->atendimento_id])}}" class="float-right" style="color:white;"  >
+                                <span class="label theme-bg2 text-white f-14 f-w-400 float-right btn-rounded btn-block" style="padding:10px" >
+                                <i class="fa fa-arrow-circle-left"></i>
+                                Voltar
+
+                            </a>
+
+                        @endif
+
+                        @if(auth()->check() && auth()->user()->hasPermissionThroughRole('view-venda'))
+
+
+
+
+                                <span class="label theme-bg text-white f-14 f-w-400 float-right btn-rounded btn-block" style="padding:10px"   onclick="pagamento()">
+                                <i class="fa fa-edit"></i>
+                                <a href="#!" class="float-right" style="color:white;">Registrar Pagamento</a>
+                                </span>
+
+
+                                <span class="label theme-bg text-white f-14 f-w-400 float-right btn-rounded btn-block" style="padding:10px"   onclick="window.print()">
+                                <i class="fa fa-edit"></i>
+                                <a href="#!" class="float-right" style="color:white;">Imprimir</a>
+                                </span>
+
+
+
+                        @endif
 
                     @endif
 
 
 
-                        <span class="label theme-bg text-white f-14 f-w-400 float-right btn-rounded btn-block" style="padding:10px"   onclick="window.print()">
-                        <i class="fa fa-edit"></i>
-                        <a href="#!" class="float-right" style="color:white;">Imprimir Venda</a>
-                    </span>
+
 
 
 
@@ -395,6 +433,35 @@
                 </div>
 
                 <hr>
+
+
+
+                    <div class="card note-bar">
+                        <div class="card-header">
+                            <h5>Vendas em Aberto</h5>
+                            <div class="card-header-right">
+
+                            </div>
+                        </div>
+                        <div class="card-block p-0">
+
+                            @if(isset($uvendas))
+
+                                @foreach($uvendas as $vend)
+                                <a href="{{route('vendas.edit', $vend->id)}}" class="media friendlist-box" style="padding:5px">
+                                    <div class="mr-3 photo-table">
+                                        <i class="fa fa-dollar-sign f-30"></i>
+                                    </div>
+                                    <div class="media-body">
+                                        <h6>{{$vend->id}} - {{ date('d/m/Y', strtotime($vend->created_at))}}</h6>
+                                        <span class="f-12 float-right text-muted">{{$vend->total_venda_bruto}}</span>
+                                        <p class="text-muted m-0">{{$vend->status}}</p>
+                                    </div>
+                                </a>
+                                @endforeach
+                            @endif
+                        </div>
+                    </div>
 
 
             </div>

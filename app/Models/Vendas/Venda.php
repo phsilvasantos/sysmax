@@ -22,6 +22,7 @@ class Venda extends ModelDefault
         return User::all();
     }
 
+
     public function Itens()
     {
         return $this->hasMany('App\Models\Itens\Item', 'venda_id','id');

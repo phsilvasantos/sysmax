@@ -47,6 +47,7 @@
                         <thead>
                         <tr>
                             <th width="50">ID</th>
+                            <th width="50">Tipo</th>
                             <th width="50">Status</th>
                             <th>Data</th>
                             <th>Cliente</th>
@@ -64,6 +65,7 @@
 
                             <tr>
                                 <td width="50">{{$venda->id}} </td>
+                                <td width="50">{{$venda->tipo}} </td>
                                 <td width="50">{{$venda->status}} </td>
                                 <td style="padding-left:10px;"> {{date('d/m/Y', strtotime($venda->created_at))}} </td>
                                 <td>{{$venda->Cliente->nome}} </td>

@@ -135,7 +135,9 @@ class VendaController extends AppController
         $formaPagamentos = Forma_Pagamento::all();
         $vendedores = User::all();
 
-        return view($this->name.'.edit', compact('instace','formaPagamentos','venda','vendedores'));
+        $uvendas = Venda::where('cliente_id', $venda[0]->cliente_id)->where('status','!=','Quitada')->get();
+
+        return view($this->name.'.edit', compact('instace','formaPagamentos','venda','vendedores','uvendas'));
 
 
     }
@@ -297,10 +299,23 @@ class VendaController extends AppController
     public function prevenda(Request $request)
     {
 
+
+
+        $pvenda = Venda::where('tipo','Venda')->where('atendimento_id', $request->atendimento_id)->where('status','!=','Quitada')->where('animal_id', $request->animal_id)->get();
+
+        if(count($pvenda) > 0){
+
+            return redirect()->route('vendas.edit', $pvenda[0]->id );
+
+        }
+
+
+
         $dados['cliente_id'] = $request->cliente_id;
         $dados['user_id'] = $request->user_id;
         $dados['animal_id'] = $request->animal_id;
-        $dados['tipo'] = 'Pre_Venda';
+        $dados['atendimento_id'] = $request->atendimento_id;
+        $dados['tipo'] = 'Venda';
         $dados['status'] = 'Aberta';
 
         $venda = new Venda($dados);

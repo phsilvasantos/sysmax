@@ -47,7 +47,7 @@
 
                             <th width="50">ID</th>
                             <th width="50">Status</th>
-                            <th>Data</th>
+                            <th>Data Criação</th>
                             <th>Cliente</th>
                             <th>Pet</th>
                             <th>Forma</th>
