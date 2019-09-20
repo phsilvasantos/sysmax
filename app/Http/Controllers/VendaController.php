@@ -20,7 +20,7 @@ class VendaController extends AppController
     public function index()
     {
         //
-        $data_ini = date('Y-m-d', strtotime('-1 months', strtotime(date('Y-m-d'))));
+        $data_ini = date('Y-m-d', strtotime('-1 weeks', strtotime(date('Y-m-d'))));
         $data_fim = date('Y-m-d');
 
 
