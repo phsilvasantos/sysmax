@@ -436,6 +436,8 @@
 
 
 
+                    @if(auth()->check() && auth()->user()->hasPermissionThroughRole('view-venda'))
+
                     <div class="card note-bar">
                         <div class="card-header">
                             <h5>Vendas em Aberto</h5>
@@ -462,6 +464,8 @@
                             @endif
                         </div>
                     </div>
+
+                    @endif
 
 
             </div>
