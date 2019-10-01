@@ -47,7 +47,8 @@
 
                             <th width="50">ID</th>
                             <th width="50">Status</th>
-                            <th>Data Criação</th>
+                            <th>Data Venda</th>
+                            <th>Data Pagamento</th>
                             <th>Cliente</th>
                             <th>Pet</th>
                             <th>Forma</th>
@@ -68,6 +69,7 @@
                                 <td width="50">{{$venda->id}} </td>
                                 <td width="50">{{$venda->status}} </td>
                                 <td style="padding-left:10px;"> {{date('d/m/Y', strtotime($venda->created_at))}} </td>
+                                <td style="padding-left:10px;"> {{date('d/m/Y', strtotime($venda->data_pagamento))}} </td>
                                 <td>{{$venda->Cliente->nome}} </td>
                                 <td>
 

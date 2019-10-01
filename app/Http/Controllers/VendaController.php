@@ -254,7 +254,7 @@ class VendaController extends AppController
 
 
 
-        $registros1 = $this->model::select('vendas.*', 'pagamentos.valor','pagamentos.parcelas','forma_pagamentos.nome as forma', 'vendas.deleted_at as contribuicao')
+        $registros1 = $this->model::select('vendas.*', 'pagamentos.valor','pagamentos.parcelas','forma_pagamentos.nome as forma', 'vendas.deleted_at as contribuicao', 'pagamentos.created_at as data_pagamento')
                                     ->join('pagamentos', 'vendas.id', '=', 'pagamentos.venda_id')
                                     ->join('forma_pagamentos', 'pagamentos.forma_pagamento_id', '=', 'forma_pagamentos.id')
                                     ->join('items', 'vendas.id', '=','items.venda_id')
@@ -267,7 +267,7 @@ class VendaController extends AppController
 
 
 
-        $registros = $this->model::select('vendas.*', 'pagamentos.valor','pagamentos.parcelas','forma_pagamentos.nome as forma','vendas.empresa_id as contribuicao')
+        $registros = $this->model::select('vendas.*', 'pagamentos.valor','pagamentos.parcelas','forma_pagamentos.nome as forma','vendas.empresa_id as contribuicao', 'pagamentos.created_at as data_pagamento')
             ->join('pagamentos', 'vendas.id', '=', 'pagamentos.venda_id')
             ->join('forma_pagamentos', 'pagamentos.forma_pagamento_id', '=', 'forma_pagamentos.id')
             ->join('items', 'vendas.id', '=','items.venda_id')

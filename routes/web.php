@@ -76,6 +76,8 @@ Route::resource('/roles', 'RoleController');
 Route::resource('/users', 'UserController');
 Route::resource('/leitos', 'LeitoController');
 Route::resource('/itens_prescricao', 'ItensPrescricaoController');
+Route::resource('/prescricao', 'PrescricaoController');
+
 
 
 

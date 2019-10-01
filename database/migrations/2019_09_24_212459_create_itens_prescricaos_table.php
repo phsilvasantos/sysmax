@@ -20,8 +20,8 @@ class CreateItensPrescricaosTable extends Migration
             $table->text('descricao')->nullable();
             $table->softDeletes();
 
-            $table->unsignedBigInteger('empresa_id');
-            $table->foreign('empresa_id')->references('id')->on('empresas');
+            $table->unsignedBigInteger('empresa_id')->nullable();
+            //$table->foreign('empresa_id')->references('id')->on('empresas');
 
             $table->timestamps();
         });
