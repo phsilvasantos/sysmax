@@ -114,6 +114,10 @@
                         <li class=""><a href="{{route('planos.index')}}" class="">Planos</a></li>
                         @endif
 
+                        @if(auth()->check() && auth()->user()->hasPermissionThroughRole('view-atendimento'))
+                            <li class=""><a href="{{ route('itens_prescricao.index')}}" class="">Itens de Prescrição</a></li>
+                        @endif
+
                     </ul>
                 </li>
 
