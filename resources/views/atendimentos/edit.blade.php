@@ -98,13 +98,13 @@
                                 </li>
 
 
-                                <li>
-                                    <a class="nav-link text-secondary" href="{{route('vendas.pre', ['cliente_id' => $registro->Animal->Cliente->id, 'user_id' => $registro->user_id, 'animal_id' => $registro->animal_id, 'atendimento_id' => $registro->id])}}" ><i class="feather icon-shopping-cart"></i> PRÉ VENDA</a>
-                                </li>
-
 
                                 @endif
 
+
+                                <li>
+                                    <a class="nav-link text-secondary" href="{{route('vendas.pre', ['cliente_id' => $registro->Animal->Cliente->id, 'user_id' => $registro->user_id, 'animal_id' => $registro->animal_id, 'atendimento_id' => $registro->id])}}" ><i class="feather icon-shopping-cart"></i> PRÉ VENDA</a>
+                                </li>
 
                             </ul>
                             <div class="nav-item nav-grid f-view">
@@ -508,8 +508,8 @@
                                     <h5>Prescrição</h5>
                                     <div class="card-header-right">
                                         @if($registro->status == 'Em Atendimento')
-                                            <button type="button" class="btn btn-info"   onclick="adicionar('prescricao');"><i class="feather icon-alert-triangle"></i>NOVO</button>
-                                            <button type="button" class="btn btn-info"   onclick="prevenda();"><i class="feather icon-alert-triangle"></i>NOVA PRE VENDA</button>
+
+                                            <button type="button" class="btn btn-info"   onclick="prevenda();"><i class="feather icon-alert-triangle"></i>NOVA PRESCRIÇÃO</button>
                                         @endif
                                     </div>
                                 </div>
@@ -1000,7 +1000,7 @@
 
 
     <div class="modal fade" id="exampleModal8" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="titulo">Pre Venda</h5>
@@ -1024,11 +1024,32 @@
 
                     <div class="modal-body" >
 
+                        <div class="form-group col-md-12">
+                            <label for="nome" class="control-label">Descrição: </label>
+                            <select  class="form-control" name="descricao" >
+                                @foreach(\App\Models\Vacinas\Vacina::all() as $vacina)
+                                    <option value="{{$vacina->nome}}">{{$vacina->nome}}</option>
+                                @endforeach
+                            </select>
+                        </div>
 
+                        <div class="form-group col-md-12">
+                            <label for="nome" class="control-label">Descrição: </label>
+                            <select  class="form-control" name="descricao" >
+                                @foreach(\App\Models\Vacinas\Vacina::all() as $vacina)
+                                    <option value="{{$vacina->nome}}">{{$vacina->nome}}</option>
+                                @endforeach
+                            </select>
+                        </div>
 
-
-                    
-
+                        <div class="form-group col-md-12">
+                            <label for="nome" class="control-label">Descrição: </label>
+                            <select  class="form-control" name="descricao" >
+                                @foreach(\App\Models\Vacinas\Vacina::all() as $vacina)
+                                    <option value="{{$vacina->nome}}">{{$vacina->nome}}</option>
+                                @endforeach
+                            </select>
+                        </div>
 
 
                     </div>
@@ -1038,7 +1059,7 @@
                     <div class="modal-footer">
 
 
-                        <button type="submit"  class="btn btn-danger">Confirmar</button>
+                        <button type="submit"  class="btn btn-primary">Confirmar</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
 
 

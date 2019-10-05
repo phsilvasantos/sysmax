@@ -69,7 +69,7 @@
                                 <td width="50">{{$venda->id}} </td>
                                 <td width="50">{{$venda->status}} </td>
                                 <td style="padding-left:10px;"> {{date('d/m/Y', strtotime($venda->created_at))}} </td>
-                                <td style="padding-left:10px;"> {{date('d/m/Y', strtotime($venda->data_pagamento))}} </td>
+                                <td style="padding-left:10px;"> {{date('d/m/Y', strtotime($venda->data_pagamentos))}} </td>
                                 <td>{{$venda->Cliente->nome}} </td>
                                 <td>
 
