@@ -37,20 +37,18 @@
                             </li>
                         </ul>
                         <div class="nav-item nav-grid f-view">
-                            <ul class="nav">
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-secondary" href="#" id="bydate" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Opções</a>
-                                <div class="dropdown-menu" aria-labelledby="bydate">
-                                    <a class="dropdown-item" href="#">Show all</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Today</a>
-                                    <a class="dropdown-item" href="#">Yesterday</a>
-                                    <a class="dropdown-item" href="#">This week</a>
-                                    <a class="dropdown-item" href="#">This month</a>
-                                    <a class="dropdown-item" href="#">This year</a>
+                            <div class="form-group d-inline">
+                            <div class="radio radio-primary radio-fill d-inline">
+                                <input type="radio" name="tipo" id="radio-infill-1" checked="" value="credito" onclick="credito();">
+                                <label for="radio-infill-1" class="cr">Receber</label>
+                            </div>
+                            </div>
+                            <div class="form-group d-inline">
+                                <div class="radio radio-danger radio-fill d-inline">
+                                    <input type="radio" name="tipo" id="radio-infill-2" value="debito" onclick="debito();">
+                                    <label for="radio-infill-2" class="cr">Pagar</label>
                                 </div>
-                            </li>
-                            </ul>
+                            </div>
                         </div>
                     </nav>
 
@@ -61,7 +59,8 @@
                             <div class="tab-pane @if(Session::get('status') != 'Animal Incluido') active @endif" id="kt_portlet_base_demo_1_1_tab_content" role="tabpanel">
 
 
-                                <h5 class="text-c-blue"><i class="fa fa-cart-plus m-r-5 text-c-blue" style="font-size:28px"></i>  Contas a Receber</h5>
+                                <div id="titulo_recebe"> <h5 class="text-c-blue"><i class="fa fa-cart-plus m-r-5 text-c-blue" style="font-size:28px"></i>  Contas a Receber</h5></div>
+                                <div id="titulo_paga" style="display:none;"><h5 class="text-c-red"><i class="fa fa-cart-plus m-r-5 text-c-red" style="font-size:28px"></i>  Contas a Pagar</h5></div>
 
                                 <div class="float-right" style="background-color:white; padding-left:10px;">
                                     Parcela 1 de 1
@@ -200,7 +199,7 @@
                     <div class="accordion" id="accordionExample">
                         <div class="card" style="margin-bottom:10px">
                             <div class="card-header" style="padding:15px 25px" id="headingOne">
-                                <h5 class="mb-0"><a href="#!" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="collapsed">Parcelamento</a></h5>
+                                <h5 class="mb-0"><a href="#!" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="collapsed" style="color:grey;">Parcelamento</a></h5>
                             </div>
                             <div id="collapseOne" class="card-body collapse show" aria-labelledby="headingOne" data-parent="#accordionExample" style="">
 
@@ -251,7 +250,7 @@
                         </div>
                         <div class="card" style="margin-bottom:10px">
                             <div class="card-header" id="headingTwo"  style="padding:15px 25px">
-                                <h5 class="mb-0"><a href="#!" class="collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Pagamento</a></h5>
+                                <h5 class="mb-0"><a href="#!" class="collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="color:grey;">Pagamento</a></h5>
                             </div>
                             <div id="collapseTwo" class="card-body collapse" aria-labelledby="headingTwo" data-parent="#accordionExample" style="">
 
@@ -376,6 +375,21 @@
             document.getElementById('parcela').style.display = 'none';
 
         };
+
+
+        function debito() {
+
+            document.getElementById('titulo_paga').style.display = 'block';
+            document.getElementById('titulo_recebe').style.display = 'none';
+
+        }
+
+        function credito() {
+
+            document.getElementById('titulo_paga').style.display = 'none';
+            document.getElementById('titulo_recebe').style.display = 'block';
+
+        }
 
     </script>
 

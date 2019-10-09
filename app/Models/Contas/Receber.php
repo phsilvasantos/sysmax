@@ -13,7 +13,7 @@ class Receber extends ModelDefault
 
     public function TodasCategorias()
     {
-        return Categoria::where('categoria_type', 'Receber')->get();
+        return Categoria::where('categoria_type', 'Receber')->orwhere('categoria_type','Pagar')->get();
     }
 
 

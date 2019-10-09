@@ -50,6 +50,7 @@ Route::post('/vendas/pesquisar', 'VendaController@pesquisar')->name('vendas.pesq
 Route::get('/vendas/pre', 'VendaController@prevenda')->name('vendas.pre');
 Route::any('/vendas/fechamento', 'VendaController@fechamento')->name('vendas.fechamento');
 Route::put('/users/password/{id}', 'UserController@password')->name('users.password');
+Route::get('/receber/baixarapida/{id}', 'ReceberController@baixaRapida')->name('receber.baixaRapida');
 
 
 Route::resource('/empresas', 'EmpresaController');

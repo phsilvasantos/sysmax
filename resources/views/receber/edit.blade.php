@@ -21,9 +21,11 @@
 
                     <nav class="navbar m-b-10 p-10">
                         <ul class="nav">
+                            @if($registro->status != 'Quitado')
                             <li class="nav-item f-text active">
                                 <a class="nav-link text-secondary" href="#" onclick="document.getElementById('form1').submit()"><i class="fa fa-check"></i> Salvar <span class="sr-only">(current)</span></a>
                             </li>
+                            @endif
                             <li class="nav-item dropdown">
                                 <a class="nav-link text-secondary" href="{{route('receber.index')}}" ><i class="fa fa-angle-left"></i> Voltar</a>
 
@@ -41,20 +43,18 @@
 
                         </ul>
                         <div class="nav-item nav-grid f-view">
-                            <ul class="nav">
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle text-secondary" href="#" id="bydate" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Opções</a>
-                                    <div class="dropdown-menu" aria-labelledby="bydate">
-                                        <a class="dropdown-item" href="#">Show all</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Today</a>
-                                        <a class="dropdown-item" href="#">Yesterday</a>
-                                        <a class="dropdown-item" href="#">This week</a>
-                                        <a class="dropdown-item" href="#">This month</a>
-                                        <a class="dropdown-item" href="#">This year</a>
-                                    </div>
-                                </li>
-                            </ul>
+                            <div class="form-group d-inline">
+                                <div class="radio radio-primary radio-fill d-inline">
+                                    <input type="radio" name="tipo" id="radio-infill-1" @if($registro->tipo == 'credito') checked="" @endif value="credito" onclick="credito();">
+                                    <label for="radio-infill-1" class="cr">Receber</label>
+                                </div>
+                            </div>
+                            <div class="form-group d-inline">
+                                <div class="radio radio-danger radio-fill d-inline">
+                                    <input type="radio" name="tipo" id="radio-infill-2" @if($registro->tipo == 'debito') checked="" @endif value="debito" onclick="debito();">
+                                    <label for="radio-infill-2" class="cr">Pagar</label>
+                                </div>
+                            </div>
                         </div>
                     </nav>
 
@@ -65,7 +65,9 @@
                             <div class="tab-pane @if(Session::get('status') != 'Animal Incluido') active @endif" id="kt_portlet_base_demo_1_1_tab_content" role="tabpanel">
 
 
-                                <h5 class="text-c-blue"><i class="fa fa-cart-plus m-r-5 text-c-blue" style="font-size:28px"></i>  Contas a Receber</h5>
+                                <div id="titulo_recebe" @if($registro->tipo == 'credito') style="display:block;" @else  style="display:none;" @endif> <h5 class="text-c-blue"><i class="fa fa-cart-plus m-r-5 text-c-blue" style="font-size:28px"></i>  Contas a Receber</h5></div>
+                                <div id="titulo_paga" @if($registro->tipo == 'credito') style="display:none;" @else  style="display:block;" @endif><h5 class="text-c-red"><i class="fa fa-cart-plus m-r-5 text-c-red" style="font-size:28px"></i>  Contas a Pagar</h5></div>
+
 
                                 <div class="float-right" style="background-color:white; padding-left:10px;">
                                     Parcela {{$registro->numero_parcela}} de {{$registro->parcelas}}
@@ -96,7 +98,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Valor Original</label>
-                                            <input type="number" step="0.01" class="form-control form-control-sm" name="valor_original"   value="{{$registro->valor_original}}">
+                                            <input id="valor_original" type="number" step="0.01" class="form-control form-control-sm" name="valor_original"   value="{{$registro->valor_original}}">
                                         </div>
 
                                     </div>
@@ -116,7 +118,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Plano de Contas</label>
-                                            <select  class="form-control form-control-sm" name="tipo" >
+                                            <select  class="form-control form-control-sm" name="categoria_id" >
                                                 @foreach($registro->TodasCategorias() as $categoria)
                                                     <option value="{{$categoria->id}}" @if($categoria->id == $registro->categoria_id) selected @endif>{{$categoria->categoria}}</option>
                                                 @endforeach
@@ -200,7 +202,7 @@
                             <div class="tab-pane @if(Session::get('status') != 'Animal Incluido') active @endif" id="kt_portlet_base_demo_1_1_tab_content" role="tabpanel">
 
 
-                                <h5 class="text-c-blue"><i class="fa fa-dollar-sign m-r-5 text-c-blue" style="font-size:28px"></i>  Parcelas</h5>
+                                <h5 class="text-c-grey"><i class="fa fa-dollar-sign m-r-5 text-c-grey" style="font-size:28px"></i>  Parcelas</h5>
 
 
 
@@ -214,8 +216,10 @@
                                             <th style="padding:5px">Parcela</th>
                                             <th style="padding:5px">Vencimento</th>
                                             <th style="padding:5px">Valor Parcela</th>
+                                            <th style="padding:5px">Valor Pago</th>
                                             <th style="padding:5px">Valor Documento</th>
                                             <th style="padding:5px">Status</th>
+                                            <th style="padding:5px">Opções</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -226,8 +230,14 @@
                                                   <td>{{$parcela->numero_parcela}}</td>
                                                   <td>{{date('d/m/y',strtotime($parcela->data_vencimento))}}</td>
                                                   <td>{{$parcela->valor_original}}</td>
+                                                  <td>{{$parcela->valor_pago}}</td>
                                                   <td>{{$parcela->valor_documento}}</td>
                                                   <td><a href="{{route('receber.edit', $parcela->id)}}">{{$parcela->status}} </a></td>
+                                                  <td>
+                                                      @if($parcela->status != 'Quitado')
+                                                      <a class="text-white label theme-bg" href="{{Route('receber.baixaRapida',[$parcela->id])}}">Baixa Rápida</a>
+                                                      @endif
+                                                  </td>
 
                                             </tr>
 
@@ -256,7 +266,7 @@
                     <div class="accordion" id="accordionExample">
                         <div class="card" style="margin-bottom:10px">
                             <div class="card-header" style="padding:15px 25px" id="headingOne">
-                                <h5 class="mb-0"><a href="#!" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="collapsed">Pagamento</a></h5>
+                                <h5 class="mb-0"><a href="#!" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="collapsed" style="color:grey;">Pagamento Manual</a></h5>
                             </div>
                             <div id="collapseOne" class="card-body collapse show" aria-labelledby="headingOne" data-parent="#accordionExample" style="">
                                 <div class="card-block">
@@ -264,9 +274,21 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Data Pagamento</label>
-                                                <input type="date"  class="form-control form-control-sm" name="data_pagamento"   value="{{$registro->data_pagamento}}">
+                                                <input type="date"  class="form-control form-control-sm" name="data_pagamento"   value="{{($registro->data_pagamento) ? $registro->data_pagamento : date('Y-m-d')}}">
                                             </div>
                                         </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Forma Pagamento</label>
+                                                <select  class="form-control form-control-sm" name="forma_pagamento">
+                                                    <option value="Débito em Conta" @if($registro->forma_pagamento == 'Débito em Conta') checked="" @endif>Débito em Conta</option>
+                                                    @foreach(\App\Models\Forma_Pagamentos\Forma_Pagamento::all() as $forma)
+                                                        <option value="{{$forma->nome}}" @if($registro->forma_pagamento == $forma->nome) checked="" @endif>{{$forma->nome}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Descontos</label>
@@ -289,10 +311,20 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Valor Pagamento</label>
-                                                <input type="number" step="0.01" class="form-control form-control-sm" name="valor_pago"   value="{{$registro->valor_pago}}">
+                                                <input id="valor_pago" type="number" step="0.01" class="form-control form-control-sm" name="valor_pago"   value="{{$registro->valor_pago}}" >
                                             </div>
                                         </div>
 
+                                        @if($registro->status != 'Quitado')
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+
+                                                <button class="btn btn-primary btn-block" onclick="event.preventDefault();valida()"  >Baixar</button>
+                                            </div>
+                                        </div>
+
+                                        @endif
 
                                     </div>
                                 </div>
@@ -305,7 +337,7 @@
 
 
 
-
+                    <input type="hidden" name="status" value="{{$registro->status}}" id="status">
 
 
 
@@ -322,7 +354,23 @@
 
 
 
-
+    <div id="modal_baixa" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLiveLabel" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLiveLabel">Divergência de Valores</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body">
+                    <p>O valor de pagamento está diferente do valor do título. Confirma a Baixa?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" onclick="baixa()">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
@@ -358,6 +406,43 @@
             placeholder: 'Digite pelo menos 3 caracteres',
             minimumInputLength: 3,
         });
+
+
+        function debito() {
+
+            document.getElementById('titulo_paga').style.display = 'block';
+            document.getElementById('titulo_recebe').style.display = 'none';
+
+        }
+
+        function credito() {
+
+            document.getElementById('titulo_paga').style.display = 'none';
+            document.getElementById('titulo_recebe').style.display = 'block';
+
+        }
+
+        function valida() {
+
+            var pago = document.getElementById('valor_pago').value;
+            var original = document.getElementById('valor_original').value;
+
+            if(pago != original){
+
+                $('#modal_baixa').modal('show');
+            }else{
+                baixa();
+            }
+
+        }
+
+
+        function baixa(){
+
+            $('#status').val('Quitado');
+            $('#form1').submit();
+        }
+
 
     </script>
 

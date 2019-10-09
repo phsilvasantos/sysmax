@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddAtendPaiToAtendimentos extends Migration
+class AddFormaToReceber extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AddAtendPaiToAtendimentos extends Migration
      */
     public function up()
     {
-        Schema::table('atendimentos', function (Blueprint $table) {
+        Schema::table('receber', function (Blueprint $table) {
             //
-            $table->unsignedBigInteger('atendimento_origem')->nullable();
+            $table->string('forma_pagamento')->nullable();
         });
     }
 
@@ -26,9 +26,9 @@ class AddAtendPaiToAtendimentos extends Migration
      */
     public function down()
     {
-        Schema::table('atendimento_origem', function (Blueprint $table) {
+        Schema::table('receber', function (Blueprint $table) {
             //
-            $table->dropColumn('atendimento_origem');
+            $table->dropColumn('forma_pagamento');
         });
     }
 }

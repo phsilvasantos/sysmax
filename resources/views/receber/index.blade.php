@@ -22,6 +22,7 @@
                         <thead>
                         <tr>
 
+                            <th>Tipo</th>
                             <th>Vencimento</th>
                             <th>Cliente</th>
                             <th>Valor</th>
@@ -35,8 +36,9 @@
 
                             @foreach($registros as $conta)
 
-                            <tr>
-                                <td style="padding-left:10px;"> {{date('d/m/Y', strtotime($conta->data_vencimento))}} </td>
+                            <tr @if($conta->tipo == 'credito') class="table-success" @else class="table-danger" @endif>
+                                <td style="padding-left:10px;"> {{ $conta->tipo }} </td>
+                                <td> {{date('d/m/Y', strtotime($conta->data_vencimento))}} </td>
                                 @if(isset($registro->Cliente->nome))
                                     <td>{{$conta->Cliente->nome}} </td>
                                 @else
@@ -44,7 +46,26 @@
                                 @endif
                                 <td>{{$conta->valor_original}} </td>
                                 <td>{{$conta->status}} </td>
-                                <td style="padding:8px"> <a class="text-white label theme-bg" href="{{route('receber.edit', $conta->id)}}">Acessar</a> </td>
+                                <td style="padding:8px">
+
+
+                                    <div class="btn-group card-option">
+                                        <a  class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                            <i class="feather icon-more-horizontal"></i>
+                                        </a>
+                                        <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right" x-placement="top-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-106px, -168px, 0px);">
+                                            <li class="dropdown-item"><a href="{{route('receber.edit', $conta->id)}}"><span><i class="feather icon-maximize"></i> Acessar</span></a></li>
+                                            @if($conta->status != 'Quitado')
+                                            <li class="dropdown-item"><a href="{{Route('receber.baixaRapida',[$conta->id])}}"><span><i class="feather icon-minus"></i> Baixa Rápida</span></a></li>
+                                            @endif
+                                            {{--<li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> reload</a></li>--}}
+                                            @if(\Illuminate\Support\Facades\Auth::user()->id == '1')
+                                            <li class="dropdown-item"><a href="#!"><i class="feather icon-trash"></i> Excluir</a></li>
+                                            @endif
+                                        </ul>
+                                    </div>
+
+                                </td>
 
                             </tr>
 

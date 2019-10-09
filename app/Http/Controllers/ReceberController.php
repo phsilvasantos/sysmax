@@ -56,6 +56,7 @@ class ReceberController extends AppController
                 'setor_id' => $request->setor_id,
                 'cliente_id' => $request->cliente_id,
                 'categoria_id' => $request->categoria_id,
+                'tipo' => $request->tipo,
                 ]);
             $registro->save();
 
@@ -96,6 +97,45 @@ class ReceberController extends AppController
 
 
         return view($this->name.'.edit', compact('registro','parcelas'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        //
+        $registro = $this->model::where('id',$id)->get()[0];
+
+        $registro->update($request->except('_token','_method'));
+
+        if($request->origem == 'novo'){
+
+            return redirect()->route($this->name.'.create')->with('status', 'Registro Incluído');
+
+        }elseif($request->origem == 'voltar'){
+
+            return redirect()->route($this->name.'.index')->with('status', 'Registro Incluído');
+        }
+
+        return redirect()->route($this->name.'.edit', $registro)->with('status', 'Registro Atualizado');
+
+    }
+
+    public function baixaRapida($id)
+    {
+        //
+        $registro = $this->model::where('id',$id)->get()[0];
+
+        $registro->update([
+            'valor_pago' => $registro->valor_original,
+            'data_pagamento' => $registro->data_vencimento,
+            'forma_pagamento' => 'Débito em Conta',
+            'status' => 'Quitado'
+        ]);
+
+        return redirect()->back();
+
+
+        return redirect()->back();
+
     }
 
 }
