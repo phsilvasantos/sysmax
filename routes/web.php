@@ -28,6 +28,7 @@ Route::any('/product/localizar','ProdutoController@localizar')->name('produto.lo
 Route::any('/cliente/localizar','ClienteController@localizar')->name('cliente.localizar');
 Route::any('/cliente/validar','ClienteController@validar')->name('cliente.validar');
 Route::post('/clientes/pesquisar','ClienteController@pesquisar')->name('clientes.pesquisar');
+Route::post('/fornecedores/pesquisar','FornecedorController@pesquisar')->name('fornecedores.pesquisar');
 Route::any('/product/localizar/{id}','ProdutoController@localizar_id')->name('produto.localizar_id');
 Route::get('/clientes/{id}/ficha', 'ClienteController@ficha')->name('cliente.ficha');
 Route::post('/clientes/desassociar', 'ClienteController@desassociar')->name('cliente.desassociar');
@@ -57,6 +58,7 @@ Route::resource('/empresas', 'EmpresaController');
 Route::resource('/categorias', 'CategoriaController');
 Route::resource('/produtos', 'ProdutoController');
 Route::resource('/clientes', 'ClienteController');
+Route::resource('/fornecedores', 'FornecedorController');
 Route::resource('/animais', 'AnimalController');
 Route::resource('/racas', 'RacaController');
 Route::resource('/vendas', 'VendaController');

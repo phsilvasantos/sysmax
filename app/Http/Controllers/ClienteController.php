@@ -17,7 +17,7 @@ class ClienteController extends AppController
     public function index()
     {
         //
-        $registros = $this->model::limit(10)->orderBy('id', 'desc')->get();
+        $registros = $this->model::limit(10)->where('clifor','!=','fornecedor')->orderBy('id', 'desc')->get();
 
 
         return view($this->name.'.index', compact('registros'));
@@ -110,11 +110,11 @@ class ClienteController extends AppController
         switch($request->campo){
             case 'nome_cliente':
                 //
-                $registros = $this->model::where('nome', 'like', '%'. $request->descricao .'%')->get();
+                $registros = $this->model::where('nome', 'like', '%'. $request->descricao .'%')->where('clifor','!=','fornecedor')->get();
                 break;
             case 'nome_animal':
                 //
-                $clientes =   DB::table('clientes')->select('clientes.id')->join('animais','animais.cliente_id','clientes.id')->where('animais.nome', 'like', '%'. $request->descricao .'%')->get();
+                $clientes =   DB::table('clientes')->select('clientes.id')->join('animais','animais.cliente_id','clientes.id')->where('animais.nome', 'like', '%'. $request->descricao .'%')->where('clifor','!=','fornecedor')->get();
 
                 $ids = array();
 
@@ -129,7 +129,7 @@ class ClienteController extends AppController
                 break;
             case 'CPF':
                 //
-                $registros = $this->model::where('cpf_cnpj', 'like', '%'. $request->descricao .'%')->get();
+                $registros = $this->model::where('cpf_cnpj', 'like', '%'. $request->descricao .'%')->where('clifor','!=','fornecedor')->get();
                 break;
 
             case 'id':

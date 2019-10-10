@@ -6,7 +6,7 @@
 
     @endif
 
-    <form action="{{route('clientes.store')}}" method="post" name="form1">
+    <form action="{{route('fornecedores.store')}}" method="post" name="form1">
 
         @csrf
         <input type="hidden" id="origem" name="origem" value="">
@@ -28,7 +28,7 @@
                                     <span>Categoria Principal</span>
                                 </div>
                                 <div class="col text-right">
-                                    <a href="{{route('clientes.index')}}"> <button type="button" class="btn btn-sm btn-default btn-shadow-1 btn-rounded"><i class="feather icon-arrow-left"></i>Voltar</button></a>
+                                    <a href="{{route('fornecedores.index')}}"> <button type="button" class="btn btn-sm btn-default btn-shadow-1 btn-rounded"><i class="feather icon-arrow-left"></i>Voltar</button></a>
 
                                     <div class="btn-group mb-2 mr-2  btn-rounded">
                                         <button type="submit" class="btn btn-primary btn-rounded">Salvar</button>
@@ -49,9 +49,9 @@
                                 <li class="nav-item">
                                     <a class="nav-link active show" id="pills-home-tab" data-toggle="pill" href="#kt_portlet_base_demo_1_1_tab_content" role="tab" aria-controls="pills-home" aria-selected="true">Geral</a>
                                 </li>
-                                <li class="nav-item">
+                               {{-- <li class="nav-item">
                                     <a class="nav-link show" id="pills-profile-tab" data-toggle="pill" href="#kt_portlet_base_demo_1_2_tab_content" role="tab" aria-controls="pills-profile" aria-selected="false">Categorias</a>
-                                </li>
+                                </li>--}}
 
                             </ul>
 
@@ -81,7 +81,7 @@
 
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <label>Nome</label>
+                                    <label>Nome Fantasia</label>
                                     <input type="text" class="form-control form-control-sm" name="nome"  >
                                 </div>
                             </div>
@@ -111,8 +111,8 @@
                                 <div class="form-group">
                                     <label>Tipo</label>
                                     <select  class="form-control form-control-sm" name="tipo" >
-                                        <option value="Fisica">Física</option>
                                         <option value="Juridica">Jurídica</option>
+                                        <option value="Fisica">Física</option>
                                     </select>
                                 </div>
                             </div>
@@ -228,7 +228,7 @@
 
 
                     </div>
-                    <div class="tab-pane" id="kt_portlet_base_demo_1_2_tab_content" role="tabpanel">
+                    {{--<div class="tab-pane" id="kt_portlet_base_demo_1_2_tab_content" role="tabpanel">
 
                         <div class="card code-table" style="margin: -25px;">
                             <div class="card-header">
@@ -238,7 +238,7 @@
                                     <button type="button" class="btn btn-primary btn-sm btn-rounded" onclick="addRow();">+ Nova</button>
 
 
-                                    {{--<div class="btn-group card-option">
+                                    --}}{{--<div class="btn-group card-option">
                                         <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="feather icon-more-horizontal"></i>
                                         </button>
@@ -249,7 +249,7 @@
                                             <li class="dropdown-item close-card"><a href="#!"><i class="feather icon-trash"></i> remove</a></li>
                                         </ul>
 
-                                    </div>--}}
+                                    </div>--}}{{--
                                 </div>
                             </div>
                             <div class="card-block pb-0">
@@ -266,11 +266,11 @@
                                         </tr></thead>
                                         <tbody>
 
-                                        {{--<select class="form-control form-control-sm" name="categoria_id">
+                                        --}}{{--<select class="form-control form-control-sm" name="categoria_id">
                                             @foreach($instace->TodasCategorias() as $categoria)
                                                 <option value="{{$categoria->id}}">{{$categoria->categoria}}</option>
                                             @endforeach
-                                        </select>--}}
+                                        </select>--}}{{--
 
 
                                         </tbody>
@@ -279,13 +279,13 @@
                             </div>
                         </div>
 
-                    </div>
+                    </div>--}}
 
                 </div>
             </div>
         </div>
 
-        <input type="hidden" name="clifor" value="clientes">
+        <input type="hidden" name="clifor" value="fornecedor">
 
     </form>
 

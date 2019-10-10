@@ -7,7 +7,7 @@
     <div class="col-md-12">
         <div class="card code-table">
             <div class="card-header">
-                <h5>Contas a Receber</h5>
+                <h5>Contas a Receber/Pagar</h5>
                 <div class="card-header-right">
 
                     <a href="{{route('receber.create')}}" ><button type="button" class="btn btn-primary btn-sm btn-rounded">+ Nova</button></a>

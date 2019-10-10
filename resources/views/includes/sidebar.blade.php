@@ -23,6 +23,12 @@
                 </li>
                 @endif
 
+                @if(auth()->check() && auth()->user()->hasPermissionThroughRole('view-fornecedor'))
+                    <li  class="nav-item">
+                        <a href="{{route('fornecedores.index')}}" class="nav-link"><span class="pcoded-micon"><i class="feather icon-users"></i></span><span class="pcoded-mtext">Fornecedores</span></a>
+                    </li>
+                @endif
+
 
 
                 <li data-username="basic components Button Alert Badges breadcrumb Paggination progress Tooltip popovers Carousel Cards Collapse Tabs pills Modal Grid System Typography Extra Shadows Embeds" class="nav-item pcoded-hasmenu">
@@ -65,7 +71,7 @@
 
                 @if(auth()->check() && auth()->user()->hasPermissionThroughRole('view-receber'))
                 <li  class="nav-item">
-                    <a href="{{route('receber.index')}}" class="nav-link"><span class="pcoded-micon"><i class="fa fa-money-bill "></i></span><span class="pcoded-mtext">Contas a Receber</span></a>
+                    <a href="{{route('receber.index')}}" class="nav-link"><span class="pcoded-micon"><i class="fa fa-money-bill "></i></span><span class="pcoded-mtext">Financeiro</span></a>
                 </li>
                 @endif
 
