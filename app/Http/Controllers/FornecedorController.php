@@ -20,7 +20,7 @@ class FornecedorController extends AppController
         $registros = $this->model::limit(10)->where('clifor','fornecedor')->orderBy('id', 'desc')->get();
 
 
-        return view('fornecedor.index', compact('registros'));
+        return view('fornecedores.index', compact('registros'));
 
     }
 
@@ -33,7 +33,7 @@ class FornecedorController extends AppController
         $registro->save();
 
 
-        return redirect()->route('fornecedor.edit', $registro->id)->with('status', 'Registro Incluído');
+        return redirect()->route('fornecedores.edit', $registro->id)->with('status', 'Registro Incluído');
 
     }
 
@@ -48,14 +48,14 @@ class FornecedorController extends AppController
 
         if($request->origem == 'novo'){
 
-            return redirect()->route('fornecedor.create')->with('status', 'Registro Incluído');
+            return redirect()->route('fornecedores.create')->with('status', 'Registro Incluído');
 
         }elseif($request->origem == 'voltar'){
 
-            return redirect()->route('fornecedor.create.index')->with('status', 'Registro Incluído');
+            return redirect()->route('fornecedores.create.index')->with('status', 'Registro Incluído');
         }
 
-        return redirect()->route('fornecedor.create.edit', $registro)->with('status', 'Registro Atualizado');
+        return redirect()->route('fornecedores.create.edit', $registro)->with('status', 'Registro Atualizado');
 
 
 
@@ -94,7 +94,7 @@ class FornecedorController extends AppController
 
 
 
-        return view('fornecedor.index', compact('registros'));
+        return view('fornecedores.index', compact('registros'));
 
 
     }
@@ -105,7 +105,7 @@ class FornecedorController extends AppController
         $instace = new $this->model;
 
 
-        return view('fornecedor.create', compact('instace'));
+        return view('fornecedores.create', compact('instace'));
     }
 
     public function show($id)
@@ -114,7 +114,7 @@ class FornecedorController extends AppController
         $registro = $this->model::where('id',$id)->get()[0];
 
 
-        return redirect()->route('fornecedor.create', $registro);
+        return redirect()->route('fornecedores.create', $registro);
     }
 
     public function validar(Request $request){
@@ -136,7 +136,7 @@ class FornecedorController extends AppController
         $registro = $this->model::where('id',$id)->get()[0];
 
 
-        return view('fornecedor.edit', compact('registro'));
+        return view('fornecedores.edit', compact('registro'));
     }
 
 }
