@@ -24,6 +24,21 @@ class ClienteController extends AppController
 
     }
 
+
+    public function edit($id)
+    {
+        //
+
+
+        $registro = $this->model::where('id',$id)->with('vendas')->get()[0];
+
+
+        //dd($registro->vendas);
+
+        return view($this->name.'.edit', compact('registro'));
+    }
+
+
     //sobrescrever o metodo store para salvar
     public function store(Request $request)
     {

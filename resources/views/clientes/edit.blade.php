@@ -54,6 +54,9 @@
                                 <li class="nav-item">
                                     <a class="nav-link @if(Session::get('status') == 'Animal Incluido') active @endif  show" id="pills-contact-tab" data-toggle="pill" href="#kt_portlet_base_demo_1_3_tab_content" role="tab" aria-controls="pills-contact" aria-selected="false"> Animais</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link show" id="pills-history-tab" data-toggle="pill" href="#history_tab" role="tab" aria-controls="pills-history" aria-selected="false">Historico</a>
+                                </li>
                             </ul>
 
                         </div>
@@ -423,10 +426,65 @@
 
                             @endif
 
+                    </div>
+
+                    </div>
+                    <div class="tab-pane" id="history_tab" role="tabpanel">
+                        <h5>Historico de Vendas</h5>
+                        <hr>
+
+                        <div class="card-block pb-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover  table-list" id="myTable7">
+                                    <thead>
+                                    <tr>
+                                        <th width="50">ID</th>
+
+                                        <th width="50">Status</th>
+                                        <th>Data</th>
+
+                                        <th>Pet</th>
+                                        <th>Vlr Total</th>
+                                        <th>Vlr Pago</th>
+                                        <th width="50">Opção</th>
+
+                                    </tr></thead>
+                                    <tbody>
+
+
+
+                                    @foreach($registro->vendas as $venda)
+
+                                        <tr>
+                                            <td width="50">{{$venda->id}} </td>
+
+                                            <td width="50">{{$venda->status}} </td>
+                                            <td style="padding-left:10px;"> {{date('d/m/Y', strtotime($venda->created_at))}} </td>
+
+                                            <td>
+
+                                                @if(isset($venda->Animal->nome))
+                                                    {{$venda->Animal->nome}}
+                                                @else
+                                                    Venda sem Pet
+                                                @endif
+
+                                            </td>
+                                            <td>{{$venda->TotalItens($venda->id)}} </td>
+                                            <td>{{$venda->TotalPagamentos($venda->id)}} </td>
+                                            <td style="padding:8px"> <a class="text-white label theme-bg" href="{{route('vendas.edit', $venda->id)}}">Acessar</a> </td>
+
+                                        </tr>
+
+                                    @endforeach
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
 
 
                     </div>
-
                 </div>
             </div>
         </div>
@@ -830,6 +888,31 @@
 
         }
 
+        $(document).ready( function () {
+            $('#myTable7').DataTable({
+                'bInfo': false,
+                'filter': true,
+                'paginate': false,
+                'lengthChange': false,
+                dom: 'Bfrtip',
+                buttons: [
+                    'copyHtml5',
+                    'excelHtml5',
+                    'csvHtml5',
+                    'pdfHtml5'
+                ],
+                'language':{
+                    'sSearch': 'Buscar:',
+                    "oPaginate": {
+                        "sFirst":    "Primero",
+                        "sLast":    "Último",
+                        "sNext":    "Próximo",
+                        "sPrevious": "Anterior"
+                    },
+                },
+
+            });
+        } );
 
     </script>
 
