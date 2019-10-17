@@ -81,6 +81,7 @@
                                 <select  class="form-control form-control-sm" name="categoria_type" >
                                     <option value="Produtos" @if($registro->categoria_type == 'Produtos') selected="" @endif>Produtos</option>
                                     <option value="Clientes" @if($registro->categoria_type == 'Clientes') selected="" @endif>Clientes</option>
+                                    <option value="Fornecedores" @if($registro->categoria_type == 'Fornecedores') selected="" @endif>Fornecedores</option>
                                     <option value="Receber" @if($registro->categoria_type == 'Receber') selected="" @endif>Contas a Receber</option>
                                     <option value="Pagar" @if($registro->categoria_type == 'Pagar') selected="" @endif>Contas a Pagar</option>
                                 </select>

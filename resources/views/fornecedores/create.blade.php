@@ -86,8 +86,74 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Tipo</label>
+                                    <select  class="form-control form-control-sm" name="tipo" onchange="ocultar(this.value)">
+                                        <option value="Juridica">Jurídica</option>
+                                        <option value="Fisica">Física</option>
+                                    </select>
+                                </div>
+                            </div>
+
 
                             <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>CPF/CNPJ</label>
+                                    <input type="text" class="form-control form-control-sm" name="cpf_cnpj" id="cpf" required>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6" id="gru_razao">
+                                <div class="form-group">
+                                    <label>Razão Social</label>
+                                    <input type="text" class="form-control form-control-sm" name="razao_social"  required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3" id="gru_inscricao">
+                                <div class="form-group">
+                                    <label>Inscricao Estadual</label>
+                                    <input type="text" class="form-control form-control-sm" name="inscricao_estadual"   required>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3" id="gru_categoria">
+                                <div class="form-group">
+                                    <label>Categoria</label>
+                                    <select  class="form-control form-control-sm" name="categoria" >
+                                        @foreach(\App\Models\Categorias\Categoria::where('categoria_type','Fornecedores')->get() as $categoria)
+                                        <option value="{{$categoria->categoria}}">{{$categoria->categoria}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-2"  id="gru_nascimento">
+                                <div class="form-group">
+                                    <label>Nascimento</label>
+                                    <input type="date" class="form-control form-control-sm" name="nascimento"  >
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-2"  id="gru_rg">
+                                <div class="form-group">
+                                    <label>RG</label>
+                                    <input type="text" class="form-control form-control-sm" name="rg"  >
+                                </div>
+                            </div>
+
+                            <div class="col-md-2"  id="gru_emissor">
+                                <div class="form-group">
+                                    <label>Emissor</label>
+                                    <input type="text" class="form-control form-control-sm" name="emissor"  >
+                                </div>
+                            </div>
+
+                            <div class="col-md-3" id="gru_sexo">
                                 <label>Sexo</label><br>
                                 <div class="custom-control custom-radio custom-control-inline">
                                     <input type="radio" id="customRadioInline2" name="sexo" class="custom-control-input" value="M">
@@ -100,43 +166,11 @@
 
                             </div>
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Nascimento</label>
-                                    <input type="date" class="form-control form-control-sm" name="nascimento"  >
-                                </div>
-                            </div>
 
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label>Tipo</label>
-                                    <select  class="form-control form-control-sm" name="tipo" >
-                                        <option value="Juridica">Jurídica</option>
-                                        <option value="Fisica">Física</option>
-                                    </select>
-                                </div>
-                            </div>
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>CPF/CNPJ</label>
-                                    <input type="text" class="form-control form-control-sm" name="cpf_cnpj" id="cpf" onblur="valida_cpf()" required>
-                                </div>
-                            </div>
 
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label>RG</label>
-                                    <input type="text" class="form-control form-control-sm" name="rg"  >
-                                </div>
-                            </div>
 
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label>Emissor</label>
-                                    <input type="text" class="form-control form-control-sm" name="emissor"  >
-                                </div>
-                            </div>
+
 
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -159,7 +193,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-3"  id="gru_profissao">
                                 <div class="form-group">
                                     <label>Profissão</label>
                                     <input type="text" class="form-control form-control-sm" name="profissao"  >
@@ -290,6 +324,9 @@
     </form>
 
     <script type="text/javascript">
+
+
+
         var count = 0;
 
 
@@ -377,7 +414,48 @@
         }
 
 
+        function ocultar(tipo){
+
+            if(tipo == 'Juridica'){
+
+                $('#gru_sexo').hide();
+                $('#gru_nascimento').hide();
+                $('#gru_emissor').hide();
+                $('#gru_profissao').hide();
+                $('#gru_rg').hide();
+
+                $('#gru_categoria').show();
+                $('#gru_inscricao').show();
+                $('#gru_razao').show();
+
+            }else{
+
+                $('#gru_sexo').show();
+                $('#gru_nascimento').show();
+                $('#gru_emissor').show();
+                $('#gru_profissao').show();
+                $('#gru_rg').show();
+
+                $('#gru_categoria').hide();
+                $('#gru_inscricao').hide();
+                $('#gru_razao').hide();
+            }
+
+
+        }
+
+
+
     </script>
 
 @endsection
 
+@section('posScript')
+
+    <script>
+
+        $(document).ready( function () {
+            ocultar('Juridica');
+        });
+    </script>
+@endsection

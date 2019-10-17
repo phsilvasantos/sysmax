@@ -52,10 +52,10 @@ class FornecedorController extends AppController
 
         }elseif($request->origem == 'voltar'){
 
-            return redirect()->route('fornecedores.create.index')->with('status', 'Registro Incluído');
+            return redirect()->route('fornecedores.index')->with('status', 'Registro Incluído');
         }
 
-        return redirect()->route('fornecedores.create.edit', $registro)->with('status', 'Registro Atualizado');
+        return redirect()->route('fornecedores.edit', $registro)->with('status', 'Registro Atualizado');
 
 
 

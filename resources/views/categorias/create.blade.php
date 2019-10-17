@@ -82,6 +82,7 @@
                                     <select  class="form-control form-control-sm" name="categoria_type" >
                                         <option value="Produtos">Produtos</option>
                                         <option value="Clientes">Clientes</option>
+                                        <option value="Fornecedores">Fornecedores</option>
                                         <option value="Receber">Contas a Receber</option>
                                         <option value="Pagar">Contas a Pagar</option>
                                     </select>

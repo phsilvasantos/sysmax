@@ -83,8 +83,77 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Tipo</label>
+                                    <select  class="form-control form-control-sm" name="tipo" onchange="ocultar(this.value)">
+                                        <option value="Fisica"  @if($registro->tipo == 'Fisica') selected="" @endif>Física</option>
+                                        <option value="Juridica"  @if($registro->tipo == 'Juridica') selected="" @endif>Jurídica</option>
+                                    </select>
+                                </div>
+                            </div>
+
 
                             <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>CPF/CNPJ</label>
+                                    <input type="text" class="form-control form-control-sm" name="cpf_cnpj"   value="{{$registro->cpf_cnpj}}"  required id="cpf" onblur="valida_cpf()">
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6" id="gru_razao">
+                                <div class="form-group">
+                                    <label>Razão Social</label>
+                                    <input type="text" class="form-control form-control-sm" name="razao_social"  required value="{{$registro->razao_social}}" >
+                                </div>
+                            </div>
+
+                            <div class="col-md-3" id="gru_inscricao">
+                                <div class="form-group">
+                                    <label>Inscricao Estadual</label>
+                                    <input type="text" class="form-control form-control-sm" name="inscricao_estadual"   required value="{{$registro->inscricao_estadual}}" >
+                                </div>
+                            </div>
+
+                            <div class="col-md-3" id="gru_categoria">
+                                <div class="form-group">
+                                    <label>Categoria</label>
+                                    <select  class="form-control form-control-sm" name="categoria" >
+                                        @foreach(\App\Models\Categorias\Categoria::where('categoria_type','Fornecedores')->get() as $categoria)
+                                            <option value="{{$categoria->categoria}}"   @if($registro->categoria == $categoria->categoria) selected="" @endif>{{$categoria->categoria}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2"   id="gru_nascimento">
+                                <div class="form-group">
+                                    <label>Nascimento</label>
+                                    <input type="date" class="form-control form-control-sm" name="nascimento"    value="{{$registro->nascimento}}" >
+                                </div>
+                            </div>
+
+
+
+
+
+                            <div class="col-md-2"   id="gru_rg">
+                                <div class="form-group">
+                                    <label>RG</label>
+                                    <input type="text" class="form-control form-control-sm" name="rg"    value="{{$registro->rg}}" >
+                                </div>
+                            </div>
+
+                            <div class="col-md-2"   id="gru_emissor">
+                                <div class="form-group">
+                                    <label>Emissor</label>
+                                    <input type="text" class="form-control form-control-sm" name="emissor"    value="{{$registro->emissor}}" >
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-3"   id="gru_sexo">
                                 <label>Sexo</label><br>
                                 <div class="custom-control custom-radio custom-control-inline">
                                     <input type="radio" id="customRadioInline2" name="sexo" class="custom-control-input" value="M" @if($registro->sexo == 'M') checked="checked" @endif>
@@ -95,44 +164,6 @@
                                     <label class="custom-control-label" for="customRadioInline1">Feminino</label>
                                 </div>
 
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Nascimento</label>
-                                    <input type="date" class="form-control form-control-sm" name="nascimento"    value="{{$registro->nascimento}}" >
-                                </div>
-                            </div>
-
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label>Tipo</label>
-                                    <select  class="form-control form-control-sm" name="tipo" >
-                                        <option value="Fisica"  @if($registro->tipo == 'Fisica') selected="" @endif>Física</option>
-                                        <option value="Juridica"  @if($registro->tipo == 'Juridica') selected="" @endif>Jurídica</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>CPF/CNPJ</label>
-                                    <input type="text" class="form-control form-control-sm" name="cpf_cnpj"   value="{{$registro->cpf_cnpj}}"  required id="cpf" onblur="valida_cpf()">
-                                </div>
-                            </div>
-
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label>RG</label>
-                                    <input type="text" class="form-control form-control-sm" name="rg"    value="{{$registro->rg}}" >
-                                </div>
-                            </div>
-
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label>Emissor</label>
-                                    <input type="text" class="form-control form-control-sm" name="emissor"    value="{{$registro->emissor}}" >
-                                </div>
                             </div>
 
                             <div class="col-md-3">
@@ -156,7 +187,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-3"   id="gru_profissao">
                                 <div class="form-group">
                                     <label>Profissão</label>
                                     <input type="text" class="form-control form-control-sm" name="profissao"   value="{{$registro->profissao}}"  >
@@ -285,6 +316,43 @@
         }
 
 
+        function ocultar(tipo){
+
+            if(tipo == 'Juridica'){
+
+                $('#gru_sexo').hide();
+                $('#gru_nascimento').hide();
+                $('#gru_emissor').hide();
+                $('#gru_profissao').hide();
+                $('#gru_rg').hide();
+
+                $('#gru_categoria').show();
+                $('#gru_inscricao').show();
+                $('#gru_razao').show();
+
+            }else{
+
+                $('#gru_sexo').show();
+                $('#gru_nascimento').show();
+                $('#gru_emissor').show();
+                $('#gru_profissao').show();
+                $('#gru_rg').show();
+
+                $('#gru_categoria').hide();
+                $('#gru_inscricao').hide();
+                $('#gru_razao').hide();
+            }
+
+
+        }
+
+        $(document).ready( function () {
+
+            ocultar('{{$registro->tipo}}');
+        });
+
     </script>
 
 @endsection
+
+
