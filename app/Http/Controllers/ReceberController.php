@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contas\Receber;
+use App\Models\Movimentos\Movimento;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ReceberController extends AppController
 {
@@ -106,6 +108,22 @@ class ReceberController extends AppController
 
         $registro->update($request->except('_token','_method'));
 
+        if($request->status == 'Quitado'){
+
+            $movimento = new Movimento([
+                'conta_id' => $request->conta_id,
+                'data' => $request->data_pagamento,
+                'historico' => $request->resumo,
+                'documento' => $request->documento,
+                'valor' => ($request->tipo == 'credito') ? $request->valor_pago : $request->valor_pago * -1,
+                'tipo' => ($request->tipo == 'credito') ? 'crédito' : 'débito',
+                'user_id' => Auth::user()->id,
+                'receber_id' => $id,
+            ]);
+
+            $movimento->save();
+        }
+
         if($request->origem == 'novo'){
 
             return redirect()->route($this->name.'.create')->with('status', 'Registro Incluído');
@@ -124,12 +142,29 @@ class ReceberController extends AppController
         //
         $registro = $this->model::where('id',$id)->get()[0];
 
+
         $registro->update([
             'valor_pago' => $registro->valor_original,
             'data_pagamento' => $registro->data_vencimento,
             'forma_pagamento' => 'Débito em Conta',
-            'status' => 'Quitado'
+            'status' => 'Quitado',
+            'conta_id' => config('sysmax.conta_corrente_padrao')
         ]);
+
+
+        $movimento = new Movimento([
+            'conta_id' => config('sysmax.conta_corrente_padrao'),
+            'data' => $registro->data_vencimento,
+            'historico' => $registro->resumo,
+            'documento' => $registro->documento,
+            'valor' => ($registro->tipo == 'credito') ? $registro->valor_original : $registro->valor_original * -1,
+            'tipo' => ($registro->tipo == 'credito') ? 'crédito' : 'débito',
+            'user_id' => Auth::user()->id,
+            'receber_id' => $id,
+        ]);
+
+        $movimento->save();
+
 
         return redirect()->back();
 

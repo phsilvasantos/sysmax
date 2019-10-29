@@ -139,7 +139,7 @@
                                             <select  class="form-control form-control-sm" name="setor_id" >
                                                 <option value=""></option>
                                                 @foreach(\App\Models\Setores\Setor::all() as $setor)
-                                                    <option value="{{$setor->id}}">{{$setor->nome}}</option>
+                                                    <option value="{{$setor->id}}" @if($setor->id == $registro->setor_id) selected @endif>{{$setor->nome}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -154,7 +154,7 @@
 
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Numero Documento</label>
+                                            <label>Numero Documento/Venda</label>
                                             <input type="text" class="form-control form-control-sm" name="documento"   value="{{$registro->documento}}">
                                         </div>
                                     </div>
@@ -162,7 +162,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Observações</label>
-                                            <textarea  class="form-control form-control-sm" name="descricao" rows="2">{{$registro->documento}}</textarea>
+                                            <textarea  class="form-control form-control-sm" name="descricao" rows="2">{{$registro->observacao}}</textarea>
                                         </div>
                                     </div>
 
@@ -215,9 +215,10 @@
                                         <tr>
                                             <th style="padding:5px">Parcela</th>
                                             <th style="padding:5px">Vencimento</th>
-                                            <th style="padding:5px">Valor Parcela</th>
-                                            <th style="padding:5px">Valor Pago</th>
                                             <th style="padding:5px">Valor Documento</th>
+                                            <th style="padding:5px">Valor Parcela</th>
+                                            <th style="padding:5px">Data Pagamento/Recebimento</th>
+                                            <th style="padding:5px">Valor Liquído</th>
                                             <th style="padding:5px">Status</th>
                                             <th style="padding:5px">Opções</th>
                                         </tr>
@@ -229,10 +230,19 @@
 
                                                   <td>{{$parcela->numero_parcela}}</td>
                                                   <td>{{date('d/m/y',strtotime($parcela->data_vencimento))}}</td>
-                                                  <td>{{$parcela->valor_original}}</td>
-                                                  <td>{{$parcela->valor_pago}}</td>
-                                                  <td>{{$parcela->valor_documento}}</td>
-                                                  <td><a href="{{route('receber.edit', $parcela->id)}}">{{$parcela->status}} </a></td>
+                                                <td>{{$parcela->valor_documento}}</td>
+                                                <td>{{$parcela->valor_original}}</td>
+                                                  <td>{{
+
+                                                ($parcela->data_pagamento) ? date('d/m/y',strtotime($parcela->data_pagamento)) : ''
+
+
+                                                }}
+
+
+                                                </td>
+                                                <td>{{$parcela->valor_pago}}</td>
+                                                <td><a href="{{route('receber.edit', $parcela->id)}}">{{$parcela->status}} </a></td>
                                                   <td>
                                                       @if($parcela->status != 'Quitado')
                                                       <a class="text-white label theme-bg" href="{{Route('receber.baixaRapida',[$parcela->id])}}">Baixa Rápida</a>
@@ -266,24 +276,19 @@
                     <div class="accordion" id="accordionExample">
                         <div class="card" style="margin-bottom:10px">
                             <div class="card-header" style="padding:15px 25px" id="headingOne">
-                                <h5 class="mb-0"><a href="#!" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="collapsed" style="color:grey;">Pagamento Manual</a></h5>
+                                <h5 class="mb-0"><a href="#!" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="collapsed" style="color:grey;">Baixa Manual</a></h5>
                             </div>
                             <div id="collapseOne" class="card-body collapse show" aria-labelledby="headingOne" data-parent="#accordionExample" style="">
                                 <div class="card-block">
                                     <div class="row">
+
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>Data Pagamento</label>
-                                                <input type="date"  class="form-control form-control-sm" name="data_pagamento"   value="{{($registro->data_pagamento) ? $registro->data_pagamento : date('Y-m-d')}}">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <div class="form-group">
-                                                <label>Forma Pagamento</label>
-                                                <select  class="form-control form-control-sm" name="forma_pagamento">
-                                                    <option value="Débito em Conta" @if($registro->forma_pagamento == 'Débito em Conta') checked="" @endif>Débito em Conta</option>
-                                                    @foreach(\App\Models\Forma_Pagamentos\Forma_Pagamento::all() as $forma)
-                                                        <option value="{{$forma->nome}}" @if($registro->forma_pagamento == $forma->nome) checked="" @endif>{{$forma->nome}}</option>
+                                                <label>Conta</label>
+                                                <select  class="form-control form-control-sm" name="conta_id">
+
+                                                    @foreach(\App\Models\Contas\Conta::all() as $conta)
+                                                        <option value="{{$conta->id}}" @if($conta->id == $registro->conta_id) selected @endif>{{$conta->nome}} - {{$conta->conta}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -291,7 +296,25 @@
 
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>Descontos</label>
+                                                <label>Data Pagamento/Recebimento</label>
+                                                <input type="date"  class="form-control form-control-sm" name="data_pagamento"   value="{{($registro->data_pagamento) ? $registro->data_pagamento : date('Y-m-d')}}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Forma Pagamento/Recebimento</label>
+                                                <select  class="form-control form-control-sm" name="forma_pagamento">
+
+                                                    @foreach(\App\Models\Forma_Pagamentos\Forma_Pagamento::all() as $forma)
+                                                        <option value="{{$forma->nome}}" @if($registro->forma_pagamento == $forma->nome) selected @endif>{{$forma->nome}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Descontos/Taxas</label>
                                                 <input type="number" step="0.01" class="form-control form-control-sm" name="valor_desconto"   value="{{$registro->valor_desconto}}">
                                             </div>
                                         </div>
@@ -310,7 +333,7 @@
 
                                         <div class="col-md-12">
                                             <div class="form-group">
-                                                <label>Valor Pagamento</label>
+                                                <label>Valor Liquido</label>
                                                 <input id="valor_pago" type="number" step="0.01" class="form-control form-control-sm" name="valor_pago"   value="{{$registro->valor_pago}}" >
                                             </div>
                                         </div>

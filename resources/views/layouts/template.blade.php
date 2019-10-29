@@ -38,7 +38,11 @@
     <!-- datetimepicker css -->
     <link rel="stylesheet" href="{{url('dattaable/assets/plugins/data-tables/css/datatables.min.css')}}">
 
+
     <script src="https://cdn.ckeditor.com/4.11.4/standard/ckeditor.js"></script>
+
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css">
 
     @yield('preScript')
 
@@ -282,20 +286,66 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/3.1.60/inputmask/jquery.inputmask.js"></script>
 
+<script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.min.js"></script>
+
 
 
 <script>
 
     $(document).ready( function () {
-        $('#myTable').DataTable({
+        var  DT1 = $('#example').DataTable();
+        $(".selectAll").on( "click", function(e) {
+            if ($(this).is( ":checked" )) {
+                DT1.rows(  ).select();
+            } else {
+                DT1.rows(  ).deselect();
+            }
+        });
+    } );
+
+    $(document).ready( function () {
+        var table =  $('#myTable').DataTable({
             'bInfo': false,
             'lengthChange': false,
             dom: 'Bfrtip',
+            select: true,
             buttons: [
                 'copyHtml5',
                 'excelHtml5',
                 'csvHtml5',
-                'pdfHtml5'
+                'pdfHtml5',
+                {
+                    text: 'Marcar Todos',
+                    action: function () {
+                        table.rows().select();
+                        console.log(table);
+                    }
+                },
+                {
+                    text: 'Desmarcar',
+                    action: function () {
+                        table.rows().deselect();
+                    }
+                },
+                {
+                    text: 'Baixar',
+                    action: function () {
+
+                        var ids = new Array();
+
+                        var count = table.rows( { selected: true } ).data();
+
+
+                            for(var i=0; i < count.length; i++){
+
+                                ids[i] = count[i][0];
+                            }
+
+                            console.log(ids);
+
+
+                    }
+                }
             ],
             'language':{
                 'sSearch': 'Buscar:',

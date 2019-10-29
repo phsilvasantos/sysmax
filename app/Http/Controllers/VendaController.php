@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contas\Receber;
 use App\Models\Forma_Pagamentos\Forma_Pagamento;
 use App\Models\Itens\Item;
 use App\Models\Pagamentos\Pagamento;
+use App\Models\Taxas\Taxa;
 use App\Models\Vendas\Venda;
 use App\User;
 use Illuminate\Http\Request;
@@ -25,6 +27,7 @@ class VendaController extends AppController
 
 
         $registros = $this->model::whereBetween('created_at', [$data_ini . ' 00:00:00',date('Y-m-d') . ' 23:59:59'])->orderby('id','desc')->get();
+
 
 
         return view($this->name.'.index', compact('registros','data_ini','data_fim'));
@@ -93,6 +96,8 @@ class VendaController extends AppController
             if($pagamentos[$key]['valor'] > 0){
 
                 $pagamento = $venda->Pagamentos()->create($pagamentos[$key]);
+
+                $this->gerarConta($pagamento,$dados['cliente_id']);
             }
         }
 
@@ -182,7 +187,9 @@ class VendaController extends AppController
 
 
 
-            Pagamento::create($pagamentos[$key]);
+            $pago = Pagamento::create($pagamentos[$key]);
+
+            $this->gerarConta($pago,$dados['cliente_id']);
 
             }
         }
@@ -328,6 +335,80 @@ class VendaController extends AppController
     }
 
 
+    public function gerarConta($dados, $cliente)
+    {
+
+
+
+
+        $valor = $dados->valor / $dados->parcelas;
+        $receber_id =  null;
+        $vencimento = null;
+        $forma_pagamento = Forma_Pagamento::where('id', $dados->forma_pagamento_id)->first();
+        $taxas = Taxa::where('forma_pagamento_id', $dados->forma_pagamento_id)->where('parcelas', '>=', $dados->parcelas)->orderby('parcelas', 'asc')->first();
+
+        $tax = str_replace(',','.', $taxas->taxa);
+
+
+        $valor2 = $valor - ($valor * $tax);
+
+
+
+        for($i=1; $i<= $dados->parcelas; $i++){
+
+
+            if($i == 1) {
+                $vencimento =  date('Y-m-d', strtotime("+". $taxas->prazo ." days", strtotime($dados->created_at)));
+
+            }else{
+                $dias = $i * $taxas->prazo;
+                $vencimento =  date('Y-m-d', strtotime("+". $dias ." days", strtotime($dados->created_at)));
+            };
+
+
+            $registro = new Receber([
+                'resumo' => 'Conta a Receber venda: '. $dados->venda_id,
+                'documento' => $dados->venda_id,
+                'data_vencimento' => $vencimento,
+                'data_pagamento' => $vencimento,
+                'data_emissao' => $dados->created_at,
+
+                'valor_documento' => $dados->valor,
+                'valor_original' => $valor,
+                'valor_pago' => $valor2,
+                'valor_desconto' => $valor * $tax,
+                'forma_pagamento' => $forma_pagamento->nome,
+
+                'status' => 'Aberto',
+                'parcelas' => $dados->parcelas,
+                'numero_parcela' => $i,
+                'conta_id' => ($forma_pagamento->nome == 'Dinheiro')  ? config('sysmax.conta_receber_dinheiro') : config('sysmax.conta_receber_padrao'),
+
+
+                'receber_id' => $receber_id,
+                'setor_id' => config('sysmax.setor_receber_padrao'),
+                'cliente_id' => $cliente,
+                'categoria_id' => config('sysmax.categoria_receber_padrao'),
+                'tipo' => 'credito',
+            ]);
+            $registro->save();
+
+
+            if($i == 1 and $dados->parcelas >= 1) {
+                $receber_id = $registro->id;
+            };
+
+            $registro->receber_id = $receber_id;
+            $registro->save();
+
+        }
+
+
+
+
+
+
+    }
 
 
 }

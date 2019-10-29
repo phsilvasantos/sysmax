@@ -22,6 +22,7 @@
                         <thead>
                         <tr>
 
+                            <th>ID</th>
                             <th>Tipo</th>
                             <th>Vencimento</th>
                             <th>Cliente</th>
@@ -36,10 +37,11 @@
 
                             @foreach($registros as $conta)
 
-                            <tr @if($conta->tipo == 'credito') class="table-success" @else class="table-danger" @endif>
-                                <td style="padding-left:10px;"> {{ $conta->tipo }} </td>
+                            <tr>
+                                <td style="padding-left:10px;"> {{ $conta->id}} </td>
+                                <td style="padding-left:10px;"> {{ ($conta->tipo == 'credito') ? 'Receber' : 'Pagar' }} </td>
                                 <td> {{date('d/m/Y', strtotime($conta->data_vencimento))}} </td>
-                                @if(isset($registro->Cliente->nome))
+                                @if(isset($conta->Cliente->nome))
                                     <td>{{$conta->Cliente->nome}} </td>
                                 @else
                                     <td> Cliente não Identificado </td>

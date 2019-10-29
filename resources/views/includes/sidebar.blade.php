@@ -75,6 +75,12 @@
                 </li>
                 @endif
 
+                @if(auth()->check() && auth()->user()->hasPermissionThroughRole('view-receber'))
+                    <li  class="nav-item">
+                        <a href="{{route('movimentos.index')}}" class="nav-link"><span class="pcoded-micon"><i class="fa fa-expand"></i></span><span class="pcoded-mtext">Movimentação</span></a>
+                    </li>
+                @endif
+
 
 
                 <li class="nav-item pcoded-menu-caption">
@@ -123,6 +129,10 @@
                         @if(auth()->check() && auth()->user()->hasPermissionThroughRole('view-atendimento'))
                             <li class=""><a href="{{ route('itens_prescricao.index')}}" class="">Itens de Prescrição</a></li>
                         @endif
+
+                            @if(auth()->check() && auth()->user()->hasPermissionThroughRole('view-atendimento'))
+                                <li class=""><a href="{{ route('contas.index')}}" class="">Contas</a></li>
+                            @endif
 
                     </ul>
                 </li>
