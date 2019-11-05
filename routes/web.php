@@ -53,6 +53,7 @@ Route::get('/vendas/pre', 'VendaController@prevenda')->name('vendas.pre');
 Route::any('/vendas/fechamento', 'VendaController@fechamento')->name('vendas.fechamento');
 Route::put('/users/password/{id}', 'UserController@password')->name('users.password');
 Route::get('/receber/baixarapida/{id}', 'ReceberController@baixaRapida')->name('receber.baixaRapida');
+Route::post('/receber/baixagrupo', 'ReceberController@baixaGrupo')->name('receber.baixaGrupo');
 Route::get('/fluxo', 'FluxoController@fluxo')->name('fluxo');
 
 

@@ -169,6 +169,48 @@ class ReceberController extends AppController
         return redirect()->back();
 
 
+    }
+
+    public function baixaGrupo(Request $request)
+    {
+
+
+        $contas = explode(",", $request->registros);
+        $valor = 0;
+        $tipo = "";
+
+        foreach ($contas as $id) {
+
+            $registro = $this->model::where('id', $id)->get()[0];
+
+            $registro->update([
+                //'valor_pago' => $registro->valor_original,
+                //'data_pagamento' => $request->data,
+                //'forma_pagamento' => 'Débito em Conta',
+                'status' => 'Quitado',
+                'conta_id' => config('sysmax.conta_corrente_padrao')
+            ]);
+
+            $valor += $registro->valor_pago;
+            $tipo = $registro->tipo;
+
+        }
+
+        $movimento = new Movimento([
+            'conta_id' => config('sysmax.conta_corrente_padrao'),
+            'data' => $request->data,
+            'historico' => $request->historico,
+            'documento' => $request->registros,
+            'valor' => ($tipo == 'credito') ? $valor : $valor * -1,
+            'tipo' => ($tipo == 'credito') ? 'crédito' : 'débito',
+            'user_id' => Auth::user()->id,
+            'receber_id' => 0,
+        ]);
+
+        $movimento->save();
+
+
+
         return redirect()->back();
 
     }

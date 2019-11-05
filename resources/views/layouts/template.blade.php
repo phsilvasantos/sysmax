@@ -341,7 +341,9 @@
                                 ids[i] = count[i][0];
                             }
 
-                            console.log(ids);
+                            document.getElementById('registros').value = ids;
+
+                            $("#exampleModal7").modal();
 
 
                     }
