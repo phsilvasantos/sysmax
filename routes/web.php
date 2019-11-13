@@ -48,12 +48,14 @@ Route::get('/atendimentos/internacao', 'AtendimentoController@internacao')->name
 Route::get('/relatorios/caixa', 'RelatorioController@caixa')->name('relatorio.caixa');
 Route::post('/relatorios/caixa', 'RelatorioController@caixa')->name('relatorio.caixa');
 Route::post('/vendas/pesquisar', 'VendaController@pesquisar')->name('vendas.pesquisar');
+Route::post('/receber/pesquisar', 'ReceberController@pesquisar')->name('receber.pesquisar');
 Route::post('/movimentos/pesquisa', 'MovimentoController@pesquisa')->name('movimentos.pesquisa');
 Route::get('/vendas/pre', 'VendaController@prevenda')->name('vendas.pre');
 Route::any('/vendas/fechamento', 'VendaController@fechamento')->name('vendas.fechamento');
 Route::put('/users/password/{id}', 'UserController@password')->name('users.password');
 Route::get('/receber/baixarapida/{id}', 'ReceberController@baixaRapida')->name('receber.baixaRapida');
 Route::post('/receber/baixagrupo', 'ReceberController@baixaGrupo')->name('receber.baixaGrupo');
+Route::post('/receber/baixaantecipacao', 'ReceberController@baixaAntecipacao')->name('receber.baixaAntecipacao');
 Route::get('/fluxo', 'FluxoController@fluxo')->name('fluxo');
 
 

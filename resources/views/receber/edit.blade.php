@@ -90,7 +90,7 @@
                                     <div class="col-md-7">
                                         <div class="form-group">
                                             <label>Descrição</label>
-                                            <input type="text" class="form-control form-control-sm" name="resumo"   value="{{$registro->resumo}}">
+                                            <input type="text" class="form-control form-control-sm" name="resumo"   value="{{$registro->resumo}}"  @if($registro->resumo == 'Antecipação de Vendas') readonly @endif>
                                         </div>
                                     </div>
 
@@ -155,7 +155,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Numero Documento/Venda</label>
-                                            <input type="text" class="form-control form-control-sm" name="documento"   value="{{$registro->documento}}">
+                                            <input type="text" class="form-control form-control-sm" name="documento"   value="{{$registro->documento}}" @if($registro->resumo == 'Antecipação de Vendas') readonly @endif>
                                         </div>
                                     </div>
 

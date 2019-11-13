@@ -88,14 +88,16 @@
             </div>
             <div class="card-block px-0">
                 <div class="table-responsive">
-                    <table class="table table-hover  table-list" id="myTable5">
+                    <table class="table table-hover  table-list" id="myTable7">
                         <thead>
                         <tr>
                             <th></th>
+                            <th>Mov ID</th>
                             <th>Conta</th>
                             <th>Data</th>
                             <th>Historico</th>
                             <th>Valor</th>
+                            <th>Opções</th>
 
                         </tr>
                         </thead>
@@ -106,6 +108,7 @@
                         @forelse($registros as $registro)
                             <tr class="unread">
                             <td width="20">@if($registro->receber_id > 0) <i class="fa fa-copyright pl-2"></i> @endif</td>
+                            <td class="col-auto">{{$registro->id}}</td>
                             <td class="col-auto">{{$registro->conta->nome}}</td>
                             <td class="col-auto">{{date('d/m/Y', strtotime($registro->data))}}</td>
                             <td>
@@ -113,8 +116,9 @@
                                 {{--<p class="m-0">{{$registro->categoria}}</p>--}}
                             </td>
                             <td>
-                                <h6 class="text-muted"><i class="fas fa-circle text-c-green f-10 m-r-15"></i>{{$registro->valor}}</h6>
+                                <h6 class="text-muted"><i class="fas fa-circle @if($registro->valor > 0) text-c-green @else text-c-red @endif f-10 m-r-15"></i>{{$registro->valor}}</h6>
                             </td>
+                             <td><a href="{{route('movimentos.edit', $registro->id)}}"><i class="fa fa-edit fa-2x"></button> </a></td>
 
                         </tr>
                         @empty

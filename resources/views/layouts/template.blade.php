@@ -303,64 +303,7 @@
         });
     } );
 
-    $(document).ready( function () {
-        var table =  $('#myTable').DataTable({
-            'bInfo': false,
-            'lengthChange': false,
-            dom: 'Bfrtip',
-            select: true,
-            buttons: [
-                'copyHtml5',
-                'excelHtml5',
-                'csvHtml5',
-                'pdfHtml5',
-                {
-                    text: 'Marcar Todos',
-                    action: function () {
-                        table.rows().select();
-                        console.log(table);
-                    }
-                },
-                {
-                    text: 'Desmarcar',
-                    action: function () {
-                        table.rows().deselect();
-                    }
-                },
-                {
-                    text: 'Baixar',
-                    action: function () {
 
-                        var ids = new Array();
-
-                        var count = table.rows( { selected: true } ).data();
-
-
-                            for(var i=0; i < count.length; i++){
-
-                                ids[i] = count[i][0];
-                            }
-
-                            document.getElementById('registros').value = ids;
-
-                            $("#exampleModal7").modal();
-
-
-                    }
-                }
-            ],
-            'language':{
-                'sSearch': 'Buscar:',
-                "oPaginate": {
-                    "sFirst":    "Primero",
-                    "sLast":    "Último",
-                    "sNext":    "Próximo",
-                    "sPrevious": "Anterior"
-                },
-            },
-
-        });
-    } );
 
     $(document).ready( function () {
         $('#myTable3').DataTable({
@@ -399,6 +342,30 @@
             'paginate': false,
             'lengthChange': false,
             dom: 'Bfrtip',
+            buttons: [
+                'copyHtml5',
+                'excelHtml5',
+                'csvHtml5',
+                'pdfHtml5'
+            ],
+            'language':{
+                'sSearch': 'Buscar:',
+                "oPaginate": {
+                    "sFirst":    "Primero",
+                    "sLast":    "Último",
+                    "sNext":    "Próximo",
+                    "sPrevious": "Anterior"
+                },
+            },
+
+        });
+    } );
+
+
+    $(document).ready( function () {
+        $('#myTable7').DataTable({
+
+            dom: 'Bfrtpl',
             buttons: [
                 'copyHtml5',
                 'excelHtml5',

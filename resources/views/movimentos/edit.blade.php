@@ -35,7 +35,7 @@
                             <a href="{{route('movimentos.index')}}"> <button type="button" class="btn btn-sm btn-default btn-shadow-1 btn-rounded"><i class="feather icon-arrow-left"></i>Voltar</button></a>
 
 
-                            <div class="btn-group mb-2 mr-2  btn-rounded">
+                            {{--<div class="btn-group mb-2 mr-2  btn-rounded">
                                 <button type="submit" class="btn btn-primary btn-rounded">Salvar</button>
                                 <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split  btn-rounded" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="sr-only">Toggle Dropdown</span></button>
                                 <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(92px, 43px, 0px);">
@@ -43,7 +43,7 @@
                                     <a class="dropdown-item" href="#!" onclick="salvar('salvar')">Salvar e Voltar</a>
 
                                 </div>
-                            </div>
+                            </div>--}}
 
                         </div>
                     </div>

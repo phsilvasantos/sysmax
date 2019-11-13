@@ -28,7 +28,10 @@ class Receber extends ModelDefault
         return $this->hasMany('App\Models\Contas\Receber','receber_id','id');
     }
 
-
+    Public Function Movimentos()
+    {
+        return $this->hasMany('App\Models\Movimentos\Movimento', 'receber_id', 'id');
+    }
 
 
 }

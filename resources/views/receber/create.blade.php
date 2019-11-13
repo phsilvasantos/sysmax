@@ -248,7 +248,7 @@
 
                             </div>
                         </div>
-                        <div class="card" style="margin-bottom:10px">
+                        {{--<div class="card" style="margin-bottom:10px">
                             <div class="card-header" id="headingTwo"  style="padding:15px 25px">
                                 <h5 class="mb-0"><a href="#!" class="collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="color:grey;">Pagamento</a></h5>
                             </div>
@@ -295,7 +295,7 @@
 
 
                             </div>
-                        </div>
+                        </div>--}}
 
                     </div>
 
