@@ -208,12 +208,235 @@
             </div>
         </div>
 
-
-
     </form>
 
 
+        <div class="kt-portlet__body"  style="margin-top: 20px;">
+            <div class="tab-content">
+                <div class="tab-pane active" id="kt_portlet_base_demo_1_1_tab_content" role="tabpanel">
+                    <h5>Comissionamento</h5>
+                    <hr>
+
+                    <br>
+
+                    <div class="row">
+
+                        <div class="col-md-6">
+
+                         <h4>Por Grupo</h4>
+
+                         <hr>
+                         <br>
+
+                        <form id="form-procedi" action="{{route('comissao.store')}}" method="post">
+                            @csrf
+                            <input type="hidden" name="user_id" value="{{$registro->id}}">
+                            <input type="hidden" name="tipo" value="grupo">
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+
+                                    <div class="form-group">
+                                        <label>Produto ou Serviço</label>
+                                        <select class="form-control form-control-sm" name="produto_id">
+                                            @foreach(\App\Models\Categorias\Categoria::where('categoria_type','Produtos')->get() as $categoria)
+                                                <option value="{{$categoria->id}}">{{$categoria->categoria}}</option>
+                                            @endforeach
+                                        </select>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>Fixo</label>
+                                        <input type="number" step="0.01" class="form-control form-control-sm" name="valor"   value="">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>%</label>
+                                        <input type="number" step="0.01" class="form-control form-control-sm" name="percentual"   value="">
+                                    </div>
+                                </div>
 
 
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>...</label>
+                                        <button type="submit" class="btn btn-primary" >Incluir</button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <br>
+                            <hr>
+                            <br>
+
+                        <table class="table table-hover  table-list" id="myTable4">
+                            <thead>
+                                <tr>
+                                    <th>Categoria</th>
+                                    <th>Valor Fixo</th>
+                                    <th>Valor %</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach($registro->Grupos as $categoria)
+                                    <tr>
+                                        <td>{{$categoria->nome}}</td>
+                                        <td>{{$categoria->valor}}</td>
+                                        <td>{{$categoria->percentual}}</td>
+                                    </tr>
+
+                                @endforeach
+
+
+                            </tbody>
+
+                        </table>
+
+                        </form>
+
+                        </div>
+
+
+
+
+
+                        <div class="col-md-6">
+
+                            <h4>Por Procedimento</h4>
+
+                            <hr>
+                            <br>
+
+
+                            <form id="form-procedi"  action="{{route('comissao.store')}}" method="post">
+                                @csrf
+                                <input type="hidden" name="user_id" value="{{$registro->id}}">
+                                <input type="hidden" name="tipo" value="procedimento">
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+
+                                    <div class="form-group">
+                                     <label>Produto ou Serviço</label>
+                                    <select class="form-control form-control-sm js-example-data-ajax" name="produto_id" id="produto_id"></select>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>Fixo</label>
+                                        <input type="number" step="0.01" class="form-control form-control-sm" name="valor"   value="">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>%</label>
+                                        <input type="number" step="0.01" class="form-control form-control-sm" name="percentual"   value="">
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>...</label>
+                                        <button type="submit" class="btn btn-primary" >Incluir</button>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            </form>
+
+                            <br>
+                            <hr>
+                            <br>
+
+                            <table class="table table-hover  table-list" id="myTable5">
+                                <thead>
+                                <tr>
+                                    <th>Procedimento</th>
+                                    <th>Valor Fixo</th>
+                                    <th>Valor %</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                @foreach($registro->Procedimentos as $categoria)
+                                    <tr>
+                                        <td>{{$categoria->nome}}</td>
+                                        <td>{{$categoria->valor}}</td>
+                                        <td>{{$categoria->percentual}}</td>
+                                    </tr>
+
+                                @endforeach
+
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+@endsection
+
+@section('posScript')
+
+    <script>
+
+        //codigo para popular o combo de produtos dinamicamente
+        $('#produto_id').select2({
+            ajax: {
+                url: "{{route('produto.localizar')}}",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term // search term
+                    };
+                },
+                processResults: function (data, params) {
+                    return {
+                        results: data.results
+                    };
+                },
+            },
+            placeholder: 'Digite pelo menos 3 caracteres',
+            minimumInputLength: 3,
+        });
+
+        $('#produto_id').on('select2:select', function (e) {
+            var data = e.params.data;
+
+
+        });
+
+    </script>
 
 @endsection

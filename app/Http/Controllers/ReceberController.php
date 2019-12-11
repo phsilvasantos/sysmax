@@ -252,7 +252,7 @@ class ReceberController extends AppController
 
     public function baixaRapida($id)
     {
-        //
+
         $registro = $this->model::where('id',$id)->get()[0];
 
 
@@ -281,7 +281,8 @@ class ReceberController extends AppController
         ]);
 
 
-        return redirect()->back();
+        return $registro;
+        //return redirect()->back();
 
 
     }

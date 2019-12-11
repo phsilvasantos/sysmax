@@ -127,7 +127,8 @@ class UserController extends Controller
         //
 
 
-        $registro = $this->model::where('id',$id)->get()[0];
+        $registro = $this->model::where('id',$id)->with('Grupos','Procedimentos')->get()[0];
+
 
 
         return view($this->name.'.edit', compact('registro'));

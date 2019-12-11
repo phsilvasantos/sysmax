@@ -95,7 +95,8 @@
                             <th>Tipo</th>
                             <th>Vencimento</th>
                             <th>Cliente/Fornecedor</th>
-                            <th>Valor</th>
+                            <th>Vlr Bruto</th>
+                            <th>Vlr Liquido</th>
                             <th>F.Pagamento</th>
                             <th>Status</th>
                             <th width="50">Opção</th>
@@ -118,6 +119,7 @@
                                     <td> Cliente não Identificado </td>
                                 @endif
                                 <td>{{$conta->valor_original}} </td>
+                                <td>{{$conta->valor_pago}} </td>
                                 <td>{{$conta->forma_pagamento}} </td>
                                 <td>{{$conta->status}} </td>
                                 <td style="padding:8px">
@@ -130,7 +132,7 @@
                                         <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right" x-placement="top-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-106px, -168px, 0px);">
                                             <li class="dropdown-item"><a href="{{route('receber.edit', $conta->id)}}"><span><i class="feather icon-maximize"></i> Acessar</span></a></li>
                                             @if($conta->status != 'Quitado')
-                                            <li class="dropdown-item"><a href="{{Route('receber.baixaRapida',[$conta->id])}}"><span><i class="feather icon-minus"></i> Baixa Rápida</span></a></li>
+                                            <li onclick="baixarRapida({{$conta->id}})" class="dropdown-item"><a href="#"><span><i class="feather icon-minus"></i> Baixa Rápida</span></a></li>
                                             @endif
                                             {{--<li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> reload</a></li>--}}
                                             @if(\Illuminate\Support\Facades\Auth::user()->id == '1')
@@ -177,6 +179,11 @@
 
 
                             <input type="hidden" name="registros" id="registros">
+
+                            <div class="input-group-sm col-sm-12">
+                                <i class="fa fa-dollar-sign"></i><label for="valor"> Valor Total</label>
+                                <input type="text"   class="form-control form-control-sm" name="valor_grupo" id="valor_grupo" disabled>
+                            </div>
 
 
                             <br>
@@ -366,7 +373,8 @@
                         action: function () {
 
                             var ids = new Array();
-
+                            var total = 0;
+                            var valor = 0;
 
 
                             var count = table.rows( { selected: true } ).data();
@@ -375,6 +383,9 @@
                             for(var i=0; i < count.length; i++){
 
                                 ids[i] = count[i][0];
+                                valor = parseFloat(count[i][6]) ;
+
+                                total = total + valor;
 
                                 if(count[i][1] > 0){
                                     alert('Você selecionou contas que já estão baixadas!');
@@ -388,6 +399,7 @@
 
 
                             document.getElementById('registros').value = ids;
+                            document.getElementById('valor_grupo').value = total;
 
                             $("#exampleModal7").modal();
 
@@ -410,13 +422,13 @@
                             for(var i=0; i < count.length; i++){
 
 
-                                /*if(count[i][1] > 0){
+                                if(count[i][1] > 0){
                                     alert('Você selecionou contas que já estão baixadas!');
                                     exit();
-                                }*/
+                                }
 
                                 ids[i] = count[i][0];
-                                valor = parseInt(count[i][5]) ;
+                                valor = parseFloat(count[i][6]) ;
 
                                 total = total + valor;
 
@@ -464,6 +476,30 @@
                 error: function(data){
 
                     $("#exampleModal7").modal('hide');
+                    alert('Erro ao tentar efetuar a baixa!')
+                }
+            });
+        }
+
+
+        function baixarRapida(id) {
+
+
+            var url = '{{route('receber.index')}}' + '/baixarapida/' + id;
+
+
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function(data){
+
+                    //$("#exampleModal7").modal('hide');
+                    alert('Baixa Efetuada');
+                    location.reload();
+                },
+                error: function(data){
+
+                    //$("#exampleModal7").modal('hide');
                     alert('Erro ao tentar efetuar a baixa!')
                 }
             });

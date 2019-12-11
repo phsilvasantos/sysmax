@@ -54,6 +54,15 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Modelos\Modelo');
     }
 
+    public function Grupos(){
+
+        return $this->hasMany('App\Models\Comissoes\Comissao')->where('tipo','grupo');
+    }
+
+    public function Procedimentos(){
+
+        return $this->hasMany('App\Models\Comissoes\Comissao')->where('tipo','procedimento');
+    }
 
 
 }

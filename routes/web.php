@@ -57,6 +57,7 @@ Route::get('/receber/baixarapida/{id}', 'ReceberController@baixaRapida')->name('
 Route::post('/receber/baixagrupo', 'ReceberController@baixaGrupo')->name('receber.baixaGrupo');
 Route::post('/receber/baixaantecipacao', 'ReceberController@baixaAntecipacao')->name('receber.baixaAntecipacao');
 Route::get('/fluxo', 'FluxoController@fluxo')->name('fluxo');
+Route::post('/comissao', 'ComissaoController@store')->name('comissao.store');
 
 
 Route::resource('/empresas', 'EmpresaController');
