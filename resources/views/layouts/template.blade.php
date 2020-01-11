@@ -305,7 +305,11 @@
 
 
     $(document).ready( function () {
-        $('#myTable').DataTable();
+        $('#myTable').DataTable({
+            'bFilter': false,
+            'bInfo': false,
+            'bPaginate': false,
+        });
     } );
 
 

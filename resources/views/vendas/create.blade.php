@@ -158,7 +158,7 @@
                     </div>
                     <div class="card-block pb-0">
                         <div class="table-responsive">
-                            <table class="table table-hover  table-list" id="tabela">
+                            <table class="table table-hover  table-list" id="myTable">
                                 <thead>
                                 <tr>
 
