@@ -306,7 +306,6 @@
 
     $(document).ready( function () {
         $('#myTable').DataTable({
-            'bFilter': false,
             'bInfo': false,
             'bPaginate': false,
         });
