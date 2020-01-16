@@ -560,9 +560,9 @@
                                 <div class="card-header">
                                     <h5>Anexos</h5>
                                     <div class="card-header-right">
-                                        @if($registro->status == 'Em Atendimento')
+                                        {{--@if($registro->status == 'Em Atendimento')--}}
                                         <button type="button" class="btn btn-info"  onclick="adicionar('anexo');"><i class="feather icon-camera"></i>NOVO</button>
-                                        @endif
+                                        {{--@endif--}}
                                     </div>
                                 </div>
                                 <div class="card-block pb-0">
