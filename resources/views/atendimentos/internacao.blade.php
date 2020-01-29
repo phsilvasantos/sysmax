@@ -85,7 +85,7 @@
                                          <td>{{$atendimento->Animal->nome}} </td>
                                          <td>{{$atendimento->Animal->Cliente->nome}} </td>
                                          <td style="padding-left:10px;"> {{date('d/m/Y', strtotime($atendimento->created_at))}} </td>
-                                         <td style="padding-left:10px;"> <?php  echo($intervalo->m > 0 ? $intervalo->m . 'mês(es) e' : '');  ?>  {{$intervalo->d}} dia(s) </td>
+                                         <td style="padding-left:10px;"> <?php  echo($intervalo->m > 0 ? $intervalo->m . ' mês(es) e' : '');  ?>  {{$intervalo->d}} dia(s) </td>
                                          <td>{{$atendimento->Leito->nome}} </td>
                                          <td>{{$atendimento->Veterinario->name}} </td>
                                         <td>
