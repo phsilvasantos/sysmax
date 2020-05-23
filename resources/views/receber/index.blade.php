@@ -71,6 +71,17 @@
         </div>
 
     <div class="col-md-9">
+
+
+        @if (Session::has('success'))
+            <div class="alert alert-danger">
+                <ul>
+                    <li>Registro Exclulído com Sucesso!</li>
+                </ul>
+            </div>
+        @endif
+
+
         <div class="card code-table">
             <div class="card-header">
 
@@ -135,8 +146,8 @@
                                             <li onclick="baixarRapida({{$conta->id}})" class="dropdown-item"><a href="#"><span><i class="feather icon-minus"></i> Baixa Rápida</span></a></li>
                                             @endif
                                             {{--<li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> reload</a></li>--}}
-                                            @if(\Illuminate\Support\Facades\Auth::user()->id == '1')
-                                            <li class="dropdown-item"><a href="#!"><i class="feather icon-trash"></i> Excluir</a></li>
+                                            @if(auth()->user()->hasPermissionThroughRole('delete-receber'))
+                                            <li onclick="excluir_receber({{$conta->id}})" class="dropdown-item"><a href="#!"><i class="feather icon-trash"></i> Excluir</a></li>
                                             @endif
                                         </ul>
                                     </div>
@@ -286,6 +297,57 @@
     </form>
 
 
+
+    <div class="modal fade" id="exampleModal9" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fa fa-edit"></i> Excluir Conta?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                @csrf
+
+
+                <div class="modal-body">
+
+                    <div class="row">
+
+                        <div class="col-md-12">
+
+                            <form id="form_excluir_receber" method="POST" action="{{route('receber.delete')}}">
+                                @csrf
+                                <h3 class="text-danger" style="text-align: center"><i class="fa fa-trash"></i><br>  Confirma a Exclusão desta conta?</h3>
+                                <input type="hidden" name="registro_id" id="registro_id">
+                            </form>
+
+
+
+
+
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+
+                    <input  type="submit" form="form_excluir_receber" class="btn btn-danger" value="Confirmar">
+                    {{--<button type="submit" class="btn btn-primary">Confirmar</button>--}}
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+
+
 @endsection
 
 @section('posScript')
@@ -298,6 +360,14 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
     <script>
+
+        function excluir_receber(id){
+
+            document.getElementById('registro_id').value = id
+
+            $("#exampleModal9").modal();
+
+        }
 
         $(function() {
 

@@ -59,6 +59,7 @@ Route::post('/receber/baixagrupo', 'ReceberController@baixaGrupo')->name('recebe
 Route::post('/receber/baixaantecipacao', 'ReceberController@baixaAntecipacao')->name('receber.baixaAntecipacao');
 Route::get('/fluxo', 'FluxoController@fluxo')->name('fluxo');
 Route::post('/comissao', 'ComissaoController@store')->name('comissao.store');
+Route::post('/receber/delete', 'ReceberController@delete')->name('receber.delete');
 
 
 Route::resource('/empresas', 'EmpresaController');

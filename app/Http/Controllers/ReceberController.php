@@ -24,12 +24,11 @@ class ReceberController extends AppController
         $formas = 'todas';
         $statu = 'todas';
 
-        $registros = $this->model::where('tipo','credito')->whereBetween('data_vencimento', [$data_ini . ' 00:00:00',$data_fim . ' 23:59:59'])->with('Movimentos')->get();
+        $registros = $this->model::where('tipo', 'credito')->whereBetween('data_vencimento', [$data_ini . ' 00:00:00', $data_fim . ' 23:59:59'])->with('Movimentos')->get();
 
         //dd($registros);
 
-        return view($this->name.'.index', compact('registros','data_ini', 'data_fim','tipo','clifor','formas','statu'));
-
+        return view($this->name . '.index', compact('registros', 'data_ini', 'data_fim', 'tipo', 'clifor', 'formas', 'statu'));
     }
 
 
@@ -46,38 +45,36 @@ class ReceberController extends AppController
         $statu = $request->status;
 
 
-        if($request->forma_pagamento == 'todas'){
+        if ($request->forma_pagamento == 'todas') {
             $operador_forma = 'like';
             $forma_pagamento = '%%';
-        }else{
+        } else {
             $operador_forma = '=';
             $forma_pagamento = $request->forma_pagamento;
         }
 
-        if($request->status == 'todos'){
+        if ($request->status == 'todos') {
             $operador_status = 'like';
             $status = '%%';
-        }else{
+        } else {
             $operador_status = '=';
             $status = $request->status;
         }
 
 
 
-        if($clifor){
+        if ($clifor) {
 
             $registros = $this->model::whereBetween('receber.data_vencimento', [$data_ini . ' 00:00:00', $data_fim . ' 23:59:59'])
                 ->join('clientes', 'receber.cliente_id', '=', 'clientes.id')
                 ->where('receber.tipo', $request->tipo)
-                ->where('clientes.nome','like', '%'.$clifor.'%')
+                ->where('clientes.nome', 'like', '%' . $clifor . '%')
                 ->where('forma_pagamento', $operador_forma, $forma_pagamento)
                 ->where('status', $operador_status, $status)
                 ->orderby('receber.id', 'desc')
                 ->select('receber.*')
                 ->get();
-
-
-        }else {
+        } else {
 
             $registros = $this->model::whereBetween('data_vencimento', [$data_ini . ' 00:00:00', $data_fim . ' 23:59:59'])
                 ->where('tipo', $request->tipo)
@@ -87,8 +84,7 @@ class ReceberController extends AppController
                 ->get();
         }
 
-        return view($this->name.'.index', compact('registros','data_ini','data_fim','tipo','clifor','formas','statu'));
-
+        return view($this->name . '.index', compact('registros', 'data_ini', 'data_fim', 'tipo', 'clifor', 'formas', 'statu'));
     }
 
 
@@ -101,17 +97,16 @@ class ReceberController extends AppController
         $receber_id =  null;
         $vencimento = null;
 
-        for($i=1; $i<= $request->parcelas; $i++){
+        for ($i = 1; $i <= $request->parcelas; $i++) {
 
             //dd($request);
 
 
-            if($i == 1) {
+            if ($i == 1) {
                 $vencimento = $request->data_vencimento;
-
-            }else{
-                $dias = ($i - 1)* $request->periodicidade;
-                $vencimento =  date('Y-m-d', strtotime("+". $dias ." days", strtotime($request->data_vencimento)));
+            } else {
+                $dias = ($i - 1) * $request->periodicidade;
+                $vencimento =  date('Y-m-d', strtotime("+" . $dias . " days", strtotime($request->data_vencimento)));
             };
 
 
@@ -139,33 +134,31 @@ class ReceberController extends AppController
                 'categoria_id' => $request->categoria_id,
                 'tipo' => $request->tipo,
                 'forma_pagamento' => 'Dinheiro',
-                ]);
+            ]);
             $registro->save();
 
 
-            if($i == 1 and $request->parcelas >= 1) {
+            if ($i == 1 and $request->parcelas >= 1) {
                 $receber_id = $registro->id;
             };
 
             $registro->receber_id = $receber_id;
             $registro->save();
-
         }
 
 
 
 
 
-        if($request->origem == 'novo'){
+        if ($request->origem == 'novo') {
 
-            return redirect()->route($this->name.'.create')->with('status', 'Registro Incluído');
+            return redirect()->route($this->name . '.create')->with('status', 'Registro Incluído');
+        } elseif ($request->origem == 'voltar') {
 
-        }elseif($request->origem == 'voltar'){
-
-            return redirect()->route($this->name.'.index')->with('status', 'Registro Incluído');
+            return redirect()->route($this->name . '.index')->with('status', 'Registro Incluído');
         }
 
-        return redirect()->route($this->name.'.edit', $registro->id)->with('status', 'Registro Incluído');
+        return redirect()->route($this->name . '.edit', $registro->id)->with('status', 'Registro Incluído');
     }
 
 
@@ -173,22 +166,22 @@ class ReceberController extends AppController
     {
 
 
-        $registro = $this->model::where('id',$id)->get()[0];
+        $registro = $this->model::where('id', $id)->get()[0];
 
-        $parcelas = $this->model::where('receber_id',$registro->receber_id)->get();
+        $parcelas = $this->model::where('receber_id', $registro->receber_id)->get();
 
 
-        return view($this->name.'.edit', compact('registro','parcelas'));
+        return view($this->name . '.edit', compact('registro', 'parcelas'));
     }
 
     public function update(Request $request, $id)
     {
         //
-        $registro = $this->model::where('id',$id)->get()[0];
+        $registro = $this->model::where('id', $id)->get()[0];
 
-        $registro->update($request->except('_token','_method'));
+        $registro->update($request->except('_token', '_method'));
 
-        if($request->status == 'Quitado'){
+        if ($request->status == 'Quitado') {
 
             $movimento =  Movimento::create([
                 'conta_id' => $request->conta_id,
@@ -209,7 +202,7 @@ class ReceberController extends AppController
 
 
             //se Antecipação Atualizar todos os registros antecipados
-            if($request->resumo == 'Antecipação de Vendas'){
+            if ($request->resumo == 'Antecipação de Vendas') {
 
                 $contas = explode(",", $request->documento);
 
@@ -222,13 +215,8 @@ class ReceberController extends AppController
                     $registro->update([
                         'movimento_id' => $movimento->id
                     ]);
-
-
                 }
-
             }
-
-
         }
 
 
@@ -237,23 +225,21 @@ class ReceberController extends AppController
 
 
 
-        if($request->origem == 'novo'){
+        if ($request->origem == 'novo') {
 
-            return redirect()->route($this->name.'.create')->with('status', 'Registro Incluído');
+            return redirect()->route($this->name . '.create')->with('status', 'Registro Incluído');
+        } elseif ($request->origem == 'voltar') {
 
-        }elseif($request->origem == 'voltar'){
-
-            return redirect()->route($this->name.'.index')->with('status', 'Registro Incluído');
+            return redirect()->route($this->name . '.index')->with('status', 'Registro Incluído');
         }
 
-        return redirect()->route($this->name.'.edit', $registro)->with('status', 'Registro Atualizado');
-
+        return redirect()->route($this->name . '.edit', $registro)->with('status', 'Registro Atualizado');
     }
 
     public function baixaRapida($id)
     {
 
-        $registro = $this->model::where('id',$id)->get()[0];
+        $registro = $this->model::where('id', $id)->get()[0];
 
 
         $registro->update([
@@ -299,9 +285,9 @@ class ReceberController extends AppController
 
             $registro = $this->model::where('id', $id)->get()[0];
 
-            if($registro->tipo == 'debito'){
+            if ($registro->tipo == 'debito') {
                 $liquido = $registro->valor_original;
-            }else{
+            } else {
                 $liquido = $registro->valor_pago;
             }
 
@@ -314,7 +300,6 @@ class ReceberController extends AppController
 
             $valor += $registro->valor_pago;
             $tipo = $registro->tipo;
-
         }
 
         $movimento =  Movimento::create([
@@ -338,13 +323,10 @@ class ReceberController extends AppController
             $registro->update([
                 'movimento_id' => $movimento->id
             ]);
-
-
         }
 
 
         return $movimento;
-
     }
 
 
@@ -370,7 +352,6 @@ class ReceberController extends AppController
 
             $valor += $registro->valor_pago;
             $tipo = $registro->tipo;
-
         }
 
 
@@ -391,7 +372,7 @@ class ReceberController extends AppController
             'status' => 'Aberto',
             'parcelas' => 1,
             'numero_parcela' => 1,
-            'observacao' => 'Referente as Vendas'. $request->registros_antecipacao,
+            'observacao' => 'Referente as Vendas' . $request->registros_antecipacao,
             /*'imagem' => $request->imagem,*/
 
             'setor_id' => config('sysmax.setor_id_antecipacao'),
@@ -410,7 +391,15 @@ class ReceberController extends AppController
 
 
         return $registro->id;
-
     }
 
+
+    public function delete(Request $request)
+    {
+
+
+        Receber::find($request->registro_id)->delete();
+
+        return redirect()->route('receber.index')->with('success', ['Registro Excluído com sucesso']);
+    }
 }
