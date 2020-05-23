@@ -44,6 +44,9 @@
 
     <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.min.css">
 
+     {{-- Vuejs --}}
+     <script src="https://unpkg.com/vue"></script>
+
     @yield('preScript')
 
 
@@ -187,7 +190,7 @@
 <!-- [ Header ] end -->
 
 <!-- [ Main Content ] start -->
-<div class="pcoded-main-container">
+<div class="pcoded-main-container" id="app">
     <div class="pcoded-wrapper">
         <div class="pcoded-content">
             <div class="pcoded-inner-content">
@@ -267,6 +270,16 @@
 </div>
 <![endif]-->
 <!-- Warning Section Ends -->
+
+
+<script>
+    var app = new Vue({
+        el: '#app',
+      data: {
+        tipo: 'Fisica'
+      }
+    })
+</script>
 
 <!-- Required Js -->
 <script src="{{url('dattaable/assets/js/vendor-all.min.js')}}"></script>
@@ -477,6 +490,8 @@
 
 
 </script>
+
+
 
 
 @yield('posScript')

@@ -12,6 +12,11 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
+
+    {{-- Vuejs --}}
+    <script src="https://unpkg.com/vue"></script>
+
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
@@ -77,5 +82,10 @@
             @yield('content')
         </main>
     </div>
+
+
+
+    <script src="{{ asset('assets/vue/app.vue') }}" defer></script>
+
 </body>
 </html>

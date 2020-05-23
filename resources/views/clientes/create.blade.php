@@ -86,8 +86,48 @@
                                 </div>
                             </div>
 
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="text-danger">Tipo</label>
+                                <select  class="form-control form-control-sm" name="tipo" id="tipo" v-model="tipo" >
+                                        <option value="Fisica">Física</option>
+                                        <option value="Juridica">Jurídica</option>
+                                    </select>
+                                </div>
+                            </div>
 
                             <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class="text-danger">CPF/CNPJ</label>
+                                    <input type="text" class="form-control form-control-sm" name="cpf_cnpj" id="cpf" onblur="valida_cpf()" required>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-3" v-show="tipo == 'Fisica'">
+                                <div class="form-group">
+                                    <label>Nascimento</label>
+                                    <input type="date" class="form-control form-control-sm" name="nascimento"  >
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-2" v-show="tipo == 'Fisica'">
+                                <div class="form-group">
+                                    <label>RG</label>
+                                    <input type="text" class="form-control form-control-sm" name="rg"  >
+                                </div>
+                            </div>
+
+                            <div class="col-md-2" v-show="tipo == 'Fisica'">
+                                <div class="form-group">
+                                    <label>Emissor</label>
+                                    <input type="text" class="form-control form-control-sm" name="emissor"  >
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-2" v-show="tipo == 'Fisica'">
                                 <label>Sexo</label><br>
                                 <div class="custom-control custom-radio custom-control-inline">
                                     <input type="radio" id="customRadioInline2" name="sexo" class="custom-control-input" value="M">
@@ -100,43 +140,11 @@
 
                             </div>
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>Nascimento</label>
-                                    <input type="date" class="form-control form-control-sm" name="nascimento"  >
-                                </div>
-                            </div>
 
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label>Tipo</label>
-                                    <select  class="form-control form-control-sm" name="tipo" >
-                                        <option value="Fisica">Física</option>
-                                        <option value="Juridica">Jurídica</option>
-                                    </select>
-                                </div>
-                            </div>
 
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label>CPF/CNPJ</label>
-                                    <input type="text" class="form-control form-control-sm" name="cpf_cnpj" id="cpf" onblur="valida_cpf()" required>
-                                </div>
-                            </div>
 
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label>RG</label>
-                                    <input type="text" class="form-control form-control-sm" name="rg"  >
-                                </div>
-                            </div>
 
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label>Emissor</label>
-                                    <input type="text" class="form-control form-control-sm" name="emissor"  >
-                                </div>
-                            </div>
+
 
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -159,7 +167,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-3" v-show="tipo == 'Fisica'">
                                 <div class="form-group">
                                     <label>Profissão</label>
                                     <input type="text" class="form-control form-control-sm" name="profissao"  >
@@ -333,6 +341,8 @@
         function valida(cpf){
 
             var cpf = cpf;
+
+
             var _token = $('input[name="_token"]').val();
 
             $.ajax({
@@ -345,7 +355,16 @@
 
                     if(result.id){
 
-                        alert('Este CPF já está cadastrado no sistema no ID:' + result.id + ' - ' + result.nome);
+                        var direciona = confirm('Este CPF já está cadastrado no sistema no ID:' + result.id + ' - ' + result.nome +' Você será direcionado para a tela de edição do cliente.');
+
+                        if(direciona){
+                            var local = "{{route('clientes.index')}}" + '/' + result.id + '/edit'
+
+                            window.location.href = local
+                        }
+
+
+
                     }
 
 
@@ -365,14 +384,25 @@
 
         function valida_cpf(){
 
+
+
             var vcpf = document.getElementById('cpf').value;
+            var tipo = document.getElementById('tipo').value;
 
-            if(!cpf(vcpf)){
-                alert('Este CPF não é Válido!');
-            }else{
 
-                valida(vcpf);
+
+            if(tipo == 'Fisica'){
+                if(!cpf(vcpf)){
+                    alert('Este CPF não é Válido!');
+                }else{
+
+                    valida(vcpf);
+                }
+
             }
+
+
+
 
         }
 
