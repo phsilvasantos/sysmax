@@ -24,12 +24,12 @@ Route::resource('/modulos', 'ModuloController');
 
 
 
-Route::any('/product/localizar','ProdutoController@localizar')->name('produto.localizar');
-Route::any('/cliente/localizar','ClienteController@localizar')->name('cliente.localizar');
-Route::any('/cliente/validar','ClienteController@validar')->name('cliente.validar');
-Route::post('/clientes/pesquisar','ClienteController@pesquisar')->name('clientes.pesquisar');
-Route::post('/fornecedores/pesquisar','FornecedorController@pesquisar')->name('fornecedores.pesquisar');
-Route::any('/product/localizar/{id}','ProdutoController@localizar_id')->name('produto.localizar_id');
+Route::any('/product/localizar', 'ProdutoController@localizar')->name('produto.localizar');
+Route::any('/cliente/localizar', 'ClienteController@localizar')->name('cliente.localizar');
+Route::any('/cliente/validar', 'ClienteController@validar')->name('cliente.validar');
+Route::post('/clientes/pesquisar', 'ClienteController@pesquisar')->name('clientes.pesquisar');
+Route::post('/fornecedores/pesquisar', 'FornecedorController@pesquisar')->name('fornecedores.pesquisar');
+Route::any('/product/localizar/{id}', 'ProdutoController@localizar_id')->name('produto.localizar_id');
 Route::get('/clientes/{id}/ficha', 'ClienteController@ficha')->name('cliente.ficha');
 Route::post('/clientes/desassociar', 'ClienteController@desassociar')->name('cliente.desassociar');
 Route::any('/dynamic_dependent/fetch', 'RacaController@fetch')->name('dynamicdependent.fetch');
@@ -48,6 +48,7 @@ Route::get('/atendimentos/internacao', 'AtendimentoController@internacao')->name
 Route::get('/relatorios/caixa', 'RelatorioController@caixa')->name('relatorio.caixa');
 Route::post('/relatorios/caixa', 'RelatorioController@caixa')->name('relatorio.caixa');
 Route::post('/vendas/pesquisar', 'VendaController@pesquisar')->name('vendas.pesquisar');
+Route::post('altera/vet', 'VendaController@altera_vet')->name('altera.vet');
 Route::post('/receber/pesquisar', 'ReceberController@pesquisar')->name('receber.pesquisar');
 Route::post('/movimentos/pesquisa', 'MovimentoController@pesquisa')->name('movimentos.pesquisa');
 Route::get('/vendas/pre', 'VendaController@prevenda')->name('vendas.pre');
@@ -89,9 +90,3 @@ Route::resource('/prescricao', 'PrescricaoController');
 Route::resource('/prescricao', 'PrescricaoController');
 Route::resource('/contas', 'ContasController');
 Route::resource('/movimentos', 'MovimentoController');
-
-
-
-
-
-

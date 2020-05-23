@@ -264,6 +264,10 @@
                                             <td><i class="fa fa-edit f-18 text-c-yellow" onclick="editar({{$key}})"></i><i class="fa fa-trash f-18 text-c-red" style="padding-left:15px" onclick="alerta_exclusao(this.parentNode.parentNode.rowIndex, {{$registro->id}});"></i></td>
                                             @endif
 
+                                            @if($venda[0]->status == 'Quitada' && auth()->user()->hasPermissionThroughRole('edit-vet-user'))
+                                            <td><i class="fa fa-edit f-18 text-c-yellow" onclick="editar_vet({{$registro->id}})"></i></td>
+                                            @endif
+
                                         @endif
 
                                     </tr>
@@ -713,7 +717,7 @@
                         <button type="button" class="btn btn-danger"  onclick="confirmar_exclusao_pag()">Sim! Excluir</button>
                     </div>
 
-
+                </form>
 
             </div>
         </div>
@@ -828,6 +832,70 @@
                     <a id="link_gerar" target="_blank" href="{{route('nfce.gerar', ['venda_id' => $venda[0]->id, 'cpf' => $venda[0]->Cliente->cpf_cnpj])}}" type="button" class="btn btn-primary btn-block" onclick="fechar_modal()" ><i class="fa fa-save"></i>  Gerar</a>
                 </div>
 
+
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="exampleModal8" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fa fa-edit"></i> Alterar Veterinário ?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+
+
+
+                <div class="modal-body">
+
+
+
+                    <form action="{{route('altera.vet')}}" method="post" id="alterar_vet">
+                        @csrf
+
+                    <div class="row">
+
+                        <div class="col-md-12">
+
+
+
+
+                            <br>
+
+
+
+                            <input type="hidden" id="items_id" name="items_id" value="">
+                            <input type="hidden"  name="venda_id" value="{{$venda[0]->id}}">
+
+                            <div class="input-group-sm col-sm-12">
+                                <i class="fa fa-dollar-sign"></i><label for="valor"> Veterinário</label>
+                                <select class="form-control form-control-sm js-select" name="vet_id" id="vet_id">
+                                    @foreach($vendedores as $vendedor)
+                                        <option value="{{$vendedor->id}}" @if(auth()->user()->id == $vendedor->id)) selected  @endif>{{$vendedor->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+
+                    </form>
+
+
+                </div>
+                <div class="modal-footer">
+
+                    <input type="submit" form="alterar_vet" class="btn btn-primary btn-block"  value="Alterar" >
+                </div>
 
 
             </div>
@@ -1069,6 +1137,34 @@
                     alert('Erro ao tentar excluir o item!')
                 }
             });
+
+        }
+
+
+        function editar_vet(id){
+
+
+         document.getElementById('items_id').value = id
+
+        $("#exampleModal8").modal();
+
+        // var url = '{{route('pagamentos.store')}}' + '/' + pag_id
+
+        // $.ajax({
+        //     url: url,
+        //     type: 'DELETE',
+        //     data: '_token={{csrf_token()}}',
+        //     success: function(data){
+
+        //         //deleteRow_pag(linha);
+        //         location.reload();
+        //         $("#exampleModal5").modal('hide');
+        //     },
+        //     error: function(data){
+
+        //         alert('Erro ao tentar excluir o item!')
+        //     }
+        // });
 
         }
 
@@ -1339,6 +1435,8 @@
 
             $("#exampleModal7").modal('hide');
         }
+
+
 
 
         function editar_pag(linha, id){

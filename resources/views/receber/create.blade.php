@@ -39,13 +39,13 @@
                         <div class="nav-item nav-grid f-view">
                             <div class="form-group d-inline">
                             <div class="radio radio-primary radio-fill d-inline">
-                                <input type="radio" name="tipo" id="radio-infill-1" checked="" value="credito" onclick="credito();">
+                                <input type="radio" name="tipo" id="radio-infill-1"  value="credito" onclick="credito();">
                                 <label for="radio-infill-1" class="cr">Receber</label>
                             </div>
                             </div>
                             <div class="form-group d-inline">
                                 <div class="radio radio-danger radio-fill d-inline">
-                                    <input type="radio" name="tipo" id="radio-infill-2" value="debito" onclick="debito();">
+                                    <input type="radio" name="tipo" id="radio-infill-2" checked="" value="debito" onclick="debito();">
                                     <label for="radio-infill-2" class="cr">Pagar</label>
                                 </div>
                             </div>
@@ -333,6 +333,14 @@
 
 
     <script>
+
+
+        window.onload = function(){
+            debito();
+
+        }
+
+
 
         //codigo para popular o combo de clientes dinamicamente
         $('#cliente_id').select2({
