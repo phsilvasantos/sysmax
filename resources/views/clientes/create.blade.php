@@ -355,13 +355,13 @@
 
                     if(result.id){
 
-                        var direciona = confirm('Este CPF já está cadastrado no sistema no ID:' + result.id + ' - ' + result.nome +' Você será direcionado para a tela de edição do cliente.');
+                        var direciona = alert('Este CPF já está cadastrado no sistema, Cliente:' + result.nome +' Você será direcionado para a tela de edição do cliente.');
 
-                        if(direciona){
+
                             var local = "{{route('clientes.index')}}" + '/' + result.id + '/edit'
 
                             window.location.href = local
-                        }
+
 
 
 

@@ -1148,23 +1148,6 @@
 
         $("#exampleModal8").modal();
 
-        // var url = '{{route('pagamentos.store')}}' + '/' + pag_id
-
-        // $.ajax({
-        //     url: url,
-        //     type: 'DELETE',
-        //     data: '_token={{csrf_token()}}',
-        //     success: function(data){
-
-        //         //deleteRow_pag(linha);
-        //         location.reload();
-        //         $("#exampleModal5").modal('hide');
-        //     },
-        //     error: function(data){
-
-        //         alert('Erro ao tentar excluir o item!')
-        //     }
-        // });
 
         }
 
