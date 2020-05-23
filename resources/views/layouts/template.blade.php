@@ -306,6 +306,7 @@
 
     $(document).ready( function () {
         $('#myTable').DataTable({
+            destroy : true,
             'bInfo': false,
             'bPaginate': false,
         });
@@ -372,7 +373,7 @@
 
     $(document).ready( function () {
         $('#myTable7').DataTable({
-
+            destroy: true,
             dom: 'Bfrtpl',
             buttons: [
                 'copyHtml5',

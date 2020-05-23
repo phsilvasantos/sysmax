@@ -890,6 +890,7 @@
 
         $(document).ready( function () {
             $('#myTable7').DataTable({
+                destroy: true,
                 'bInfo': false,
                 'filter': true,
                 'paginate': false,

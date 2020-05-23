@@ -346,6 +346,7 @@
 
         $(document).ready( function () {
             var table =  $('#myTable').DataTable({
+                destroy: true,
                 'bInfo': false,
                 'lengthChange': false,
                 dom: 'Bfrtip',
@@ -455,8 +456,8 @@
 
             });
         } );
-        
-        
+
+
         function baixarGrupo() {
 
 
@@ -532,7 +533,7 @@
                 }
             });
         }
-        
+
 
     </script>
 
