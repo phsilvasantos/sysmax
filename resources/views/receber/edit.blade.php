@@ -297,7 +297,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Data Pagamento/Recebimento</label>
-                                                <input type="date"  class="form-control form-control-sm" name="data_pagamento"   value="{{($registro->data_pagamento) ? $registro->data_pagamento : date('Y-m-d')}}">
+                                                <input type="date"  class="form-control form-control-sm" name="data_pagamento"   value="{{($registro->data_pagamento) ? $registro->data_pagamento : ''}}">
                                             </div>
                                         </div>
                                         <div class="col-md-12">
