@@ -6,6 +6,7 @@ use App\Models\Contas\Receber;
 use App\Models\Movimentos\Movimento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class ReceberController extends AppController
 {
@@ -398,8 +399,17 @@ class ReceberController extends AppController
     {
 
 
-        Receber::find($request->registro_id)->delete();
+        $receber = Receber::find($request->registro_id);
 
-        return redirect()->route('receber.index')->with('success', ['Registro Excluído com sucesso']);
+        $contas = Receber::where('receber_id',  $receber->receber_id)->delete();
+
+        // foreach ($contas as $key => $value) {
+        //     if ($value->status != 'Aberto') {
+
+        //         return redirect()->route('receber.index')->with('success', 'Não foi possivel excluir, pois existem parcelas Quitadas');
+        //     }
+        // }
+
+        return redirect()->route('receber.index')->with(['success', 'Registro Excluído com sucesso']);
     }
 }

@@ -41,6 +41,10 @@
 
                             </li>
 
+                            @if(auth()->user()->hasPermissionThroughRole('delete-receber'))
+                            <li onclick="excluir_receber({{$registro->id}})"  class="nav-link text-secondary"><a href="#!"><i class="feather icon-trash"></i> Excluir</a></li>
+                            @endif
+
                         </ul>
                         <div class="nav-item nav-grid f-view">
                             <div class="form-group d-inline">
@@ -395,7 +399,53 @@
         </div>
     </div>
 
+    <div class="modal fade" id="exampleModal9" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fa fa-edit"></i> Excluir Conta?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
 
+                @csrf
+
+
+                <div class="modal-body">
+
+                    <div class="row">
+
+                        <div class="col-md-12">
+
+                            <form id="form_excluir_receber" method="POST" action="{{route('receber.delete')}}">
+                                @csrf
+                                <h3 class="text-danger" style="text-align: center"><i class="fa fa-trash"></i><br>  Esta ação irá excluir todas as parcelas vinculadas a esta conta. Você confirma esta operação?</h3>
+                                <input type="hidden" name="registro_id" id="registro_id">
+                            </form>
+
+
+
+
+
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+
+                    <input  type="submit" form="form_excluir_receber" class="btn btn-danger" value="Confirmar">
+                    {{--<button type="submit" class="btn btn-primary">Confirmar</button>--}}
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
 
 
 
@@ -408,6 +458,14 @@
 
 
     <script>
+
+        function excluir_receber(id){
+
+        document.getElementById('registro_id').value = id
+
+        $("#exampleModal9").modal();
+
+        }
 
         //codigo para popular o combo de clientes dinamicamente
         $('#cliente_id').select2({

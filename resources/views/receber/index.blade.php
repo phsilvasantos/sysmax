@@ -73,10 +73,10 @@
     <div class="col-md-9">
 
 
-        @if (Session::has('success'))
+        @if ($message = Session::get('success'))
             <div class="alert alert-danger">
                 <ul>
-                    <li>Registro Exclulído com Sucesso!</li>
+                    <li>{!!$message!!}</li>
                 </ul>
             </div>
         @endif
