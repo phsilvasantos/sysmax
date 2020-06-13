@@ -12,12 +12,35 @@ class ProdutoController extends AppController
     public $model = Produto::class;
 
 
-    public function localizar(Request $request){
+    public function index()
+    {
+        //
+        $registros = $this->model::orderBy('nome')->paginate(10);
 
-        $dados = $this->model::where('nome', 'like', '%'.$request->q.'%')->get();
+
+        return view($this->name . '.index', compact('registros'));
+    }
 
 
-        foreach ($dados as $key => $registro){
+    public function filtrar(Request $request)
+    {
+        //
+
+
+        $registros = $this->model::where('nome', 'like', '%' . $request->valor . '%')->get();
+
+
+        return view($this->name . '.index', compact('registros'));
+    }
+
+
+    public function localizar(Request $request)
+    {
+
+        $dados = $this->model::where('nome', 'like', '%' . $request->q . '%')->get();
+
+
+        foreach ($dados as $key => $registro) {
 
             $registros[$key]['id'] = $registro->id;
             $registros[$key]['text'] = $registro->nome;
@@ -27,26 +50,17 @@ class ProdutoController extends AppController
         $resultado['results'] = $registros;
 
         return response()->json($resultado);
-
-
-
     }
 
-    public function localizar_id(Request $request, $id){
+    public function localizar_id(Request $request, $id)
+    {
 
 
-        $produto = Item::select('items.*','produtos.*','items.id as item_id')->join('produtos','items.produto_id','produtos.id')->where("venda_id", $id)->get();
+        $produto = Item::select('items.*', 'produtos.*', 'items.id as item_id')->join('produtos', 'items.produto_id', 'produtos.id')->where("venda_id", $id)->get();
 
         $produtos['total_count'] = count($produto);
         $produtos['items'] = $produto;
 
         return response()->json($produtos);
-
-
-
     }
-
-
-
-
 }
