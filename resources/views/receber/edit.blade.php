@@ -42,7 +42,7 @@
                             </li>
 
                             @if(auth()->user()->hasPermissionThroughRole('delete-receber'))
-                            <li onclick="excluir_receber({{$registro->id}})"  class="nav-link text-secondary"><a href="#!"><i class="feather icon-trash"></i> Excluir</a></li>
+                            <li onclick="excluir_receber({{$registro->id}})"  class="nav-link text-secondary"><a class="text-danger" href="#!"><i class="feather icon-trash"></i> Excluir</a></li>
                             @endif
 
                         </ul>
@@ -301,7 +301,7 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label>Data Pagamento/Recebimento</label>
-                                                <input type="date"  class="form-control form-control-sm" name="data_pagamento"   value="{{($registro->data_pagamento) ? $registro->data_pagamento : ''}}">
+                                                <input type="date"  class="form-control form-control-sm" name="data_pagamento" id="data_pagamento"   value="{{($registro->data_pagamento) ? $registro->data_pagamento : ''}}">
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -420,7 +420,7 @@
 
                             <form id="form_excluir_receber" method="POST" action="{{route('receber.delete')}}">
                                 @csrf
-                                <h3 class="text-danger" style="text-align: center"><i class="fa fa-trash"></i><br>  Esta ação irá excluir todas as parcelas vinculadas a esta conta. Você confirma esta operação?</h3>
+                                <h3 class="text-danger" style="text-align: center"><i class="fa fa-trash"></i><br>  Esta ação irá excluir todas as parcelas <u><i>EM ABERTO</i></u> vinculadas a esta conta. Você confirma esta operação?</h3>
                                 <input type="hidden" name="registro_id" id="registro_id">
                             </form>
 
@@ -507,13 +507,23 @@
 
             var pago = document.getElementById('valor_pago').value;
             var original = document.getElementById('valor_original').value;
+            var data_pag = document.getElementById('data_pagamento').value;
 
-            if(pago != original){
+
+            if(data_pag == ''){
+                alert('É necessário informar a data de pagamento para realizar a Baixa!')
+            }else{
+
+                if(pago != original){
 
                 $('#modal_baixa').modal('show');
-            }else{
+                }else{
                 baixa();
+                }
+
             }
+
+
 
         }
 

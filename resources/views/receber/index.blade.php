@@ -143,12 +143,13 @@
                                         <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right" x-placement="top-end" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-106px, -168px, 0px);">
                                             <li class="dropdown-item"><a href="{{route('receber.edit', $conta->id)}}"><span><i class="feather icon-maximize"></i> Acessar</span></a></li>
                                             @if($conta->status != 'Quitado')
-                                            <li onclick="baixarRapida({{$conta->id}})" class="dropdown-item"><a href="#"><span><i class="feather icon-minus"></i> Baixa Rápida</span></a></li>
+                                                <li onclick="baixarRapida({{$conta->id}})" class="dropdown-item"><a href="#"><span><i class="feather icon-minus"></i> Baixa Rápida</span></a></li>
+                                                @if(auth()->user()->hasPermissionThroughRole('delete-receber'))
+                                                <li onclick="excluir_receber({{$conta->id}})" class="dropdown-item"><a href="#!"><i class="feather icon-trash"></i> Excluir</a></li>
+                                                @endif
                                             @endif
                                             {{--<li class="dropdown-item reload-card"><a href="#!"><i class="feather icon-refresh-cw"></i> reload</a></li>--}}
-                                            @if(auth()->user()->hasPermissionThroughRole('delete-receber'))
-                                            <li onclick="excluir_receber({{$conta->id}})" class="dropdown-item"><a href="#!"><i class="feather icon-trash"></i> Excluir</a></li>
-                                            @endif
+
                                         </ul>
                                     </div>
 
@@ -319,7 +320,7 @@
 
                             <form id="form_excluir_receber" method="POST" action="{{route('receber.delete')}}">
                                 @csrf
-                                <h3 class="text-danger" style="text-align: center"><i class="fa fa-trash"></i><br>  Confirma a Exclusão desta conta?</h3>
+                                <h3 class="text-danger" style="text-align: center"><i class="fa fa-trash"></i><br>  Esta ação irá excluir todas as parcelas <u><i>EM ABERTO</i></u> vinculadas a esta conta. Você confirma esta operação?</h3>
                                 <input type="hidden" name="registro_id" id="registro_id">
                             </form>
 

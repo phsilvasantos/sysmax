@@ -268,10 +268,8 @@ class ReceberController extends AppController
         ]);
 
 
-        return $registro;
-        //return redirect()->back();
-
-
+        //return $registro;
+        return redirect()->back();
     }
 
     public function baixaGrupo(Request $request)
@@ -401,15 +399,15 @@ class ReceberController extends AppController
 
         $receber = Receber::find($request->registro_id);
 
-        $contas = Receber::where('receber_id',  $receber->receber_id)->delete();
+        $contas = Receber::where('receber_id',  $receber->receber_id)->get();
 
-        // foreach ($contas as $key => $value) {
-        //     if ($value->status != 'Aberto') {
+        foreach ($contas as $key => $conta) {
+            if ($conta->status == 'Aberto') {
 
-        //         return redirect()->route('receber.index')->with('success', 'Não foi possivel excluir, pois existem parcelas Quitadas');
-        //     }
-        // }
+                $conta->delete();
+            }
+        }
 
-        return redirect()->route('receber.index')->with(['success', 'Registro Excluído com sucesso']);
+        return redirect()->route('receber.index')->with(['success', 'Registros Excluídos com sucesso']);
     }
 }
