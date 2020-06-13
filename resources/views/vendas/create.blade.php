@@ -289,9 +289,9 @@
                                         @foreach($formaPagamentos as $key => $formas)
                                             <tr>
 
-                                                <td style="padding:20px"><i class="fa fa-dollar-sign"></i> {{$formas->nome}} <input type="hidden" value="{{$formas->id}}" name="forma_pagamento_id[]"> </td>
-                                                <td style="padding:10px"><input type="number" class="form-control" value="1" name="parcelas[]"></td>
-                                                <td style="padding:10px"><input type="number" step="0.01" class="form-control" id="forma_pag" name="valor_parcela[]"></td>
+                                                <td style="padding:10px"><i class="fa fa-dollar-sign"></i> {{$formas->nome}} <input type="hidden" value="{{$formas->id}}" name="forma_pagamento_id[]"> </td>
+                                                <td style="padding:5px"><input type="number" class="form-control" value="1" name="parcelas[]"></td>
+                                                <td style="padding:5px"><input type="number" step="0.01" class="form-control" id="forma_pag{{$key}}" name="valor_parcela[]"></td>
 
 
                                             </tr>
@@ -310,7 +310,7 @@
                     </div>
                     <div class="modal-footer">
 
-                        <button type="submit" class="btn btn-primary" >Confirmar</button>
+                        <button type="button" onclick="valida_fechamento()" class="btn btn-primary" >Confirmar</button>
                     </div>
 
 
@@ -409,6 +409,131 @@
     </div>
 
 
+    <div class="modal fade" id="exampleModal10" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-danger">Quitação Parcial</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+
+
+
+                    <div class="modal-body">
+
+                        <div class="row">
+
+                            <div class="col-md-12">
+
+                                <h4 class="text-danger mb-1"><i class="fa fa-exclamation"></i> A soma dos valores informados é menor que o valor A Pagar. O status da venda será alterado para Parcialmente Quitado, você Confirma?</h4>
+
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" onclick="$('#exampleModal10').modal('hide');" class="btn btn-default">Voltar</button>
+                        <button type="button" class="btn btn-danger"  onclick="$('#vendas-form').submit();">Sim! Confirmar</button>
+                    </div>
+
+
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal11" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-danger">Valor A Maior</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="" method="post" id="items_form" name="items_form">
+
+                    <input type="hidden" name="_method" value="delete">
+                    <input type="hidden" id="pag_id" value="">
+                    @csrf
+
+
+                    <div class="modal-body">
+
+                        <div class="row">
+
+                            <div class="col-md-12">
+
+                                <h4 class="text-danger mb-1"><i class="fa fa-exclamation"></i> A soma dos valores informados é maior que o valor a Pagar!</h4>
+
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="button" onclick="$('#exampleModal11').modal('hide');" class="btn btn-default">Voltar</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="exampleModal12" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-danger">Vendas Sem Itens</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="" method="post" id="items_form" name="items_form">
+
+                    <input type="hidden" name="_method" value="delete">
+                    <input type="hidden" id="pag_id" value="">
+                    @csrf
+
+
+                    <div class="modal-body">
+
+                        <div class="row">
+
+                            <div class="col-md-12">
+
+                                <h4 class="text-danger mb-1"><i class="fa fa-exclamation"></i> Não é possível fechar uma venda sem itens!</h4>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="button" onclick="$('#exampleModal12').modal('hide');" class="btn btn-default">Voltar</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
 
 
 
@@ -417,6 +542,12 @@
 @section('posScript')
 
     <script>
+
+
+        var valorCalculado1 = 0.00;
+        var total_bru = 0.00;
+        var qtd_formas = '{{count($formaPagamentos)}}';
+
 
         function atualiza_animal(){
 
@@ -659,6 +790,9 @@
                         valorCalculado += parseFloat($(this)[0].value);
                     });
 
+                    //setando o valor na variavel global para ser usado nas validações
+                    valorCalculado1 = valorCalculado;
+
                     var valorCalculado = valorCalculado.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
 
                     $("#total").text(valorCalculado);
@@ -702,6 +836,8 @@
 
                    var valorCalculado1 = (v5 + v6);
 
+                   total_bru =  valorCalculado1;
+
                    var valorCalculado = valorCalculado1.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
 
                    $("#total_bruto").text(valorCalculado);
@@ -715,6 +851,54 @@
             function pagamento(){
 
                 $("#exampleModal3").modal();
+            }
+
+
+            function valida_fechamento(){
+
+
+
+            var apagar = parseFloat(valorCalculado1);
+            var informado = parseFloat('0.0');
+
+            for (let index = 0; index < qtd_formas; index++) {
+
+                var v1 =  document.getElementById('forma_pag'+index).value;
+
+                if(v1 != ''){
+
+                var valor = parseFloat(v1.replace(',','.'));
+                informado += valor;
+
+                }
+
+            }
+
+            if(informado < apagar){
+
+                $("#exampleModal10").modal('show');
+
+            }else if(informado > apagar){
+
+                $("#exampleModal11").modal('show');
+
+            }else{
+
+                if(total_bru == 0){
+                    $("#exampleModal12").modal('show');
+                }else{
+                    $('#vendas-form').submit();
+                }
+
+
+
+
+            }
+
+
+
+
+
             }
 
 

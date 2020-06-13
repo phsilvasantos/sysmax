@@ -807,6 +807,48 @@
     </div>
 
 
+    <div class="modal fade" id="exampleModal12" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-danger">Vendas Sem Itens</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="" method="post" id="items_form" name="items_form">
+
+                    <input type="hidden" name="_method" value="delete">
+                    <input type="hidden" id="pag_id" value="">
+                    @csrf
+
+
+                    <div class="modal-body">
+
+                        <div class="row">
+
+                            <div class="col-md-12">
+
+                                <h4 class="text-danger mb-1"><i class="fa fa-exclamation"></i> Não é possível fechar uma venda sem itens!</h4>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="button" onclick="$('#exampleModal12').modal('hide');" class="btn btn-default">Voltar</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+
 
 
     <div class="modal fade" id="exampleModal6" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -997,8 +1039,8 @@
 
 
         //variavel global para armazenar o valor a pagar em aberto
-
         var valorCalculado1 = 0.00;
+        var total_bru = 0.00;
         var qtd_formas = '{{count($formaPagamentos)}}';
 
 
@@ -1458,6 +1500,8 @@
 
                 var valorCalculado1 = (v5 + v6);
 
+                total_bru = valorCalculado1;
+
                 var valorCalculado = valorCalculado1.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
 
                 $("#total_bruto").text(valorCalculado);
@@ -1647,9 +1691,18 @@
 
            }else{
 
-               $('#vendas-form').submit();
+                if(total_bru == 0){
+                    $("#exampleModal12").modal('show');
+                }else{
+                    $('#vendas-form').submit();
+                }
+
+
+
 
            }
+
+
 
 
 
