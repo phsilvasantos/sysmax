@@ -934,7 +934,10 @@ class NfceController extends AppController
 
             $cpf = $request->cpf == '00000000000' ? '' : self::tagdest($request->cpf, $venda);
 
-            self::tagenderDest($venda->cliente, $empresa);
+            if (strlen($request->cpf) == 14) {
+
+                self::tagenderDest($venda->cliente, $empresa);
+            };
 
             foreach ($venda->Itens as $key => $item) {
 
