@@ -166,17 +166,20 @@ class NfceController extends AppController
     }
 
 
-    public function tagenderDest($cliente)
+    public function tagenderDest($cliente, $empresa)
     {
+
+        $municipio = DB::table('municipios')->where('id', $empresa->cMunFG)->get();
+
 
         $std = new \stdClass();
         $std->xLgr = $cliente->endereco;
         $std->nro = $cliente->numero;
         $std->xCpl = $cliente->complemento;
         $std->xBairro = $cliente->bairro;
-        $std->cMun = null;
-        $std->xMun = null;
-        $std->UF = $cliente->estado;
+        $std->cMun = $empresa->cMunFG; //código do municipio tabela IBGE
+        $std->xMun = $municipio[0]->municipio; //nome do municipio
+        $std->UF = $municipio[0]->uf;
         $std->CEP = $cliente->cep;
         $std->cPais = 1058;
         $std->xPais = 'BRASIL';
@@ -931,7 +934,7 @@ class NfceController extends AppController
 
             $cpf = $request->cpf == '00000000000' ? '' : self::tagdest($request->cpf, $venda);
 
-            self::tagenderDest($venda->cliente);
+            self::tagenderDest($venda->cliente, $empresa);
 
             foreach ($venda->Itens as $key => $item) {
 
