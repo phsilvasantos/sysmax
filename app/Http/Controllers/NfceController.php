@@ -166,7 +166,8 @@ class NfceController extends AppController
     }
 
 
-    /*public function tagenderDest($cliente){
+    public function tagenderDest($cliente)
+    {
 
         $std = new \stdClass();
         $std->xLgr = $cliente->endereco;
@@ -182,7 +183,7 @@ class NfceController extends AppController
         $std->fone = $cliente->telefone;
 
         $nfe = $this->make->tagenderDest($std);
-    }*/
+    }
 
 
     public function tagprod($item)
@@ -930,6 +931,7 @@ class NfceController extends AppController
 
             $cpf = $request->cpf == '00000000000' ? '' : self::tagdest($request->cpf, $venda);
 
+            self::tagenderDest($venda->cliente);
 
             foreach ($venda->Itens as $key => $item) {
 
