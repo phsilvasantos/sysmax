@@ -57,13 +57,13 @@ class NfceController extends AppController
         $empresa = Empresa::where('id', 1)->get()[0]; //todo substituir para obter a empresa logada
 
         self::tools($empresa);
-
     }
 
 
 
 
-    public function taginfNFe($empresa){
+    public function taginfNFe($empresa)
+    {
 
         $std = new \stdClass();
         $std->versao = $empresa->versao; //versão do layout
@@ -71,11 +71,10 @@ class NfceController extends AppController
         $std->pk_nItem = null; //deixe essa variavel sempre como NULL
 
         $nfe = $this->make->taginfNFe($std);
-
-
     }
 
-    public function tagide($empresa, $venda){
+    public function tagide($empresa, $venda)
+    {
 
         $std = new \stdClass();
         $std->cUF = $empresa->cUF;                  //Código da UF do emitente do Documento Fiscal
@@ -98,16 +97,16 @@ class NfceController extends AppController
         $std->indFinal = $empresa->indFinal;              //Indica operação com Consumidor final 0=Normal;  1=Consumidor final;
         $std->indPres = $empresa->indPres;               //Indicador de presença do comprador no estabelecimento comercial 0=Não se aplica (por exemplo, Nota Fiscal complementar ou de ajuste);1=Operação presencial;2=Operação não presencial, pela Internet;3=Operação não presencial, Teleatendimento;4=NFC-e em operação com entrega a domicílio;9=Operação não presencial, outros.
         $std->procEmi = 0;               //0=Emissão de NF-e com aplicativo do contribuinte;1=Emissão de NF-e avulsa pelo Fisco;2=Emissão de NF-e avulsa, pelo contribuinte com seu certificado digital, através do site do Fisco; 3=Emissão NF-e pelo contribuinte com aplicativo fornecido pelo Fisco
-        $std->verProc ='2.01.01';        //Versão do Processo de emissão da NF-e
+        $std->verProc = '2.01.01';        //Versão do Processo de emissão da NF-e
         $std->dhCont = $empresa->dhCont;             //Data e Hora da entrada em contingência
         $std->xJust = $empresa->xJust;              //Justificativa da entrada em contingência
 
         $nfe = $this->make->tagide($std);
-
     }
 
 
-    public function tagemit($empresa){
+    public function tagemit($empresa)
+    {
 
         $std = new \stdClass();
         $std->xNome  = $empresa->razao_social;
@@ -121,13 +120,12 @@ class NfceController extends AppController
         //$std->CPF;
 
         $nfe = $this->make->tagemit($std);
-
-
     }
 
-    public function tagenderEmit($empresa){
+    public function tagenderEmit($empresa)
+    {
 
-        $municipio = DB::table('municipios')->where('id',$empresa->cMunFG)->get();
+        $municipio = DB::table('municipios')->where('id', $empresa->cMunFG)->get();
 
         $std = new \stdClass();
         $std->xLgr = $empresa->endereco;
@@ -135,17 +133,18 @@ class NfceController extends AppController
         $std->xCpl = $empresa->complemento;
         $std->xBairro = $empresa->bairro;
         $std->cMun = $empresa->cMunFG; //código do municipio tabela IBGE
-        $std->xMun = $municipio[0]->municipio;//nome do municipio
+        $std->xMun = $municipio[0]->municipio; //nome do municipio
         $std->UF = $municipio[0]->uf;
         $std->CEP = $empresa->cep;
         $std->cPais = 1058;
         $std->xPais = 'BRASIL';
-        $std->fone = str_replace(['-','(',')',' '],['','','',''], $empresa->telefone);
+        $std->fone = str_replace(['-', '(', ')', ' '], ['', '', '', ''], $empresa->telefone);
 
         $nfe = $this->make->tagenderEmit($std);
     }
 
-    public function tagdest($cpf_cnpj){
+    public function tagdest($cpf_cnpj, $venda)
+    {
 
         $std = new \stdClass();
         //$std->xNome = null;
@@ -154,9 +153,11 @@ class NfceController extends AppController
         //$std->ISUF = null;
         //$std->IM = null;
         //$std->email = null;
-        if(strlen($cpf_cnpj) == 14){
+        if (strlen($cpf_cnpj) == 14) {
             $std->CNPJ = $cpf_cnpj; //indicar apenas um CNPJ ou CPF ou idEstrangeiro
-        }else{
+            $std->xNome = $venda->cliente->nome; //indicar apenas um CNPJ ou CPF ou idEstrangeiro
+            $std->indIEDest = 9; //indicar apenas um CNPJ ou CPF ou idEstrangeiro
+        } else {
             $std->CPF = $cpf_cnpj;
         }
         //$std->idEstrangeiro = null;
@@ -184,7 +185,8 @@ class NfceController extends AppController
     }*/
 
 
-    public function tagprod($item){
+    public function tagprod($item)
+    {
 
 
         $std = new \stdClass();
@@ -200,18 +202,18 @@ class NfceController extends AppController
         $std->CFOP = $item->produto->codigo_cfop;
         $std->uCom = 'UN';
         $std->qCom = $item->qtd;
-        $std->vUnCom = number_format($item->valor_unitario,2,'.','');
-        $std->vProd = number_format($item->sub_total,2,'.','');
+        $std->vUnCom = number_format($item->valor_unitario, 2, '.', '');
+        $std->vProd = number_format($item->sub_total, 2, '.', '');
         $std->cEANTrib = 'SEM GTIN';
         $std->uTrib = 'UN';
         $std->qTrib = $item->qtd;
-        $std->vUnTrib = number_format($item->valor_unitario,2,'.','');
+        $std->vUnTrib = number_format($item->valor_unitario, 2, '.', '');
         $std->vFrete = null;
         $std->vSeg = null;
         if ($item->desconto == '0.0') {
             $std->vDesc = null;
-        }else{
-            $std->vDesc = number_format($item->desconto,2,'.','');
+        } else {
+            $std->vDesc = number_format($item->desconto, 2, '.', '');
         }
         $std->vOutro = null;
         $std->indTot = 1;
@@ -222,10 +224,10 @@ class NfceController extends AppController
 
 
         $nfe = $this->make->tagprod($std);
-
     }
 
-    public function tagICMS(){
+    public function tagICMS()
+    {
 
         $std = new \stdClass();
         $std->item = 1; //item da NFe
@@ -266,11 +268,10 @@ class NfceController extends AppController
         $std->vICMSSubstituto = null; //NT2018.005_1.10_Fevereiro de 2019
 
         $nfe = $this->make->tagICMS($std);
-
-
     }
 
-    public function tagICMSSN() {
+    public function tagICMSSN()
+    {
 
         $std = new \stdClass();
         $std->item = 1; //item da NFe
@@ -308,7 +309,8 @@ class NfceController extends AppController
     }
 
 
-    public function tagIPI() {
+    public function tagIPI()
+    {
 
         $std = new \stdClass();
         $std->item = 1; //item da NFe
@@ -328,30 +330,32 @@ class NfceController extends AppController
     }
 
 
-    public function tagPIS($item){
+    public function tagPIS($item)
+    {
 
         $std = new \stdClass();
         $std->item = $item->sequencial; //item da NFe
         $std->CST = '07';
-        $std->vBC = number_format($item->valor_total,2,'.','');
+        $std->vBC = number_format($item->valor_total, 2, '.', '');
         $std->pPIS = 0.65;
-        $std->vPIS = number_format(($item->valor_total  * 0.0065),2,'.','');
-          $this->total_pis += 0.00; //number_format(($item->valor_total  * 0.0065),2,'.','');
+        $std->vPIS = number_format(($item->valor_total  * 0.0065), 2, '.', '');
+        $this->total_pis += 0.00; //number_format(($item->valor_total  * 0.0065),2,'.','');
         $std->qBCProd = $item->quantidade;
         $std->vAliqProd = null;
 
         $nfe = $this->make->tagPIS($std);
     }
 
-    public function tagCOFINS($item) {
+    public function tagCOFINS($item)
+    {
 
         $std = new \stdClass();
         $std->item = $item->sequencial; //item da NFe
         $std->CST = '07';
-        $std->vBC = number_format($item->valor_total,2,'.','');
+        $std->vBC = number_format($item->valor_total, 2, '.', '');
         $std->pCOFINS = 3.00;
-        $std->vCOFINS = number_format(($item->valor_total * 0.03) ,2,'.','') ;
-          $this->total_cofins += 0.00; //number_format(($item->valor_total  * 0.03),2,'.','');
+        $std->vCOFINS = number_format(($item->valor_total * 0.03), 2, '.', '');
+        $this->total_cofins += 0.00; //number_format(($item->valor_total  * 0.03),2,'.','');
         $std->qBCProd = $item->quantidade;
         $std->vAliqProd = null;
 
@@ -359,14 +363,15 @@ class NfceController extends AppController
     }
 
 
-    public function tagISSQN($item, $empresa) {
+    public function tagISSQN($item, $empresa)
+    {
 
         $std = new \stdClass();
         $std->item = $item->sequencial; //item da NFe
-        $std->vBC = number_format($item->valor_total,2,'.','');
+        $std->vBC = number_format($item->valor_total, 2, '.', '');
         $std->vAliq = 0.00;
-        $std->vISSQN = number_format(($item->valor_total * 0.00),2,'.','');
-          $this->total_iss += number_format(($item->valor_total  * 0.00),2,'.','');
+        $std->vISSQN = number_format(($item->valor_total * 0.00), 2, '.', '');
+        $this->total_iss += number_format(($item->valor_total  * 0.00), 2, '.', '');
         $std->cMunFG = $empresa->cMunFG;
         $std->cListServ = $empresa->cListServ;
         $std->vDeducao = null;
@@ -384,12 +389,13 @@ class NfceController extends AppController
         $nfe = $this->make->tagISSQN($std);
     }
 
-    public function tagICMSTot($venda) {
+    public function tagICMSTot($venda)
+    {
 
         //NOTA: Esta tag não necessita que sejam passados valores, pois a classe irá calcular esses totais e irá usar essa totalização para complementar e gerar esse node, caso nenhum valor seja passado como parâmetro.
 
         $std = new \stdClass();
-//        $std->vServ = number_format($venda->total_venda_bruto ,2,'.','') ;
+        //        $std->vServ = number_format($venda->total_venda_bruto ,2,'.','') ;
         $std->vBC = 0.00;
         $std->vICMS = 0.00;
         $std->vICMSDesonv = 0.00;
@@ -408,21 +414,21 @@ class NfceController extends AppController
         $std->vPIS = '0.00';
         $std->vCOFINS = '0.00';
         $std->vOutro = 0.00;
-        $std->vNF = number_format($venda->total_venda_liquido ,2,'.','') ;
+        $std->vNF = number_format($venda->total_venda_liquido, 2, '.', '');
         $std->vTotTrib = 0.00;
 
         $nfe = $this->make->tagICMSTot($std);
-
     }
 
 
-    public function tagISSQNTot($venda, $empresa){
+    public function tagISSQNTot($venda, $empresa)
+    {
 
         //NOTA: caso os valores não existam indique "null". Se for indocado 0.00 esse numero será incluso no XML o que poderá causar sua rejeição.
 
         $std = new \stdClass();
-        $std->vServ = number_format($venda->total_venda_bruto ,2,'.','') ;
-        $std->vBC = number_format($venda->total_venda_liquido ,2,'.','') ;
+        $std->vServ = number_format($venda->total_venda_bruto, 2, '.', '');
+        $std->vBC = number_format($venda->total_venda_liquido, 2, '.', '');
         //$std->vISS = number_format($this->total_iss ,2,'.','') ;
         //$std->vPIS = number_format($this->total_pis ,2,'.','') ;
         //$std->vCOFINS = number_format($this->total_cofins ,2,'.','') ;
@@ -437,7 +443,8 @@ class NfceController extends AppController
         $nfe = $this->make->tagISSQNTot($std);
     }
 
-    public function tagfat(){
+    public function tagfat()
+    {
 
         $std = new \stdClass();
         $std->nFat = '1233';
@@ -446,10 +453,10 @@ class NfceController extends AppController
         $std->vLiq = 1254.22;
 
         $nfe = $this->make->tagfat($std);
-
     }
 
-    public function tagdup(){
+    public function tagdup()
+    {
 
         $std = new \stdClass();
         $std->nDup = '1233-1';
@@ -457,10 +464,10 @@ class NfceController extends AppController
         $std->vDup = 1254.22;
 
         $nfe = $this->make->tagdup($std);;
-
     }
 
-    public function tagpag(){
+    public function tagpag()
+    {
 
         $std = new \stdClass();
         $std->vTroco = null; //incluso no layout 4.00, obrigatório informar para NFCe (65)
@@ -468,14 +475,15 @@ class NfceController extends AppController
         $nfe = $this->make->tagpag($std);
     }
 
-    public function tagdetPag($pagamento) {
+    public function tagdetPag($pagamento)
+    {
 
         $forma = Forma_Pagamento::where('id', $pagamento->forma_pagamento_id)->get()[0];
 
 
         $std = new \stdClass();
         $std->tPag = $forma->tPag;
-        $std->vPag = number_format($pagamento->valor ,2,'.','') ; //Obs: deve ser informado o valor pago pelo cliente
+        $std->vPag = number_format($pagamento->valor, 2, '.', ''); //Obs: deve ser informado o valor pago pelo cliente
         //$std->CNPJ = '12345678901234';
         $std->tBand = $forma->tBand;
         //$std->cAut = '3333333';
@@ -491,7 +499,8 @@ class NfceController extends AppController
     }
 
 
-    public function tagimposto($item) {
+    public function tagimposto($item)
+    {
 
         $std = new \stdClass();
         $std->item = $item->sequencial; //item da NFe
@@ -500,7 +509,8 @@ class NfceController extends AppController
         $nfe = $this->make->tagimposto($std);
     }
 
-    public function tagtransp(){
+    public function tagtransp()
+    {
 
         $std = new \stdClass();
         $std->modFrete = 9;
@@ -508,17 +518,18 @@ class NfceController extends AppController
         $nfe = $this->make->tagtransp($std);
     }
 
-    public function tools($empresa){
+    public function tools($empresa)
+    {
 
-        $certificado =  Storage::get('public/arquivos/empresa_id_'. $empresa->id .'/'.$empresa->certificado);
+        $certificado =  Storage::get('public/arquivos/empresa_id_' . $empresa->id . '/' . $empresa->certificado);
 
 
         $this->certificado = Certificate::readPfx($certificado, $empresa->senha);
 
-        $caracteres = array('.','/','-');
-        $substitutos = array('','','');
+        $caracteres = array('.', '/', '-');
+        $substitutos = array('', '', '');
 
-        $cnpj = str_replace($caracteres,$substitutos,$empresa->cnpj);
+        $cnpj = str_replace($caracteres, $substitutos, $empresa->cnpj);
 
 
         $config = [
@@ -548,28 +559,26 @@ class NfceController extends AppController
         $this->tools = new Tools($this->config, $this->certificado);
 
         $this->tools->Model($empresa->mod);
-
-
     }
 
-    public function assina($empresa, $venda){
+    public function assina($empresa, $venda)
+    {
 
         $this->tool = new \NFePHP\NFe\Tools($this->config, $this->certificado);
         $this->tool->Model($empresa->mod);
         $this->tool->tpAmb = $empresa->tpAmb;
 
 
-        if( is_numeric($empresa)){
+        if (is_numeric($empresa)) {
 
 
             $empresa = Empresa::where('id', $empresa)->get()[0];
-            $venda = Venda::where('id', $venda)->with('cliente','itens','pagamentos')->get()[0];
-
+            $venda = Venda::where('id', $venda)->with('cliente', 'itens', 'pagamentos')->get()[0];
         }
 
 
-        $nfce = Nfce::where('venda_id', $venda->id)->orderby('id','desc')->get()[0];
-        $xml = Storage::get('public/arquivos/empresa_id_'. $empresa->id .'/'.'xml/'.$nfce->mesAno .'/'.$nfce->arquivo.'.xml');
+        $nfce = Nfce::where('venda_id', $venda->id)->orderby('id', 'desc')->get()[0];
+        $xml = Storage::get('public/arquivos/empresa_id_' . $empresa->id . '/' . 'xml/' . $nfce->mesAno . '/' . $nfce->arquivo . '.xml');
 
 
 
@@ -581,21 +590,20 @@ class NfceController extends AppController
         //variavel com o mesAno para criar a pasta onde será salvo os arquivos
         $mesAno = date('MY');
 
-        Storage::put('public/arquivos/empresa_id_'. $empresa->id .'/'.'xml/'.$mesAno .'/Assinados/'.$nome.'-assinado.xml', $this->xmlAssinado);
+        Storage::put('public/arquivos/empresa_id_' . $empresa->id . '/' . 'xml/' . $mesAno . '/Assinados/' . $nome . '-assinado.xml', $this->xmlAssinado);
 
 
-        $nfce = Nfce::where('venda_id', $venda->id)->orderby('id','desc')->get()[0];
+        $nfce = Nfce::where('venda_id', $venda->id)->orderby('id', 'desc')->get()[0];
 
         $detalhes = NfceDetalhe::create([
             'venda_id' => $venda->id,
             'nfce_id' => $nfce->id,
             'status' => '2 - XML Assinado',
         ]);
-
-
     }
 
-    public function montaxml($empresa, $venda){
+    public function montaxml($empresa, $venda)
+    {
 
 
         $this->tool = new \NFePHP\NFe\Tools($this->config, $this->certificado);
@@ -607,7 +615,7 @@ class NfceController extends AppController
 
 
 
-        if($result){
+        if ($result) {
             //gera o XML
             $this->xml = $this->make->getXML();
             //obtem a chave para salvar como nome do arquivo
@@ -615,11 +623,11 @@ class NfceController extends AppController
             //variavel com o mesAno para criar a pasta onde será salvo os arquivos
             $mesAno = date('MY');
             //salva o arquivo
-            Storage::put('public/arquivos/empresa_id_'. $empresa->id .'/'.'xml/'.$mesAno .'/'.$nome.'.xml', $this->xml);
+            Storage::put('public/arquivos/empresa_id_' . $empresa->id . '/' . 'xml/' . $mesAno . '/' . $nome . '.xml', $this->xml);
             //atualiza a tabela de nfces
             $this->registro = new $this->model([
                 'venda_id' => $venda->id,
-                'xml_assinado' => 'public/arquivos/empresa_id_'. $empresa->id .'/'.'xml/'.$mesAno .'/'.$nome.'.xml', $this->xml,
+                'xml_assinado' => 'public/arquivos/empresa_id_' . $empresa->id . '/' . 'xml/' . $mesAno . '/' . $nome . '.xml', $this->xml,
                 'valor' => $venda->total_venda_liquido,
                 'status' => '1 - XML Gerado',
                 'mesAno' => $mesAno,
@@ -635,15 +643,13 @@ class NfceController extends AppController
 
 
             $empresa->update([
-                'nNF' => $empresa->nNF +1,
+                'nNF' => $empresa->nNF + 1,
             ]);
-
-
-
         }
     }
 
-    public function envia($venda, $empresa){
+    public function envia($venda, $empresa)
+    {
 
         $this->tool = new \NFePHP\NFe\Tools($this->config, $this->certificado);
         $this->tool->Model($empresa->mod);
@@ -651,7 +657,7 @@ class NfceController extends AppController
 
         $nfce = Nfce::where('venda_id', $venda->id)->orderby('id', 'desc')->get()[0];
 
-        $xmlAssinado = Storage::get('public/arquivos/empresa_id_'. $empresa->id .'/'.'xml/'.$nfce->mesAno .'/Assinados/'.$nfce->arquivo.'-assinado.xml');
+        $xmlAssinado = Storage::get('public/arquivos/empresa_id_' . $empresa->id . '/' . 'xml/' . $nfce->mesAno . '/Assinados/' . $nfce->arquivo . '-assinado.xml');
 
 
 
@@ -693,7 +699,6 @@ class NfceController extends AppController
             echo $resp;*/
 
             return $resp;
-
         } catch (\Exception $e) {
 
 
@@ -707,15 +712,11 @@ class NfceController extends AppController
             ]);
 
             return str_replace("\n", "<br/>", $e->getMessage());
-
-
-
-
-
         }
     }
 
-    public function consulta($venda, $empresa, $recibo){
+    public function consulta($venda, $empresa, $recibo)
+    {
 
         $tool = new \NFePHP\NFe\Tools($this->config, $this->certificado);
         $tool->Model($empresa->mod);
@@ -735,7 +736,7 @@ class NfceController extends AppController
             $st = new Standardize();
             $std = $st->toStd($xmlResp);
 
-            if($std->cStat=='103') { //lote enviado
+            if ($std->cStat == '103') { //lote enviado
                 //Lote ainda não foi precessado pela SEFAZ;
                 $nfce = Nfce::where('venda_id', $venda->id)->get()[0];
 
@@ -746,11 +747,13 @@ class NfceController extends AppController
 
                 ]);
 
-                return ["situacao"=>"Enviado",
-                    "numeroProtocolo"=>$std->protNFe->infProt->nProt,
-                    "xmlProtocolo"=>$xmlResp];
+                return [
+                    "situacao" => "Enviado",
+                    "numeroProtocolo" => $std->protNFe->infProt->nProt,
+                    "xmlProtocolo" => $xmlResp
+                ];
             }
-            if($std->cStat=='105') { //lote em processamento
+            if ($std->cStat == '105') { //lote em processamento
                 //tente novamente mais tarde
                 $nfce = Nfce::where('venda_id', $venda->id)->get()[0];
 
@@ -764,13 +767,15 @@ class NfceController extends AppController
 
 
 
-                return ["situacao"=>"Em Processamento",
-                    "numeroProtocolo"=>$std->protNFe->infProt->nProt,
-                    "xmlProtocolo"=>$xmlResp];
+                return [
+                    "situacao" => "Em Processamento",
+                    "numeroProtocolo" => $std->protNFe->infProt->nProt,
+                    "xmlProtocolo" => $xmlResp
+                ];
             }
 
-            if($std->cStat=='104'){ //lote processado (tudo ok)
-                if($std->protNFe->infProt->cStat=='100'){ //Autorizado o uso da NF-e
+            if ($std->cStat == '104') { //lote processado (tudo ok)
+                if ($std->protNFe->infProt->cStat == '100') { //Autorizado o uso da NF-e
 
                     $nfce = Nfce::where('venda_id', $venda->id)->get()[0];
 
@@ -791,7 +796,7 @@ class NfceController extends AppController
 
                     $nfce->update([
                         'status' => '4 - OK - Autorizado uso',
-                        'nfce_pdf' => 'public/arquivos/empresa_id_'. $empresa->id .'/'.'xml/'.$nfce->mesAno .'/PDFs/'.$nfce->arquivo.'.pdf'
+                        'nfce_pdf' => 'public/arquivos/empresa_id_' . $empresa->id . '/' . 'xml/' . $nfce->mesAno . '/PDFs/' . $nfce->arquivo . '.pdf'
                     ]);
 
 
@@ -800,9 +805,7 @@ class NfceController extends AppController
                     /*return ["situacao"=>"autorizada",
                         "numeroProtocolo"=>$std->protNFe->infProt->nProt,
                         "xmlProtocolo"=>$xmlResp];*/
-
-
-                }elseif(in_array($std->protNFe->infProt->cStat,["302"])){ //DENEGADAS
+                } elseif (in_array($std->protNFe->infProt->cStat, ["302"])) { //DENEGADAS
 
                     $nfce = Nfce::where('venda_id', $venda->id)->get()[0];
 
@@ -815,13 +818,14 @@ class NfceController extends AppController
 
                     ]);
 
-                    return ["situacao"=>"denegada",
-                        "numeroProtocolo"=>$std->protNFe->infProt->nProt,
-                        "motivo"=>$std->protNFe->infProt->xMotivo,
-                        "cstat"=>$std->protNFe->infProt->cStat,
-                        "xmlProtocolo"=>$xmlResp];
-
-                }else{ //não autorizada (rejeição)
+                    return [
+                        "situacao" => "denegada",
+                        "numeroProtocolo" => $std->protNFe->infProt->nProt,
+                        "motivo" => $std->protNFe->infProt->xMotivo,
+                        "cstat" => $std->protNFe->infProt->cStat,
+                        "xmlProtocolo" => $xmlResp
+                    ];
+                } else { //não autorizada (rejeição)
 
 
                     $nfce = Nfce::where('venda_id', $venda->id)->get()[0];
@@ -834,9 +838,11 @@ class NfceController extends AppController
                     ]);
 
 
-                    return ["situacao"=>"rejeitada",
-                        "motivo"=>$std->protNFe->infProt->xMotivo,
-                        "cstat"=>$std->protNFe->infProt->cStat];
+                    return [
+                        "situacao" => "rejeitada",
+                        "motivo" => $std->protNFe->infProt->xMotivo,
+                        "cstat" => $std->protNFe->infProt->cStat
+                    ];
                 }
             } else { //outros erros possíveis
 
@@ -849,11 +855,12 @@ class NfceController extends AppController
                     'descricao' => $std->protNFe->infProt->xMotivo,
                 ]);
 
-                return ["situacao"=>"rejeitada",
-                    "motivo"=>$std->xMotivo,
-                    "cstat"=>$std->cStat];
+                return [
+                    "situacao" => "rejeitada",
+                    "motivo" => $std->xMotivo,
+                    "cstat" => $std->cStat
+                ];
             }
-
         } catch (\Exception $e) {
 
             $nfce = Nfce::where('venda_id', $venda->id)->get()[0];
@@ -872,14 +879,15 @@ class NfceController extends AppController
     }
 
 
-    public function gerar(Request $request, $id){
+    public function gerar(Request $request, $id)
+    {
 
 
 
 
-        $nfce = Nfce::where('venda_id', $id)->orderby('id','desc')->get();
+        $nfce = Nfce::where('venda_id', $id)->orderby('id', 'desc')->get();
 
-        $venda = Venda::where('id', $id)->with('cliente','itens','pagamentos')->get()[0];
+        $venda = Venda::where('id', $id)->with('cliente', 'itens', 'pagamentos')->get()[0];
 
         $empresa = Empresa::where('id', Auth::user()->empresa_id)->get()[0]; //todo alterar para pegar a empresa logada
 
@@ -887,17 +895,17 @@ class NfceController extends AppController
 
 
 
-        if(count($nfce)){
+        if (count($nfce)) {
 
 
-            if($nfce[0]->recibo){
+            if ($nfce[0]->recibo) {
                 $recibo = $nfce[0]->recibo;
                 $consulta = self::consulta($venda, $empresa, $recibo);
 
 
-                return redirect()->away(url('storage/arquivos/empresa_id_'. $empresa->id .'\\'.'xml\\'.$nfce[0]->mesAno .'\\PDFs\\'.$nfce[0]->arquivo.'.pdf'));    // __DIR__ .'\..\..\..\storage\app\public\arquivos\empresa_id_'. $empresa->id .'\\'.'xml\\'.$nfce[0]->mesAno .'\\PDFs\\'.$nfce[0]->arquivo.'.pdf');
+                return redirect()->away(url('storage/arquivos/empresa_id_' . $empresa->id . '\\' . 'xml\\' . $nfce[0]->mesAno . '\\PDFs\\' . $nfce[0]->arquivo . '.pdf'));    // __DIR__ .'\..\..\..\storage\app\public\arquivos\empresa_id_'. $empresa->id .'\\'.'xml\\'.$nfce[0]->mesAno .'\\PDFs\\'.$nfce[0]->arquivo.'.pdf');
 
-            }else{
+            } else {
 
 
                 $envio = self::envia($venda, $empresa);
@@ -909,10 +917,9 @@ class NfceController extends AppController
 
                 $consulta = self::consulta($venda, $empresa, $recibo);
 
-                return redirect()->away(url('storage/arquivos/empresa_id_'. $empresa->id .'\\'.'xml\\'.$nfce[0]->mesAno .'\\PDFs\\'.$nfce[0]->arquivo.'.pdf'));
+                return redirect()->away(url('storage/arquivos/empresa_id_' . $empresa->id . '\\' . 'xml\\' . $nfce[0]->mesAno . '\\PDFs\\' . $nfce[0]->arquivo . '.pdf'));
             };
-
-        }else {
+        } else {
 
 
 
@@ -921,7 +928,7 @@ class NfceController extends AppController
             self::tagemit($empresa);
             self::tagenderEmit($empresa);
 
-            $cpf = $request->cpf == '00000000000' ? '' : self::tagdest($request->cpf) ;
+            $cpf = $request->cpf == '00000000000' ? '' : self::tagdest($request->cpf, $venda);
 
 
             foreach ($venda->Itens as $key => $item) {
@@ -936,7 +943,6 @@ class NfceController extends AppController
 
                 self::tagPIS($item);
                 self::tagCOFINS($item);
-
             }
 
             self::tagpag();
@@ -958,28 +964,25 @@ class NfceController extends AppController
 
 
 
-            $nfce = Nfce::where('venda_id', $venda->id)->orderby('id','desc')->get();
+            $nfce = Nfce::where('venda_id', $venda->id)->orderby('id', 'desc')->get();
             $recibo = $nfce[0]->recibo;
 
             $consulta = self::consulta($venda, $empresa, $recibo);
 
-            return redirect()->away(url('storage/arquivos/empresa_id_'. $empresa->id .'\\'.'xml\\'.$nfce[0]->mesAno .'\\PDFs\\'.$nfce[0]->arquivo.'.pdf'));
-
+            return redirect()->away(url('storage/arquivos/empresa_id_' . $empresa->id . '\\' . 'xml\\' . $nfce[0]->mesAno . '\\PDFs\\' . $nfce[0]->arquivo . '.pdf'));
         };
-
-
-
     }
 
 
-    public function regerar($id){
+    public function regerar($id)
+    {
 
 
 
 
-        $nfce = Nfce::where('venda_id', $id)->orderby('id','desc')->get();
+        $nfce = Nfce::where('venda_id', $id)->orderby('id', 'desc')->get();
 
-        $venda = Venda::where('id', $id)->with('cliente','itens','pagamentos')->get()[0];
+        $venda = Venda::where('id', $id)->with('cliente', 'itens', 'pagamentos')->get()[0];
 
         $empresa = Empresa::where('id', Auth::user()->empresa_id)->get()[0]; //todo alterar para pegar a empresa logada
 
@@ -988,67 +991,62 @@ class NfceController extends AppController
 
 
 
-            self::taginfNFe($empresa);
-            self::tagide($empresa, $venda);
-            self::tagemit($empresa);
-            self::tagenderEmit($empresa);
+        self::taginfNFe($empresa);
+        self::tagide($empresa, $venda);
+        self::tagemit($empresa);
+        self::tagenderEmit($empresa);
 
-            $cpf =  '';
+        $cpf =  '';
 
 
-            foreach ($venda->Itens as $key => $item) {
+        foreach ($venda->Itens as $key => $item) {
 
-                $item->sequencial = $key + 1;
-                self::tagprod($item);
-                self::tagimposto($item);
+            $item->sequencial = $key + 1;
+            self::tagprod($item);
+            self::tagimposto($item);
 
-                if ($item->produto->tipo == 'servico') {
-                    self::tagISSQN($item, $empresa);
-                }
-
-                self::tagPIS($item);
-                self::tagCOFINS($item);
-
+            if ($item->produto->tipo == 'servico') {
+                self::tagISSQN($item, $empresa);
             }
 
-            self::tagpag();
+            self::tagPIS($item);
+            self::tagCOFINS($item);
+        }
 
-            foreach ($venda->Pagamentos as $key => $pagamento) {
+        self::tagpag();
 
-                self::tagdetPag($pagamento);
-            }
+        foreach ($venda->Pagamentos as $key => $pagamento) {
 
-            self::tagICMSTot($venda);
-            self::tagISSQNTot($venda, $empresa);
-            self::tagtransp();
+            self::tagdetPag($pagamento);
+        }
 
-            self::montaxml($empresa, $venda);
+        self::tagICMSTot($venda);
+        self::tagISSQNTot($venda, $empresa);
+        self::tagtransp();
 
-            self::assina($empresa, $venda);
+        self::montaxml($empresa, $venda);
 
-            $envio = self::envia($venda, $empresa);
+        self::assina($empresa, $venda);
 
-
-
-            $nfce = Nfce::where('venda_id', $venda->id)->orderby('id','desc')->get()[0];
-            $recibo = $nfce->recibo;
-
-            $consulta = self::consulta($venda, $empresa, $recibo);
-
-            return response()->file(__DIR__ .'\..\..\..\storage\app\public\arquivos\empresa_id_'. $empresa->id .'\\'.'xml\\'.$nfce->mesAno .'\\PDFs\\'.$nfce->arquivo.'.pdf');
+        $envio = self::envia($venda, $empresa);
 
 
 
+        $nfce = Nfce::where('venda_id', $venda->id)->orderby('id', 'desc')->get()[0];
+        $recibo = $nfce->recibo;
 
+        $consulta = self::consulta($venda, $empresa, $recibo);
 
+        return response()->file(__DIR__ . '\..\..\..\storage\app\public\arquivos\empresa_id_' . $empresa->id . '\\' . 'xml\\' . $nfce->mesAno . '\\PDFs\\' . $nfce->arquivo . '.pdf');
     }
 
 
-    public function consulta_recibo($id){
+    public function consulta_recibo($id)
+    {
 
         $nfce = Nfce::where('venda_id', $id)->get();
 
-        $venda = Venda::where('id', $id)->with('cliente','itens','pagamentos')->get()[0];
+        $venda = Venda::where('id', $id)->with('cliente', 'itens', 'pagamentos')->get()[0];
 
         $empresa = Empresa::where('id', Auth::user()->empresa_id)->get()[0]; //todo alterar para pegar a empresa logada
 
@@ -1058,32 +1056,31 @@ class NfceController extends AppController
 
         $consulta = self::consulta($venda, $empresa, $recibo);
 
-        return redirect()->away(url('storage/arquivos/empresa_id_'. $empresa->id .'\\'.'xml\\'.$nfce[0]->mesAno .'\\PDFs\\'.$nfce[0]->arquivo.'.pdf'));
-
-
+        return redirect()->away(url('storage/arquivos/empresa_id_' . $empresa->id . '\\' . 'xml\\' . $nfce[0]->mesAno . '\\PDFs\\' . $nfce[0]->arquivo . '.pdf'));
     }
 
 
-    public function autoriza($nfce, $empresa){
+    public function autoriza($nfce, $empresa)
+    {
 
-        $request = Storage::get('public/arquivos/empresa_id_'. $empresa->id .'/'.'xml/'.$nfce->mesAno .'/Assinados/'.$nfce->arquivo.'-assinado.xml');
+        $request = Storage::get('public/arquivos/empresa_id_' . $empresa->id . '/' . 'xml/' . $nfce->mesAno . '/Assinados/' . $nfce->arquivo . '-assinado.xml');
 
-        $detalhes = NfceDetalhe::where('nfce_id',$nfce->id)->where('status', '4 - OK - Autorizado uso')->get()[0];
+        $detalhes = NfceDetalhe::where('nfce_id', $nfce->id)->where('status', '4 - OK - Autorizado uso')->get()[0];
 
         $response = $detalhes->descricao;
 
         try {
             $xml = Complements::toAuthorize($request, $response);
 
-            $request = Storage::put('public/arquivos/empresa_id_'. $empresa->id .'/'.'xml/'.$nfce->mesAno .'/Autorizados/'.$nfce->arquivo.'-autorizado.xml', $xml);
+            $request = Storage::put('public/arquivos/empresa_id_' . $empresa->id . '/' . 'xml/' . $nfce->mesAno . '/Autorizados/' . $nfce->arquivo . '-autorizado.xml', $xml);
 
             $nfce->update([
                 'status' => '4 - OK - Autorizado uso',
-                'xml_autorizado' =>'public/arquivos/empresa_id_'. $empresa->id .'/'.'xml/'.$nfce->mesAno .'/Autorizados/'.$nfce->arquivo.'-autorizado.xml'
+                'xml_autorizado' => 'public/arquivos/empresa_id_' . $empresa->id . '/' . 'xml/' . $nfce->mesAno . '/Autorizados/' . $nfce->arquivo . '-autorizado.xml'
             ]);
 
 
-            $docxml = Storage::get('public/arquivos/empresa_id_'. $empresa->id .'/'.'xml/'.$nfce->mesAno .'/Autorizados/'.$nfce->arquivo.'-autorizado.xml');
+            $docxml = Storage::get('public/arquivos/empresa_id_' . $empresa->id . '/' . 'xml/' . $nfce->mesAno . '/Autorizados/' . $nfce->arquivo . '-autorizado.xml');
             $pathLogo = url('dattaable/assets/images/NFCe.png');
 
             $danfce = new  Danfce($docxml, $pathLogo);
@@ -1091,24 +1088,22 @@ class NfceController extends AppController
             $id = $danfce->monta();
             $pdf = $danfce->render();
 
-            Storage::put('public/arquivos/empresa_id_'. $empresa->id .'/'.'xml/'.$nfce->mesAno .'/PDFs/'.$nfce->arquivo.'.pdf', $pdf);
+            Storage::put('public/arquivos/empresa_id_' . $empresa->id . '/' . 'xml/' . $nfce->mesAno . '/PDFs/' . $nfce->arquivo . '.pdf', $pdf);
 
             return $pdf;
-
         } catch (\Exception $e) {
             return "Erro: " . $e->getMessage();
         }
-
-
     }
 
 
 
-    public function consulta_chave($id){
+    public function consulta_chave($id)
+    {
 
-        $nfce = Nfce::where('venda_id', $id)->orderby('id','desc')->get();
+        $nfce = Nfce::where('venda_id', $id)->orderby('id', 'desc')->get();
 
-        $venda = Venda::where('id', $id)->with('cliente','itens','pagamentos')->get()[0];
+        $venda = Venda::where('id', $id)->with('cliente', 'itens', 'pagamentos')->get()[0];
 
         $empresa = Empresa::where('id', Auth::user()->empresa_id)->get()[0]; //todo alterar para pegar a empresa logada
 
@@ -1143,27 +1138,19 @@ class NfceController extends AppController
             //$json = $stdCl->toJson();
 
             dd($std);
-
         } catch (\Exception $e) {
             echo $e->getMessage();
         }
-
-
-
-
-
-
-
-
     }
 
 
 
-    public function download($id){
+    public function download($id)
+    {
 
-        $nfce = Nfce::where('venda_id', $id)->orderby('id','desc')->get();
+        $nfce = Nfce::where('venda_id', $id)->orderby('id', 'desc')->get();
 
-        $venda = Venda::where('id', $id)->with('cliente','itens','pagamentos')->get()[0];
+        $venda = Venda::where('id', $id)->with('cliente', 'itens', 'pagamentos')->get()[0];
 
         $empresa = Empresa::where('id', Auth::user()->empresa_id)->get()[0]; //todo alterar para pegar a empresa logada
 
@@ -1191,7 +1178,6 @@ class NfceController extends AppController
                 //executa a busca pelos documentos
                 $resp = $tool->sefazDistDFe($ultNSU);
                 dd($resp);
-
             } catch (\Exception $e) {
                 echo $e->getMessage();
 
@@ -1229,9 +1215,5 @@ class NfceController extends AppController
             }
             sleep(10);
         }
-
-
     }
-
-
 }
